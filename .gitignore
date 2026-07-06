@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Production build output
+frontend/build/
+frontend/dist/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# Python
+__pycache__/
+*.pyc
+backend/__pycache__/
+backend/venv/
+backend/.venv/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Test/coverage output
+coverage/
+
+# ESLint / build caches
+.eslintcache
+frontend/.eslintcache

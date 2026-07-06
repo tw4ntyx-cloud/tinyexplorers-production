@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: tiny-explorers-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: MONGO_URL
+        sync: false
+      - key: DB_NAME
+        value: tiny_explorers
+      - key: RESEND_API_KEY
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: FROM_EMAIL
+        sync: false
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: CORS_ALLOW_CREDENTIALS
+        value: "false"
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO

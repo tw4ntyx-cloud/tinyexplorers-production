@@ -1,0 +1,140 @@
+{
+  "project_name": "Tiny Explorers",
+  "theme_and_archetype": {
+    "theme": "Light",
+    "archetype": "Hybrid: Archetype 6 (Vibrant Play) + Archetype 3 (Pastel & Soft) + Scandinavian Minimalism",
+    "rationale": "Balances the trust and warmth required by parents with the playful, engaging energy of a premium early childhood center. Minimalist white-space allows the custom pastel/vibrant brand colors to pop without overwhelming."
+  },
+  "colors": {
+    "primary_orange": "#FF6B2C",
+    "primary_green": "#22C55E",
+    "primary_blue": "#60A5FA",
+    "primary_yellow": "#FBC247",
+    "background_cream": "#FFF7EE",
+    "light_surface": "#F1F1F1",
+    "dark_text": "#1F1F1F",
+    "white": "#FFFFFF",
+    "usage_rules": "Use background_cream as the main page canvas. Use light_surface for secondary sections (like footer or alternating bands). Use the 4 primary colors strictly as accents for buttons, badges, icons, and decorative organic blobs. Dark text for all typography."
+  },
+  "typography": {
+    "heading_font": "Poppins",
+    "body_font": "DM Sans",
+    "rules": {
+      "h1": "font-poppins text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-[#1F1F1F]",
+      "h2": "font-poppins text-4xl sm:text-5xl font-bold tracking-tight text-[#1F1F1F]",
+      "h3": "font-poppins text-2xl sm:text-3xl font-semibold text-[#1F1F1F]",
+      "body": "font-dm-sans text-base sm:text-lg leading-relaxed text-[#1F1F1F]/80",
+      "labels": "font-dm-sans text-sm font-bold uppercase tracking-[0.15em] text-[#FF6B2C]"
+    }
+  },
+  "layout_and_spacing": {
+    "spacing_scale": "Generous. Use py-24 or py-32 for section padding. Container padding px-6 md:px-12.",
+    "border_radius": "Maximum roundness. Use rounded-3xl for cards, rounded-full for buttons and badges. Use custom organic blob borders for hero images: rounded-[40%_60%_70%_30%/40%_50%_60%_50%] or similar.",
+    "shadows": "Soft ambient. shadow-[0_8px_30px_rgb(0,0,0,0.04)]",
+    "icons": "Use lucide-react with strokeWidth={2.5} for a slightly chunkier, friendlier feel."
+  },
+  "components_instructions": {
+    "buttons": "Pill-shaped (rounded-full). Primary uses one of the brand colors (e.g., #FF6B2C) with #FFFFFF text. Hover state: slight scale (scale-105) and shadow-lg. Secondary buttons use transparent bg with solid border or light_surface.",
+    "cards": "bg-white, rounded-3xl, soft shadow, p-8. Add 1px border of #F1F1F1 for crispness. Hover: translate-y-[-4px].",
+    "forms": "Inputs should have rounded-2xl, bg-white, 1px border border-[#F1F1F1], p-4, focus:ring-2 focus:ring-[#60A5FA] focus:outline-none.",
+    "badges": "rounded-full px-4 py-1 text-sm font-semibold. Background should be a 10-15% opacity tint of a primary color with solid text color."
+  },
+  "sections": [
+    {
+      "name": "Header",
+      "design": "Sticky top, z-50. Starts transparent, transitions to bg-[#FFF7EE]/90 backdrop-blur-md on scroll. Logo on left, nav links center (DM Sans, font-medium), CTA button right (Pill, Primary Orange). Border bottom ONLY when scrolled."
+    },
+    {
+      "name": "Hero",
+      "design": "Headline 'Where little minds grow through play, care, and confidence.' (Poppins). Layout: 2-column. Text left, layered images right. Images should be masked in organic blob shapes or heavily rounded frames, slightly overlapping. Decorate background with subtle floating SVG squiggles or circles in the 4 primary colors. Dual CTAs: solid orange and outline text."
+    },
+    {
+      "name": "Why Families Choose Us",
+      "design": "4 feature cards. Grid layout (grid-cols-1 md:grid-cols-2 lg:grid-cols-4). Each card features a top icon with a soft background matching one of the 4 primary colors, rounded-3xl, soft shadow. Title and short description."
+    },
+    {
+      "name": "Programs",
+      "design": "4 cards (Infant, Toddler, Preschool, After School). Large image at top (rounded-t-3xl or inner rounded-2xl), age range badge overlapping image, title, and description. Hover: Image slight scale up."
+    },
+    {
+      "name": "Environment (Split Editorial)",
+      "design": "50/50 split. Left side: large breathtaking image of Scandinavian classroom. Right side: Generous whitespace, typography-driven text about natural materials and calm spaces. Use decorative blob background element behind the image."
+    },
+    {
+      "name": "Testimonials",
+      "design": "Full width section with bg-white. Cards on a light surface or masonry grid of review cards. Quote icon in Primary Yellow."
+    },
+    {
+      "name": "Gallery Preview",
+      "design": "Bento-style image grid for gallery with heavy border radius (rounded-3xl)."
+    },
+    {
+      "name": "Call to Action",
+      "design": "Massive, centered section: 'Ready to take the next step?' with dual buttons. Add playful abstract shapes floating around."
+    },
+    {
+      "name": "Footer",
+      "design": "bg-[#1F1F1F] text-[#F1F1F1] or use #F1F1F1 with dark text. The layout asks for minimal premium: Logo, Nav, Contact, Inquiry button, Newsletter signup. Input for newsletter must be rounded-full with an inline button."
+    },
+    {
+      "name": "Enrollment Inquiry Modal/Form",
+      "design": "Clean dialog/modal overlay (Shadcn Dialog). Use generous padding, rounded-3xl. Form fields for Parent Name, Child Age, Program Interest, Email. Connected to backend."
+    }
+  ],
+  "image_urls": [
+    {
+      "category": "Hero Main",
+      "url": "https://images.unsplash.com/photo-1763310225230-6e15b125935a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHxwcmVzY2hvb2wlMjBjbGFzc3Jvb20lMjBtb250ZXNzb3JpfGVufDB8fHx8MTc3ODYyNjkzOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Children's playroom with small tables and chairs. Mask in organic blob."
+    },
+    {
+      "category": "Hero Accent/Overlap",
+      "url": "https://images.unsplash.com/photo-1777056491418-d4ff81a4ad92?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxjYW5kaWQlMjBjaGlsZCUyMHBsYXlpbmclMjBwcmVzY2hvb2x8ZW58MHx8fHwxNzc4NjI2OTM4fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Young children sitting at table."
+    },
+    {
+      "category": "Programs - Infant",
+      "url": "https://images.unsplash.com/photo-1685358230675-5cb5a9016232?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHw0fHx3b29kZW4lMjB0b3lzJTIwbnVyc2VyeXxlbnwwfHx8fDE3Nzg2MjY5Mzh8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Child playing with wooden letters."
+    },
+    {
+      "category": "Programs - Toddler",
+      "url": "https://images.unsplash.com/photo-1557452765-5b57d100c1dc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHw0fHxjYW5kaWQlMjBjaGlsZCUyMHBsYXlpbmclMjBwcmVzY2hvb2x8ZW58MHx8fHwxNzc4NjI2OTM4fDA&ixlib=rb-4.1.0&q=85",
+      "description": "Toddler playing toy."
+    },
+    {
+      "category": "Programs - Preschool",
+      "url": "https://images.pexels.com/photos/8363051/pexels-photo-8363051.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Child in classroom with colorful surroundings."
+    },
+    {
+      "category": "Programs - After School",
+      "url": "https://images.pexels.com/photos/8363049/pexels-photo-8363049.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Young girl in a classroom setting."
+    },
+    {
+      "category": "Environment Split",
+      "url": "https://images.unsplash.com/photo-1763310225537-f7161d5c93e9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwxfHxwcmVzY2hvb2wlMjBjbGFzc3Jvb20lMjBtb250ZXNzb3JpfGVufDB8fHx8MTc3ODYyNjkzOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Children's play kitchen area with small tables and chairs."
+    },
+    {
+      "category": "Gallery 1",
+      "url": "https://images.unsplash.com/photo-1567746455504-cb3213f8f5b8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwzfHxwcmVzY2hvb2wlMjBjbGFzc3Jvb20lMjBtb250ZXNzb3JpfGVufDB8fHx8MTc3ODYyNjkzOHww&ixlib=rb-4.1.0&q=85",
+      "description": "Nursery room interior."
+    },
+    {
+      "category": "Gallery 2",
+      "url": "https://images.unsplash.com/photo-1642379831546-67d5e2bf8bcc?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA0MTJ8MHwxfHNlYXJjaHwxfHx3b29kZW4lMjB0b3lzJTIwbnVyc2VyeXxlbnwwfHx8fDE3Nzg2MjY5Mzh8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Shelf filled with wooden toys."
+    }
+  ],
+  "instructions_to_main_agent": [
+    "Build the UI strictly following the design tokens (colors, typography, spacing, radii) provided in this document.",
+    "Implement a working backend using FastAPI for the Newsletter signup and Enrollment inquiry forms. Forms should submit data to these endpoints and handle success/error states gracefully.",
+    "Ensure all interactive elements have data-testid attributes for testing.",
+    "Do NOT use placeholder text or dummy image URLs. ONLY use the image URLs provided in this JSON.",
+    "Use Lucide React for icons, keeping them child-friendly by setting strokeWidth to 2.5.",
+    "Ensure Tailwind config is updated with the custom colors (primary_orange, etc.) and fonts (Poppins, DM Sans). Add Google Fonts links for Poppins and DM Sans in index.html.",
+    "Implement the sticky navbar logic with framer-motion or standard React state for transparent-to-blur transitions."
+  ]
+}

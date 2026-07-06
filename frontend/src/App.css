@@ -1,0 +1,4 @@
+/* App-specific styles. Most styling lives in Tailwind utilities. */
+.App {
+    min-height: 100vh;
+}

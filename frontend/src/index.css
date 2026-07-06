@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+}
+
+body {
+    margin: 0;
+    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #FFF7EE;
+    color: #1F1F1F;
+}
+
+::selection {
+    background: #FF6B2C;
+    color: #FFFFFF;
+}
+
+@layer base {
+    :root {
+        --background: 33 100% 96%;
+        --foreground: 0 0% 12%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 12%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 12%;
+        --primary: 18 100% 59%;
+        --primary-foreground: 0 0% 100%;
+        --secondary: 0 0% 95%;
+        --secondary-foreground: 0 0% 12%;
+        --muted: 0 0% 95%;
+        --muted-foreground: 0 0% 40%;
+        --accent: 18 100% 59%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 0 0% 92%;
+        --input: 0 0% 92%;
+        --ring: 18 100% 59%;
+        --radius: 1rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    h1, h2, h3, h4, h5 {
+        font-family: 'Poppins', system-ui, sans-serif;
+        letter-spacing: -0.025em;
+    }
+    h1 { letter-spacing: -0.035em; }
+
+    /* Accessible focus rings for keyboard users */
+    :focus-visible {
+        outline: 2px solid #FF6B2C;
+        outline-offset: 3px;
+        border-radius: 4px;
+    }
+    button:focus-visible,
+    a:focus-visible {
+        outline-offset: 4px;
+    }
+}
+
+@layer utilities {
+    /* CSS-rounded blob masks (still useful for non-image decoration) */
+    .blob-1 { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+    .blob-2 { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    .blob-3 { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+    .blob-4 { border-radius: 55% 45% 65% 35% / 50% 65% 35% 50%; }
+
+    .text-balance { text-wrap: balance; }
+    .text-pretty  { text-wrap: pretty; }
+
+    .glass {
+        background: rgba(255, 247, 238, 0.78);
+        backdrop-filter: saturate(180%) blur(18px);
+        -webkit-backdrop-filter: saturate(180%) blur(18px);
+    }
+    .glass-white {
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: saturate(180%) blur(14px);
+        -webkit-backdrop-filter: saturate(180%) blur(14px);
+    }
+
+    /* Subtle paper-grain — preserved */
+    .grain { position: relative; isolation: isolate; }
+    .grain::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.06;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.45 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* Warm cinematic image grading overlay */
+    .image-warm { position: relative; }
+    .image-warm::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+            radial-gradient(120% 80% at 0% 0%, rgba(251, 194, 71, 0.18) 0%, transparent 55%),
+            linear-gradient(180deg, rgba(255, 107, 44, 0.0) 0%, rgba(31, 31, 31, 0.18) 100%);
+    }
+
+    .ring-soft {
+        box-shadow:
+            0 1px 0 rgba(31, 31, 31, 0.04) inset,
+            0 20px 50px rgba(31, 31, 31, 0.06),
+            0 4px 14px rgba(31, 31, 31, 0.04);
+    }
+
+    .lift-soft {
+        transition: transform 500ms cubic-bezier(.2,.7,.2,1), box-shadow 500ms cubic-bezier(.2,.7,.2,1);
+    }
+    .lift-soft:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 30px 60px rgba(31, 31, 31, 0.08), 0 6px 18px rgba(31, 31, 31, 0.05);
+    }
+
+    .editorial-rule {
+        background: linear-gradient(90deg, currentColor, transparent);
+    }
+
+    /* Marquee mask: fades content on both edges as it scrolls horizontally. */
+    .marquee-mask {
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+                mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+    }
+
+    /* Editorial display number used as a section anchor (Programs/Environment). */
+    .display-numeral {
+        font-family: 'Poppins', system-ui, sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+        line-height: 0.85;
+        color: rgba(31, 31, 31, 0.06);
+    }
+}
+
+/* Respect prefers-reduced-motion: pause infinite decorative loops. */
+@media (prefers-reduced-motion: reduce) {
+    .animate-float-slow,
+    .animate-float-slower,
+    .animate-marquee-x,
+    .animate-pulse-soft {
+        animation: none !important;
+    }
+    * {
+        scroll-behavior: auto !important;
+    }
+}
