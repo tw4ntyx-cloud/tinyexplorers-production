@@ -38,10 +38,12 @@ import NotFound from "@/pages/NotFound";
  */
 
 export default function App() {
+  const basename = process.env.PUBLIC_URL || "/";
+
   return (
     <ErrorBoundary>
       <HelmetProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={basename}>
           <Routes>
             <Route element={<SiteLayout />}>
               <Route path="/" element={<Home />} />
