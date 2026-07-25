@@ -81,6 +81,8 @@ jobs:
       - name: Add SPA fallback
         run: cp build/index.html build/404.html
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/build
