@@ -1,797 +1,882 @@
 export const PARENT_POLICIES = [
   {
-    slug: "complaint-policy",
-    category: "Family Partnership",
-    title: "Complaint Policy",
-    summary:
-      "A clear and respectful process for raising concerns and resolving them promptly, fairly, and with care.",
-    downloadFile: "Complaint Policy.docx",
-    content: [
+    "slug": "complaint-policy",
+    "category": "Family Partnership",
+    "title": "Complaint Policy",
+    "summary": "A clear, fair and timely process for addressing concerns and complaints raised by parents, guardians and staff.",
+    "downloadFile": "Tiny Explorers · Complaint Policy.pdf",
+    "content": [
       {
-        title: "Purpose",
-        blocks: [
+        "title": "Purpose",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we are committed to providing a high-quality environment for children, parents, and staff. We value feedback from parents and guardians and recognize that concerns or complaints may arise. Our Complaint Policy is designed to address issues promptly and effectively, ensuring that every concern is handled with care and respect.",
+            "type": "paragraph",
+            "text": "Tiny Explorers Nursery and Preschool is committed to a high-quality environment for children, parents and staff. We value feedback and recognise that concerns may arise. This policy sets out how complaints are received, investigated and resolved with care and respect."
           },
           {
-            type: "paragraph",
-            text:
-              "Objective: To provide a clear and structured process for addressing and resolving complaints from parents, guardians, and staff in a timely and fair manner.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "To provide a clear and structured process for addressing and resolving complaints from parents, guardians and staff in a timely and fair manner."
+          }
+        ]
       },
       {
-        title: "Submission of Complaints",
-        blocks: [
+        "title": "Submitting a Complaint",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Initial Contact: Complaints should first be addressed directly with the staff member or teacher involved. Many issues can be resolved through open and honest communication. Parents are encouraged to discuss their concerns with the relevant staff member to seek an immediate resolution.",
+            "type": "paragraph",
+            "text": "2.1 Initial Contact: Most concerns can be resolved through open, honest conversation. Parents are encouraged to raise concerns directly with the staff member or teacher involved to seek an immediate resolution."
           },
           {
-            type: "paragraph",
-            text:
-              "Formal Complaint: If a resolution cannot be reached through informal discussions or if the issue is more serious, a formal complaint can be submitted. Complaints can be made in writing or verbally to the school director or designated complaints officer. Written complaints should include the date of the complaint, the names of individuals involved, a detailed description of the concern, any attempts made to resolve the issue informally, and the desired outcome or resolution.",
+            "type": "paragraph",
+            "text": "2.2 Formal Complaint: If informal discussion does not resolve the issue, or the matter is more serious, a formal complaint may be submitted in writing or verbally to the School Director or designated Complaints Officer. A written complaint should include:"
           },
-        ],
+          {
+            "type": "list",
+            "items": [
+              "Date of the complaint",
+              "Names of individuals involved",
+              "A detailed description of the concern",
+              "Any steps already taken to resolve it informally",
+              "The desired outcome or resolution"
+            ]
+          }
+        ]
       },
       {
-        title: "Complaint Handling Procedure",
-        blocks: [
+        "title": "Complaint Handling Procedure",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Acknowledgment: All formal complaints will be acknowledged within 2 business days of receipt. The acknowledgment will include an outline of the next steps and an estimated timeline for resolution.",
+            "type": "paragraph",
+            "text": "01 Acknowledgment: All formal complaints are acknowledged within 2 business days, with an outline of next steps and an estimated timeline."
           },
           {
-            type: "paragraph",
-            text:
-              "Investigation: The complaint will be investigated thoroughly and impartially. This may involve reviewing relevant documentation, interviewing involved parties, and gathering additional information. The investigation will be conducted in a respectful and confidential manner.",
+            "type": "paragraph",
+            "text": "02 Investigation: The complaint is investigated thoroughly, impartially and confidentially — reviewing documentation, interviewing involved parties and gathering further information as needed."
           },
           {
-            type: "paragraph",
-            text:
-              "Resolution: After the investigation, a resolution will be proposed. The resolution will be communicated to the complainant in writing or verbally, depending on the preference of the complainant. The response will include a summary of the findings, any actions taken or proposed, any changes to procedures or practices where applicable, and a timeline for implementation where relevant.",
+            "type": "paragraph",
+            "text": "03 Resolution: A resolution is proposed and communicated to the complainant, including a summary of findings, actions taken, any procedural changes, and an implementation timeline."
           },
           {
-            type: "paragraph",
-            text:
-              "Follow-Up: Follow-up may be conducted to ensure that the resolution has been implemented effectively and to check if the complainant is satisfied with the outcome. The follow-up process helps identify any potential improvements to prevent similar issues in the future.",
+            "type": "paragraph",
+            "text": "04 Follow-Up: Follow-up confirms the resolution was implemented effectively and identifies improvements to prevent similar issues."
           },
-        ],
+          {
+            "type": "note",
+            "title": "LEGAL REQUIREMENT",
+            "text": "\"All complaints are handled confidentially.\" Information is shared only with individuals directly involved in investigating or resolving the complaint. A confidential record of the complaint, investigation and resolution is retained to track recurring issues."
+          }
+        ]
       },
       {
-        title: "Confidentiality and Records",
-        blocks: [
+        "title": "Appeal Process",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Confidentiality: All complaints will be handled confidentially. Information will only be shared with individuals directly involved in the investigation or resolution of the complaint.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Record Keeping: A record of the complaint, investigation, and resolution will be maintained for reference and to track any recurring issues. This record will be kept secure and confidential.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "A complainant not satisfied with the resolution may appeal in writing within 7 business days of receiving it. The appeal is reviewed by a senior administrator or independent mediator, with a final decision communicated within 10 business days of receipt."
+          }
+        ]
       },
       {
-        title: "Appeal Process",
-        blocks: [
+        "title": "Non-Retaliation",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Appeal Rights: If the complainant is not satisfied with the resolution, they have the right to appeal the decision. Appeals should be submitted in writing within 7 business days of receiving the resolution. The appeal will be reviewed by a senior administrator or an independent mediator.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Final Decision: The final decision will be communicated to the complainant within 10 business days of receiving the appeal. The decision at this stage will be considered final.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "Individuals who submit a complaint or participate in an investigation are protected from retaliation. Any retaliatory conduct is treated as a serious policy violation."
+          }
+        ]
       },
       {
-        title: "Non-Retaliation",
-        blocks: [
+        "title": "Continuous Improvement",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Protection Against Retaliation: Tiny Explorers Nursery and Preschool ensures that individuals who submit complaints or participate in the investigation process are protected from retaliation. Any form of retaliation against a complainant will be treated as a serious violation of our policies.",
-          },
-        ],
-      },
-      {
-        title: "Continuous Improvement",
-        blocks: [
-          {
-            type: "paragraph",
-            text:
-              "Policy Review: The Complaint Policy is reviewed annually to ensure it remains effective and aligned with best practices. Feedback from complainants is used to make improvements to the policy and complaint handling procedures.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Training: Staff members receive training on how to handle complaints effectively and empathetically. This training is part of our commitment to maintaining a positive and supportive environment for children and families.",
-          },
-        ],
-      },
-    ],
+            "type": "paragraph",
+            "text": "This policy is reviewed annually, incorporating feedback from complainants and staff training on effective, empathetic complaint handling."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "discipline-policy",
-    category: "Child Guidance",
-    title: "Discipline Policy",
-    summary:
-      "A positive, restorative approach to behavior that protects dignity, supports learning, and keeps expectations clear.",
-    downloadFile: "Discipline Policy.docx",
-    content: [
+    "slug": "discipline-policy",
+    "category": "Child Guidance",
+    "title": "Discipline Policy",
+    "summary": "Guiding children toward respectful, self-directed behaviour within a warm and consistent classroom community.",
+    "downloadFile": "Tiny Explorers · Discipline Policy.pdf",
+    "content": [
       {
-        title: "Purpose",
-        blocks: [
+        "title": "Our Approach",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we believe that children learn best when they feel safe, respected, and supported. Our discipline practices are designed to guide behavior in a calm, consistent, and developmentally appropriate way.",
+            "type": "paragraph",
+            "text": "At Tiny Explorers, discipline is understood as guidance — helping children become individuals who can engage and cooperate successfully within a group. It is not simply behaviour management, but a foundation for respectful, self-disciplined membership in our community."
           },
           {
-            type: "paragraph",
-            text:
-              "The aim of discipline is not punishment, but the development of self-regulation, empathy, and responsible decision-making. We encourage children to learn from their choices while retaining their dignity and sense of belonging.",
+            "type": "paragraph",
+            "text": "Our teachers work to prevent discipline issues before they arise, guided by the following principles:"
           },
-        ],
+          {
+            "type": "list",
+            "items": [
+              "Establish clear, consistent boundaries and gently remind children when they approach these limits",
+              "Design daily schedules and classroom setups suited to the developmental needs of preschoolers",
+              "Reinforce and celebrate positive behaviours, encouraging children to build on them",
+              "Help children express feelings and thoughts in appropriate, constructive ways",
+              "Model calm, firm responses that demonstrate expected behaviour",
+              "Use positive language that communicates what is expected",
+              "Teach the communication and problem-solving skills children need to resolve conflict independently"
+            ]
+          }
+        ]
       },
       {
-        title: "Guiding Principles",
-        blocks: [
+        "title": "When Guidance Is Not Enough",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Adults model calm, respectful responses and set clear boundaries. Children are supported in understanding expectations, repairing harm, and learning new skills.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Our approach is restorative rather than punitive. We focus on teaching, reflection, and repair whenever behavior causes harm or disruption.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "If a child consistently struggles to respond to these approaches, a teacher may briefly separate the child from the group for a short, supervised \"time out.\" Any ongoing behavioural concern is always discussed with the child's parents."
+          }
+        ]
       },
       {
-        title: "Implementation",
-        blocks: [
+        "title": "Our Philosophy",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "When behavior needs support, educators respond with warmth, clarity, and consistency. We help children recognize what happened, understand the effect of their actions, and practice a better response.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Parents are informed of significant concerns and are invited to work with staff to provide a consistent approach at home and at school.",
-          },
-        ],
-      },
-    ],
+            "type": "note",
+            "title": "OUR PHILOSOPHY",
+            "text": "\"Supportive, sensitive, caring teachers are key to fostering self-discipline.\" Our ultimate goal is to help each child develop the self-control and discipline needed to thrive both in the classroom and beyond."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "enrollment-policy",
-    category: "Admissions",
-    title: "Enrollment Policy",
-    summary:
-      "A clear path for families considering a place at Tiny Explorers, from inquiry through welcome and transition.",
-    downloadFile: "Enrollment Policy.docx",
-    content: [
+    "slug": "enrollment-policy",
+    "category": "Admissions",
+    "title": "Enrollment Policy",
+    "summary": "Requirements and process for enrolling a child at Tiny Explorers, from first tour to first day.",
+    "downloadFile": "Tiny Explorers · Enrollment Policy.pdf",
+    "content": [
       {
-        title: "Admissions Process",
-        blocks: [
+        "title": "Age Requirements",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Enrollment begins with an inquiry, followed by a tour and a conversation with our admissions team. We take time to understand each family, the child’s needs, and the suitability of the setting for their development.",
+            "type": "paragraph",
+            "text": "Tiny Explorers Nursery and Preschool is committed to a nurturing, educational environment for every child. This policy outlines the requirements and steps for enrollment, ensuring a smooth and transparent process for all families."
           },
           {
-            type: "paragraph",
-            text:
-              "If a place is available and we believe the setting is suitable, families are invited to complete the application process and confirm their child’s placement. We seek to ensure that each family feels informed, welcomed, and supported from the start.",
-          },
-        ],
+            "type": "list",
+            "items": [
+              "Infants: From 8 weeks",
+              "Toddlers: 12 months – 2 years",
+              "Preschoolers: 3 – 5 years"
+            ]
+          }
+        ]
       },
       {
-        title: "Documentation and Readiness",
-        blocks: [
+        "title": "Enrollment Process",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Families are asked to provide relevant medical, emergency, and enrollment information so we can prepare for a calm and well-supported start. This documentation supports safe, responsive care.",
+            "type": "paragraph",
+            "text": "01 Tour & information session: Prospective families are encouraged to tour the facility, meet staff, and learn about our programs and philosophy."
           },
           {
-            type: "paragraph",
-            text:
-              "We support a phased transition period for new children, with gentle routines that help each child settle in confidently and comfortably.",
+            "type": "paragraph",
+            "text": "02 Application: Families complete an enrollment application with basic information about the child and family."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "03 Enrollment fee: A non-refundable enrollment fee secures the child's place and is due at the time of application."
+          },
+          {
+            "type": "paragraph",
+            "text": "04 Health & immunization records: Up-to-date health and immunization records must be submitted before the child's first day."
+          },
+          {
+            "type": "paragraph",
+            "text": "05 Enrollment packet: Accepted families receive forms and information including emergency contacts, consent forms, and the Parent Handbook."
+          },
+          {
+            "type": "paragraph",
+            "text": "06 Orientation: An orientation session introduces the child to their teacher and classroom and addresses any specific needs."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Waitlist & Priority",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "When a program is full, families may join a waitlist, ordered by application date and space available within the appropriate age group. Priority enrollment may be given to siblings of currently enrolled children and to children of staff members, supporting continuity and community."
+          }
+        ]
+      },
+      {
+        "title": "Tuition & Withdrawal",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Tuition varies by age group and program (part-time or full-time) and is detailed in the enrollment packet; payments are due monthly. Families withdrawing a child must provide a minimum of 30 days' written notice — failure to do so may result in forfeiture of deposits or an additional month's tuition."
+          }
+        ]
+      },
+      {
+        "title": "Non-Discrimination",
+        "blocks": [
+          {
+            "type": "note",
+            "title": "NON-DISCRIMINATION",
+            "text": "\"An inclusive environment that welcomes children of all backgrounds.\" Tiny Explorers does not discriminate on the basis of race, colour, religion, national origin, gender, or disability in its enrollment practices."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "fire-emergency-evacuation-policy",
-    category: "Safety",
-    title: "Fire and Emergency Evacuation Plan Policy",
-    summary:
-      "Well-practiced procedures that protect children and adults during emergencies and support calm, safe responses.",
-    downloadFile: "Fire and Emergency Evacuation Plan Policy.docx",
-    content: [
+    "slug": "fire-emergency-evacuation-policy",
+    "category": "Safety",
+    "title": "Fire & Emergency Evacuation Plan",
+    "summary": "Procedures for the safe evacuation of children, staff and visitors, and for maintaining ongoing emergency preparedness.",
+    "downloadFile": "Tiny Explorers · Fire & Emergency Evacuation Plan.pdf",
+    "content": [
       {
-        title: "Preparedness",
-        blocks: [
+        "title": "Preparedness",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Tiny Explorers maintains clear plans for fire, evacuation, and other emergency situations. Staff are trained to respond promptly, calmly, and in a way that protects the children in their care.",
+            "type": "paragraph",
+            "text": "The safety of our children, staff and visitors is our highest priority. This policy sets out our Fire and Emergency Evacuation Plan, covering preparedness, evacuation procedures, drills and continuous improvement."
           },
           {
-            type: "paragraph",
-            text:
-              "Emergency procedures are practiced regularly so children become familiar with routines and adults can act with confidence. Practice is calm, clear, and age-appropriate.",
+            "type": "paragraph",
+            "text": "Emergency Exits: Clearly marked, accessible exits are located throughout the facility and kept unobstructed at all times."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "Fire Safety Equipment: Fire extinguishers, smoke detectors and alarms are installed throughout the building and inspected regularly."
+          },
+          {
+            "type": "paragraph",
+            "text": "Evacuation Routes: Routes are posted in every classroom, hallway and common area, indicating the nearest exit and assembly point. All staff are trained on these routes."
+          },
+          {
+            "type": "paragraph",
+            "text": "Emergency Supplies: First-aid kits are kept in each classroom and at the assembly point, checked and restocked regularly."
+          }
+        ]
       },
       {
-        title: "Response and Communication",
-        blocks: [
+        "title": "Evacuation Procedure",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "In the event of an emergency, staff will guide children to safety, account for each child, and communicate with families as appropriate. The school’s priority is the immediate welfare of children, followed by the clear and respectful communication of next steps to families.",
+            "type": "paragraph",
+            "text": "01 Immediate response: The fire alarm is activated immediately; staff calmly gather children and proceed to the nearest exit, ensuring no one is left behind."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "02 Staff roles: Each staff member has an assigned role — leading children out, sweeping the area, or carrying the attendance roster and emergency contacts."
+          },
+          {
+            "type": "paragraph",
+            "text": "03 Assembly point: All children and staff gather at a predetermined assembly point; a headcount confirms everyone is accounted for."
+          },
+          {
+            "type": "paragraph",
+            "text": "04 Communication: The School Director contacts emergency services and notifies parents, including of any change of location."
+          },
+          {
+            "type": "paragraph",
+            "text": "05 Reentry: No one reenters the building until it is declared safe by emergency personnel."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Reunification",
+        "blocks": [
+          {
+            "type": "note",
+            "title": "REUNIFICATION",
+            "text": "\"Children are only released to authorised individuals.\" Following an evacuation, children are released only to parents, guardians, or individuals listed on the emergency contact form, with identification verified before release."
+          }
+        ]
+      },
+      {
+        "title": "Drills & Training",
+        "blocks": [
+          {
+            "type": "list",
+            "items": [
+              "Fire & emergency evacuation drills: Monthly",
+              "Staff plan training: Annually",
+              "Plan review: Annually & after each drill/emergency"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "During drills, staff explain fire safety in age-appropriate, non-threatening terms so children remain calm and follow instructions. A log of every drill — date, time, duration — is maintained and reviewed for improvement."
+          },
+          {
+            "type": "paragraph",
+            "text": "3.1 Special Considerations: Individualized evacuation plans are created for children with special needs, with staff trained and assigned to support them. The plan also covers non-fire emergencies such as severe weather, gas leaks, or lockdown situations, with staff following the appropriate evacuation or shelter-in-place response."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "mandatory-reporter-policy",
-    category: "Safeguarding",
-    title: "Mandatory Reporter Policy",
-    summary:
-      "A safeguarding commitment that ensures concerns about a child’s welfare are reported promptly and handled responsibly.",
-    downloadFile: "Mandatory Reporter Policy.docx",
-    content: [
+    "slug": "mandatory-reporter-policy",
+    "category": "Safeguarding",
+    "title": "Mandatory Reporter Policy",
+    "summary": "Staff responsibilities for recognising and reporting suspected child abuse or neglect.",
+    "downloadFile": "Tiny Explorers · Mandatory Reporter Policy.pdf",
+    "content": [
       {
-        title: "Duty to Report",
-        blocks: [
+        "title": "Purpose",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "All staff members are expected to act in the best interests of children and to report any concerns about welfare, abuse, or neglect in accordance with legal and ethical responsibilities. This policy ensures that concerns are addressed without delay and with appropriate confidentiality.",
+            "type": "paragraph",
+            "text": "The safety and well-being of every child in our care is our highest priority. All staff members are mandatory reporters and must comply with the responsibilities and procedures set out in this policy."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "To ensure that all staff understand their legal and ethical responsibilities as mandatory reporters, and to provide clear procedures for reporting and responding to suspected abuse or neglect."
+          }
+        ]
       },
       {
-        title: "Management of Concerns",
-        blocks: [
+        "title": "Definitions",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Reports are made to the designated safeguarding lead and handled in a serious, professional, and timely way. The welfare of the child remains the highest priority.",
+            "type": "paragraph",
+            "text": "Abuse: Physical abuse, emotional abuse, sexual abuse, or exploitation."
           },
           {
-            type: "paragraph",
-            text:
-              "Our staff are trained to recognize safeguarding concerns and to support a culture of openness, accountability, and child protection.",
+            "type": "paragraph",
+            "text": "Neglect: Failure to provide adequate food, shelter, medical care, education, or supervision."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "All staff — including teachers, caregivers and administrative personnel — are mandated reporters, legally required to report any suspected abuse or neglect to the appropriate authorities without delay, based on observation, disclosure, or other information."
+          },
+          {
+            "type": "note",
+            "title": "LEGAL REQUIREMENT",
+            "text": "\"Suspected abuse or neglect must be reported immediately.\" There is no minimum threshold of certainty required — a reasonable suspicion is sufficient grounds to report."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Reporting Procedure",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "01 Immediate action: Report concerns to the Child Protection Officer or School Director immediately. If unavailable, report directly to child protective services or law enforcement."
+          },
+          {
+            "type": "paragraph",
+            "text": "02 Documentation: Document the date, time, nature of the concern and any action taken, promptly and confidentially."
+          },
+          {
+            "type": "paragraph",
+            "text": "03 Confidentiality: Reports and documentation are shared only with individuals directly involved in the investigation."
+          }
+        ]
+      },
+      {
+        "title": "Response to Reports",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Reports are reviewed by the Child Protection Officer or School Director, who ensures the appropriate authorities are engaged. The child's well-being is the primary concern throughout; staff offer support and reassurance without discussing investigation details with the child. Parents or guardians are notified unless doing so would compromise the investigation or the child's safety."
+          }
+        ]
+      },
+      {
+        "title": "Training & Non-Retaliation",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "All staff receive mandatory training on recognising signs of abuse and their reporting responsibilities, at orientation and through regular refreshers. Staff who make good-faith reports are protected from retaliation, and support — including access to counselling — is available to those involved in a report or investigation."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "media-viewing-policy",
-    category: "Learning Environment",
-    title: "Media Viewing Policy",
-    summary:
-      "Guidelines for using media in a way that remains age-appropriate, educational, and secondary to hands-on learning.",
-    downloadFile: "Media Viewing Policy.docx",
-    content: [
+    "slug": "media-viewing-policy",
+    "category": "Learning Environment",
+    "title": "Media Viewing Policy",
+    "summary": "Guidelines for age-appropriate, educational and limited use of screen media within our programs.",
+    "downloadFile": "Tiny Explorers · Media Viewing Policy.pdf",
+    "content": [
       {
-        title: "Purpose",
-        blocks: [
+        "title": "Content Guidelines",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "The use of media at Tiny Explorers is limited to content that is age-appropriate, educational, and consistent with our curriculum goals. We aim to minimize screen time and preserve space for interactive, hands-on learning.",
+            "type": "paragraph",
+            "text": "Media can play a role in education, but must be carefully selected to align with our goals and values, and used to complement — never replace — active, hands-on learning."
           },
           {
-            type: "paragraph",
-            text:
-              "Media is never used as a routine substitute for play, movement, or social connection. It is always considered a supplement to rich, active learning experiences.",
+            "type": "paragraph",
+            "text": "Age Appropriateness: Content must suit the age and developmental stage of children, free of inappropriate language, violence, or unsuitable themes."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "Educational Value: Media must have clear educational objectives aligned with our curriculum and supplement hands-on activity, not replace it."
+          },
+          {
+            "type": "paragraph",
+            "text": "Parental Notice: Parents are informed in advance of classroom media use, and asked for consent for special events or programs."
+          }
+        ]
       },
       {
-        title: "Media Content Guidelines",
-        blocks: [
+        "title": "Viewing Procedures",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Media content must be suitable for the age and developmental stage of the children. Content should be free from inappropriate language, violence, and themes that are not suitable for young children.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Media used in the classroom should have clear educational objectives and align with our curriculum. It should enhance learning, support developmental goals, and be used as a supplement to active, hands-on activities.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Parents will be informed in advance about any media content that will be used in the classroom, and for special events or educational programs involving media, parents may be asked to provide consent.",
-          },
-        ],
+            "type": "list",
+            "items": [
+              "Screen time limit: Up to 30 minutes per day, except for special educational purposes",
+              "Supervision: A staff member supervises all viewing at all times",
+              "Scheduling: Integrated into a balanced routine — never used to manage behaviour"
+            ]
+          }
+        ]
       },
       {
-        title: "Media Viewing Procedures",
-        blocks: [
+        "title": "Staff Responsibilities",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Screen time for children will be limited to ensure it does not replace physical activity, social interaction, and other hands-on learning experiences. Media viewing should not exceed 30 minutes per day, except for special educational purposes.",
+            "type": "paragraph",
+            "text": "Staff are trained in selecting suitable content, managing screen time, and integrating media into the curriculum. All content is reviewed before being shown for educational value, curriculum relevance, and age-appropriateness, and is never used as a primary means of behaviour management."
           },
           {
-            type: "paragraph",
-            text:
-              "Media viewing will be supervised by a staff member at all times. The staff member will ensure that the content is being used appropriately and that children remain engaged and focused.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Media viewing will be scheduled as part of a balanced daily routine, integrated into activities that support learning objectives. It will not be used as a routine activity or as a means of managing behavior.",
-          },
-        ],
+            "type": "note",
+            "title": "PRIVACY",
+            "text": "\"Permission is obtained before any media featuring a child is shared.\" Any media involving personal data — photos or video of children — is handled under our Media and Photography Consent Policy."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Parent Communication",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Parents are notified in advance of media planned for special events or themed activities, with an opportunity to review content and share feedback. We welcome suggestions on suitable content for their child."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "media-photography-consent-policy",
-    category: "Privacy",
-    title: "Media and Photography Consent Policy",
-    summary:
-      "A consent-based approach to documenting children’s learning and sharing school life while protecting family preferences.",
-    downloadFile: "Media and Photography Consent Policy.docx",
-    content: [
+    "slug": "media-photography-consent-policy",
+    "category": "Privacy",
+    "title": "Media & Photography Consent Policy",
+    "summary": "How we obtain, respect and act on parental consent for photography and video of children.",
+    "downloadFile": "Tiny Explorers · Media & Photography Consent Policy.pdf",
+    "content": [
       {
-        title: "Purpose",
-        blocks: [
+        "title": "Consent Process",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we recognize that media and photography are valuable tools for documenting children’s development, celebrating achievements, and sharing our activities with families. To ensure that the use of media and photography respects the privacy and preferences of our children and their families, we have established this policy.",
+            "type": "paragraph",
+            "text": "Media and photography are valuable tools for documenting development, celebrating achievement, and sharing our activities with families. This policy sets out how consent is obtained and how media is used and protected."
           },
           {
-            type: "paragraph",
-            text:
-              "Objective: To obtain informed consent from parents or guardians regarding the use of media and photography involving their children, and to outline how these materials will be used and protected.",
+            "type": "paragraph",
+            "text": "Upon enrollment, parents or guardians receive a Media and Photography Consent Form covering photographs, videos and other media featuring their child. Consent options are:"
           },
-        ],
+          {
+            "type": "list",
+            "items": [
+              "Full Consent: Newsletters, social media, and promotional materials",
+              "Limited Consent: Classroom displays only; excludes social media and external publication",
+              "No Consent: No use of the child's photographs or videos in any context"
+            ]
+          },
+          {
+            "type": "paragraph",
+            "text": "Parents may update their consent preference at any time by contacting the School Director; changes are recorded and implemented promptly."
+          }
+        ]
       },
       {
-        title: "Consent Process",
-        blocks: [
+        "title": "Use of Media",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Initial Consent Form: Upon enrollment, parents or guardians will be provided with a Media and Photography Consent Form. This form will request their permission to use photographs, videos, and other media that include their child. The form will detail the purposes for which media may be used and provide options for consent.",
+            "type": "paragraph",
+            "text": "Educational Purposes: Documenting activities and children's work, and supporting individual learning plans."
           },
           {
-            type: "paragraph",
-            text:
-              "Options for Consent: Full Consent permits the use of the child’s photographs and videos in all specified contexts, such as newsletters, social media, and promotional materials. Limited Consent permits specific uses, such as classroom displays only, excluding social media or external publications. No Consent means there is no permission for the use of the child’s photographs or videos in any context.",
+            "type": "paragraph",
+            "text": "Internal Communication: Newsletters, bulletin boards, and staff meetings."
           },
           {
-            type: "paragraph",
-            text:
-              "Ongoing Consent: Parents or guardians may update their consent preferences at any time by contacting the school director or designated staff member. Changes to consent will be noted and implemented promptly.",
+            "type": "paragraph",
+            "text": "External Communication: The school website, social media, and promotional materials — always in accordance with consent preferences."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "Special Events: Performances or field trips, as outlined in the consent form."
+          },
+          {
+            "type": "note",
+            "title": "LEGAL REQUIREMENT",
+            "text": "\"Full names are never used alongside media without explicit consent.\" Digital media is stored on secure, password-protected systems; physical media is kept in locked storage and accessed only by authorised personnel."
+          }
+        ]
       },
       {
-        title: "Use of Media",
-        blocks: [
+        "title": "Handling Concerns",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Photographs and videos may be used for documenting educational activities, showcasing children’s work, and supporting individual learning plans. These materials help in assessing and communicating the progress of the children.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Media may be used in internal communications such as newsletters, bulletin boards, and staff meetings to share information and celebrate achievements within the school community. Any external use will be in accordance with the consent preferences indicated by parents or guardians.",
-          },
-        ],
-      },
-      {
-        title: "Protection and Privacy",
-        blocks: [
-          {
-            type: "paragraph",
-            text:
-              "Confidentiality: Media and photography materials will be handled with respect for privacy and confidentiality. The school will protect the identity of children and families where consent does not permit wider sharing.",
-          },
-        ],
-      },
-    ],
+            "type": "paragraph",
+            "text": "Parents who have concerns about media use, or who wish to withdraw consent, may contact the School Director. Concerns are addressed promptly and adjustments made to reflect updated preferences. This policy is reviewed annually and significant changes are communicated to families, with updated consent forms provided as needed."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "medicine-policy",
-    category: "Health & Wellbeing",
-    title: "Medicine Policy",
-    summary:
-      "Safe, documented procedures for administering medication while protecting children’s health and keeping families informed.",
-    downloadFile: "Medicine Policy.docx",
-    content: [
+    "slug": "medicine-policy",
+    "category": "Health & Wellbeing",
+    "title": "Medicine Policy",
+    "summary": "Procedures for the safe authorisation, storage, administration and documentation of medication.",
+    "downloadFile": "Tiny Explorers · Medicine Policy.pdf",
+    "content": [
       {
-        title: "General Guidelines",
-        blocks: [
+        "title": "General Guidelines",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we prioritize the health and safety of all children in our care. To ensure that medications are administered safely and effectively, we have established this policy. It outlines the procedures and guidelines for the administration of medication to children while they are at school.",
+            "type": "paragraph",
+            "text": "Tiny Explorers prioritises the health and safety of every child in our care. This policy sets out how medication is authorised, stored, administered and documented while a child is at school."
           },
           {
-            type: "paragraph",
-            text:
-              "Parent/Guardian Authorization: Medication will only be administered with written consent from a parent or guardian. A completed Medication Authorization Form must be submitted for each medication, detailing the dosage, administration times, and any specific instructions.",
+            "type": "paragraph",
+            "text": "Authorisation: Medication is administered only with a signed Medication Authorization Form from a parent or guardian, detailing dosage, timing and specific instructions."
           },
           {
-            type: "paragraph",
-            text:
-              "Prescription Medications: All prescription medications must be in their original container, clearly labeled with the child’s name, dosage, prescribing physician’s name, and pharmacy details. The label must include the date the prescription was filled and the expiration date.",
+            "type": "paragraph",
+            "text": "Prescription Medications: Must be in the original, clearly labelled container showing the child's name, dosage, prescriber, pharmacy, fill date and expiration."
           },
           {
-            type: "paragraph",
-            text:
-              "Over-the-Counter Medications: Over-the-counter medications, including pain relievers, allergy medicines, and topical creams, will also require a Medication Authorization Form. These must be provided in their original packaging with the child’s name clearly labeled.",
+            "type": "paragraph",
+            "text": "Over-the-Counter Medications: Also require a Medication Authorization Form and original packaging labelled with the child's name."
           },
           {
-            type: "paragraph",
-            text:
-              "Storage: Medications will be stored securely in a designated, locked area that is inaccessible to children. Medications requiring refrigeration will be stored in a dedicated refrigerator.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "Storage: Kept securely in a locked area inaccessible to children; refrigerated medications are stored in a dedicated refrigerator."
+          }
+        ]
       },
       {
-        title: "Administration of Medication",
-        blocks: [
+        "title": "Administration",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Designated Staff: Only staff members who have been trained in medication administration will be allowed to administer medications. These staff members will follow the instructions provided on the Medication Authorization Form and the medication’s label.",
+            "type": "paragraph",
+            "text": "01 Designated staff only: Only staff trained in medication administration may give medication, following the authorization form and label."
           },
           {
-            type: "paragraph",
-            text:
-              "Documentation: Every time medication is administered, it will be recorded in a Medication Administration Log. This log will include the date, time, dosage, and the name of the staff member who administered the medication. Parents will have access to this log upon request.",
+            "type": "paragraph",
+            "text": "02 Documentation: Every administration is logged with date, time, dosage and administering staff member; parents may access this log on request."
           },
           {
-            type: "paragraph",
-            text:
-              "Timing: Medication will be administered at the specified times provided by the parent or guardian. If there are any discrepancies or concerns about the timing or dosage, parents will be contacted immediately for clarification.",
+            "type": "paragraph",
+            "text": "03 Timing: Medication is given at the specified times; any discrepancy prompts immediate contact with parents."
           },
           {
-            type: "paragraph",
-            text:
-              "Missed Doses: If a dose is missed due to unforeseen circumstances, parents will be notified, and the missed dose will be documented. Staff will not administer a double dose to make up for a missed one.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "04 Missed doses: Parents are notified and the missed dose is documented; staff never administer a double dose to compensate."
+          }
+        ]
       },
       {
-        title: "Special Considerations",
-        blocks: [
+        "title": "Emergency Medications",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Emergency Medications: Medications that may be needed in an emergency, such as EpiPens or inhalers, will be kept in an easily accessible but secure location. Staff members will be trained on how to administer these medications promptly.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Chronic Conditions: For children with chronic conditions requiring regular medication, an individualized care plan will be developed in collaboration with the parents and the child’s healthcare provider. This plan will outline the specific needs and emergency procedures.",
-          },
-        ],
+            "type": "note",
+            "title": "EMERGENCY MEDICATIONS",
+            "text": "\"EpiPens and inhalers are kept accessible but secure.\" Staff are trained to administer emergency medication promptly. Children with chronic conditions have an individualized care plan developed with parents and their healthcare provider."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Parent Responsibilities",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Parents provide all medication properly labelled and within expiration, and update the school on any change to medication, dosage, or health condition. Remaining medication must be collected at year-end or when no longer needed; unclaimed medication is disposed of safely."
+          }
+        ]
+      },
+      {
+        "title": "Exclusions & Liability",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Tiny Explorers may decline to administer a medication deemed unsafe or beyond staff training, notifying parents to discuss alternatives. Herbal remedies, supplements and homeopathic treatments are not administered unless prescribed by a licensed provider with a completed authorization form."
+          },
+          {
+            "type": "paragraph",
+            "text": "By submitting an authorization form, parents acknowledge the school's medication administration policies and assume responsibility for outcomes of administration performed as directed."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "open-door-policy",
-    category: "Family Partnership",
-    title: "Open-Door Policy for Parents and Guardians",
-    summary:
-      "A welcoming policy that encourages transparency, classroom connection, and regular two-way communication with families.",
-    downloadFile: "Open-Door Policy for Parents and Guardians.docx",
-    content: [
+    "slug": "open-door-policy",
+    "category": "Family Partnership",
+    "title": "Open-Door Policy for Parents & Guardians",
+    "summary": "Our commitment to transparency, visitation and open communication between families and staff.",
+    "downloadFile": "Tiny Explorers · Open-Door Policy for Parents & Guardians.pdf",
+    "content": [
       {
-        title: "Our Commitment",
-        blocks: [
+        "title": "Access to the Classroom",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we believe that a strong partnership between our staff and families is essential for the well-being and development of our children. To foster transparency, trust, and open communication, we have implemented this Open-Door Policy for parents and guardians.",
+            "type": "paragraph",
+            "text": "A strong partnership between staff and families is essential to every child's well-being and development. This Open-Door Policy sets out how we foster transparency, trust and open communication."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "Parents and guardians are welcome to visit classrooms at any time during regular school hours without prior notice, observing activities and interacting with staff. We also invite parents to participate in classroom activities, special events and celebrations — reading a story, assisting a craft, or sharing a talent."
+          }
+        ]
       },
       {
-        title: "Access to the Classroom",
-        blocks: [
+        "title": "Communication with Staff",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Open Visits: Parents and guardians are welcome to visit our classrooms at any time during regular school hours without prior notice. We encourage you to observe your child’s activities, interact with the staff, and see firsthand how your child is thriving in our care.",
+            "type": "paragraph",
+            "text": "Teachers and staff are always available to discuss a child's progress, address concerns, or answer questions. Formal meetings with a teacher or the School Director can also be scheduled for more in-depth discussion."
           },
           {
-            type: "paragraph",
-            text:
-              "Involvement Opportunities: We invite parents to actively participate in classroom activities, special events, and celebrations. Whether it is reading a story, assisting with a craft, or sharing a special talent, your involvement enriches our learning environment and strengthens the community.",
-          },
-        ],
+            "type": "note",
+            "title": "SAFETY & SECURITY",
+            "text": "\"All visitors must sign in and wear a visitor badge.\" While our door is open, the safety of our children remains paramount — every visitor, including parents, signs in at the front desk on arrival."
+          }
+        ]
       },
       {
-        title: "Communication with Teachers and Staff",
-        blocks: [
+        "title": "Feedback & Confidentiality",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Open Communication: Our teachers and staff are always available to discuss your child’s progress, address any concerns, or answer questions. We encourage regular communication to ensure that we are meeting your child’s individual needs and your expectations.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Scheduled Meetings: While you are welcome to drop in at any time, we also offer the option to schedule more formal meetings with your child’s teacher or the school director if you have specific concerns or would like a more in-depth discussion.",
-          },
-        ],
-      },
-      {
-        title: "Transparency and Trust",
-        blocks: [
-          {
-            type: "paragraph",
-            text:
-              "Observation: You are welcome to observe our daily routines, teaching methods, and interactions with the children. We believe that transparency in our practices builds trust and confidence in the care and education we provide.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Safety and Security: While we maintain an open-door policy, the safety and security of our children are paramount. All visitors, including parents and guardians, must sign in at the front desk upon arrival and wear a visitor badge while on the premises.",
-          },
-        ],
-      },
-      {
-        title: "Feedback and Suggestions",
-        blocks: [
-          {
-            type: "paragraph",
-            text:
-              "Parent Input: We value your feedback and suggestions on how we can improve our programs and services. Your insights help us create a better experience for all children and families.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Surveys and Communication: Periodically, we may conduct surveys or send out communications to gather your opinions on various aspects of our program. We encourage you to participate and share your thoughts.",
-          },
-        ],
-      },
-      {
-        title: "Confidentiality and Respect",
-        blocks: [
-          {
-            type: "paragraph",
-            text:
-              "Respect for Privacy: While visiting the classroom, we ask that parents and guardians respect the privacy and confidentiality of other children and families. Discussions regarding other children’s progress or behavior should be avoided.",
-          },
-        ],
-      },
-    ],
+            "type": "paragraph",
+            "text": "We value parent feedback and may periodically conduct surveys to gather input on our programs. While visiting, we ask that parents respect the privacy of other children and families, and avoid discussing another child's progress or behaviour. Any concern about a child's experience should be raised directly and privately with the teacher or School Director."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "privacy-confidentiality-policy",
-    category: "Privacy",
-    title: "Privacy and Confidentiality Policy",
-    summary:
-      "Guidelines that protect personal information and ensure it is shared only for appropriate, authorized purposes.",
-    downloadFile: "Privacy and Confidentiality Policy.docx",
-    content: [
+    "slug": "privacy-confidentiality-policy",
+    "category": "Privacy",
+    "title": "Privacy & Confidentiality Policy",
+    "summary": "How personal information belonging to children, families and staff is collected, used, stored and protected.",
+    "downloadFile": "Tiny Explorers · Privacy & Confidentiality Policy.pdf",
+    "content": [
       {
-        title: "Purpose",
-        blocks: [
+        "title": "Collection of Information",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we are dedicated to protecting the privacy and confidentiality of all individuals associated with our program, including children, parents, guardians, and staff. This Privacy and Confidentiality Policy outlines our commitment to safeguarding personal information and ensuring that all data is handled with the utmost care and security.",
+            "type": "paragraph",
+            "text": "Tiny Explorers is dedicated to protecting the privacy of every child, parent, guardian and staff member associated with our program. This policy sets out how personal information is handled with care and security."
           },
           {
-            type: "paragraph",
-            text:
-              "Objective: To establish clear guidelines for the collection, use, storage, and sharing of personal information, ensuring that it is managed in a confidential and secure manner in compliance with relevant laws and regulations.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "We collect information necessary to operate safely and effectively, including children's health and emergency contact details, enrollment and attendance records, parent and guardian contact details, and staff employment records — collected to provide appropriate care, manage enrollment, ensure safety, meet legal obligations, and communicate with families."
+          }
+        ]
       },
       {
-        title: "Collection of Personal Information",
-        blocks: [
+        "title": "Use, Access & Accuracy",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Types of Information: We collect personal information necessary for the effective operation of our nursery and preschool, including but not limited to children’s health and emergency contact information, enrollment and attendance records, parent and guardian contact details, and staff employment records.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Purpose of Collection: Personal information is collected for specific purposes, including providing appropriate care and support to children, managing enrollment and attendance, ensuring the safety and well-being of children, complying with legal and regulatory requirements, and communicating with parents and guardians.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "Personal information is used only for the purpose it was collected, and never repurposed without explicit consent. Access is restricted to authorised personnel who require it to perform their duties, all trained in confidentiality and data protection. Families are encouraged to notify us of any change to their information to keep records accurate."
+          }
+        ]
       },
       {
-        title: "Use and Access to Personal Information",
-        blocks: [
+        "title": "Storage & Retention",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Authorized Use: Personal information will be used only for the purposes for which it was collected. It will not be used for any other purpose without obtaining explicit consent from the individual concerned.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Access: Access to personal information is restricted to authorized personnel only, including administrative staff, teachers, and caregivers who require access to perform their duties. All staff members are trained in confidentiality and data protection.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Data Accuracy: We will take reasonable steps to ensure that personal information is accurate, complete, and up to date. Families are encouraged to notify the school of any changes that may affect this information.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "Physical records are kept in locked storage; electronic records on secure, password-protected systems with encryption, firewalls and access controls. Information is retained only as long as necessary for its purpose or as required by law, then securely disposed of."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Sharing of Information",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Information may be shared internally among authorised staff who require it. It is not shared externally except:"
+          },
+          {
+            "type": "list",
+            "items": [
+              "With the explicit consent of the parent or guardian",
+              "As required by law or regulatory authority",
+              "To comply with legal obligations or protect individual safety",
+              "For specific educational or administrative purposes, with appropriate safeguards"
+            ]
+          },
+          {
+            "type": "note",
+            "title": "PRIVACY RIGHTS",
+            "text": "\"Individuals may access, correct, or ask about their information.\" Staff sign confidentiality agreements as a condition of employment. Requests for access or correction should be directed to the School Director."
+          }
+        ]
+      },
+      {
+        "title": "Concerns & Review",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Concerns about a breach of privacy or confidentiality should be reported to the School Director immediately and are investigated promptly, following our Complaint Policy where relevant. This policy is reviewed annually to ensure ongoing compliance with applicable law and best practice."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "safe-sleep-policy",
-    category: "Health & Wellbeing",
-    title: "Safe Sleep Policy",
-    summary:
-      "Evidence-informed sleep practices that keep infants safe, comfortable, and closely monitored during rest time.",
-    downloadFile: "Safe Sleep Policy.docx",
-    content: [
+    "slug": "safe-sleep-policy",
+    "category": "Health & Wellbeing",
+    "title": "Safe Sleep Policy",
+    "summary": "Practices that reduce sleep-related risk for infants and toddlers, aligned with pediatric best practice.",
+    "downloadFile": "Tiny Explorers · Safe Sleep Policy.pdf",
+    "content": [
       {
-        title: "Safe Sleep Environment",
-        blocks: [
+        "title": "Sleep Environment",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Infants will sleep in designated cribs that meet all safety standards. Each crib is reserved for individual use, and children will not share cribs. Toddlers will nap on appropriate cots or mats, which are also designated for individual use.",
+            "type": "paragraph",
+            "text": "The safety of our youngest children is paramount. This Safe Sleep Policy aligns with pediatric best practice to reduce the risk of Sudden Infant Death Syndrome (SIDS) and other sleep-related incidents."
           },
           {
-            type: "paragraph",
-            text:
-              "Cribs are equipped with firm mattresses that fit snugly. A fitted crib sheet, free of loose bedding, pillows, stuffed animals, or bumper pads, will be used. The crib mattress is kept in the lowest position, with no more than two fingers of space between the mattress and the crib side to prevent entrapment.",
+            "type": "paragraph",
+            "text": "Designated Areas: Infants sleep in individually assigned, safety-standard cribs; toddlers nap on individually designated cots or mats."
           },
           {
-            type: "paragraph",
-            text:
-              "Infants will always be placed on their backs to sleep unless a written directive from a pediatrician specifies otherwise due to a medical condition. Staff will not use positioning devices, such as wedges or rolled blankets, unless prescribed by a physician.",
+            "type": "paragraph",
+            "text": "Crib Safety: A firm, snug-fitting mattress with a fitted sheet only — no loose bedding, pillows, stuffed animals, or bumpers — kept in the lowest position with no more than two fingers' gap to the crib side."
           },
           {
-            type: "paragraph",
-            text:
-              "The sleep area will be kept at a comfortable temperature. Infants will be dressed in sleep-appropriate clothing, such as a sleep sack, to prevent overheating. Staff will check children regularly to ensure they are neither too hot nor too cold.",
+            "type": "paragraph",
+            "text": "Sleep Position: Infants are always placed on their backs unless a pediatrician provides written direction otherwise. Positioning devices are never used unless prescribed."
           },
-        ],
+          {
+            "type": "paragraph",
+            "text": "Temperature: The sleep area is kept comfortable; infants are dressed appropriately (e.g. a sleep sack) to prevent overheating, with regular checks by staff."
+          }
+        ]
       },
       {
-        title: "Monitoring During Sleep",
-        blocks: [
+        "title": "Monitoring",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "While children are sleeping, staff will perform regular checks at least every 15 minutes, paying attention to the infant’s breathing, skin color, and overall well-being. Staff will ensure that the child’s head remains uncovered, and that the child is not experiencing any distress.",
+            "type": "list",
+            "items": [
+              "Checks: At least every 15 minutes — breathing, skin colour, and overall well-being; head kept uncovered",
+              "Staffing: Ratios maintained or exceeded during naps; a designated caregiver monitors each sleep area"
+            ]
           },
           {
-            type: "paragraph",
-            text:
-              "Staff members are trained in safe sleep practices and are aware of the importance of always adhering to this policy. Staff will be vigilant in monitoring infants and will immediately respond to any signs of distress.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "Staff-to-child ratios will be maintained or exceeded during nap times to ensure that adequate supervision is provided. Each sleep area will be staffed by a designated caregiver who is responsible for monitoring the children.",
-          },
-        ],
+            "type": "note",
+            "title": "LEGAL REQUIREMENT",
+            "text": "\"A written pediatrician directive is required for any exception.\" If a parent requests a sleep position or environment that deviates from this policy, a written directive from the child's pediatrician — including the medical reason and specific instructions — is required."
+          }
+        ]
       },
       {
-        title: "Parent Communication and Education",
-        blocks: [
+        "title": "Records & Communication",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Parents will be informed of the Safe Sleep Policy upon enrollment and encouraged to discuss any specific sleep needs or preferences for their child. The policy will also be made available in the parent handbook.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "If a parent has a specific request regarding their child’s sleep position or environment that deviates from the Safe Sleep Policy, a written directive from the child’s pediatrician is required. This directive must include the medical reason for the exception and specific instructions for the child’s care.",
-          },
-          {
-            type: "paragraph",
-            text:
-              "A daily sleep log will be maintained for each infant, documenting the time the child was placed in the crib, the position in which they were placed, and the time they were observed during sleep. Parents will receive this information as part of their child’s daily report.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "A daily sleep log records the time each infant was placed in the crib, sleep position, and observation times, shared with parents as part of the daily report. Parents are informed of this policy at enrollment, with details available in the Parent Handbook. If a child shows signs of illness, sleep is monitored more closely, and staff respond immediately to any sleep-related emergency, notifying parents once the situation is under control."
+          }
+        ]
       },
-    ],
+      {
+        "title": "Training & Review",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "All staff working with infants and toddlers receive mandatory annual training on current safe sleep recommendations. This policy is reviewed annually, or whenever new guidance is released by relevant health authorities."
+          }
+        ]
+      }
+    ]
   },
   {
-    slug: "transport-field-trip-policy",
-    category: "Excursions",
-    title: "Transport and Field Trip Policy",
-    summary:
-      "Thoughtful procedures for safe transport, well-organized outings, and clear parent communication on every journey.",
-    downloadFile: "Transport and Field Trip Policy.docx",
-    content: [
+    "slug": "transport-field-trip-policy",
+    "category": "Excursions",
+    "title": "Transport & Field Trip Policy",
+    "summary": "Safety standards for transportation, supervision and communication during off-site activities.",
+    "downloadFile": "Tiny Explorers · Transport & Field Trip Policy.pdf",
+    "content": [
       {
-        title: "Transportation Guidelines",
-        blocks: [
+        "title": "Transportation",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "At Tiny Explorers Nursery and Preschool, we believe that field trips and off-site activities are valuable opportunities for children to explore the world beyond the classroom. To ensure the safety and well-being of all children during these outings, we have established this policy.",
+            "type": "paragraph",
+            "text": "Field trips and off-site activities offer valuable opportunities to explore beyond the classroom. This policy ensures the safety and well-being of every child during these outings."
           },
           {
-            type: "paragraph",
-            text:
-              "Safety First: All children will be transported in vehicles that meet all safety standards and regulations. Each vehicle will be equipped with age-appropriate car seats, booster seats, or seat belts as required by law.",
+            "type": "paragraph",
+            "text": "Vehicle Safety: All vehicles meet applicable safety standards and are equipped with age-appropriate car seats, booster seats, or seat belts."
           },
           {
-            type: "paragraph",
-            text:
-              "Qualified Drivers: Only licensed and insured drivers who have undergone background checks and training will transport children. Drivers will be familiar with the planned route and will carry a cell phone for emergencies.",
+            "type": "paragraph",
+            "text": "Qualified Drivers: Only licensed, insured drivers who have passed background checks and training may transport children, familiar with the planned route and carrying a phone for emergencies."
           },
           {
-            type: "paragraph",
-            text:
-              "Parent/Guardian Permission: Written consent from a parent or guardian is required for all field trips and transportation of children. Consent forms will be provided well in advance of the trip.",
+            "type": "paragraph",
+            "text": "Parent Permission: Written consent is required for every field trip, provided well in advance."
           },
           {
-            type: "paragraph",
-            text:
-              "Emergency Preparedness: Each vehicle will carry a first-aid kit, emergency contact information for each child, and any necessary medications with instructions for use. Staff will be trained in emergency procedures, including CPR and first aid.",
-          },
-        ],
+            "type": "paragraph",
+            "text": "Emergency Preparedness: Each vehicle carries a first-aid kit, emergency contacts for each child, and any needed medication with instructions; staff are trained in CPR and first aid."
+          }
+        ]
       },
       {
-        title: "Field Trip Guidelines",
-        blocks: [
+        "title": "Field Trip Guidelines",
+        "blocks": [
           {
-            type: "paragraph",
-            text:
-              "Planning and Communication: Parents will be informed in advance about upcoming field trips, including the destination, date, time, and any special instructions such as appropriate clothing or packed lunches. A detailed itinerary and contact information will be provided, and parents are welcome to join the trip as chaperones.",
+            "type": "paragraph",
+            "text": "01 Planning & communication: Parents are informed in advance of destination, date, time and instructions, and welcome to join as chaperones with a full itinerary."
           },
           {
-            type: "paragraph",
-            text:
-              "Supervision: The staff-to-child ratio will be maintained or exceeded during field trips to ensure close supervision. Additional adults may accompany the group to provide extra support and ensure safety. Children will be assigned to small groups, each supervised by a specific staff member, to ensure they are always accounted for.",
+            "type": "paragraph",
+            "text": "02 Supervision: Staff-to-child ratios are maintained or exceeded; children are assigned to small groups, each with a specific supervising staff member."
           },
           {
-            type: "paragraph",
-            text:
-              "Health and Safety: Children will wear identification tags with the school’s contact information, but not the child’s name, during all outings. Staff will carry any necessary health information for children, including allergies or medical conditions, and be prepared to administer medication if needed.",
+            "type": "paragraph",
+            "text": "03 Health & safety: Children wear identification tags with the school's contact information (not the child's name); staff carry relevant health information and any needed medication."
           },
           {
-            type: "paragraph",
-            text:
-              "Behavior Expectations: Children will be briefed on behavior expectations before the trip, including staying with their group, listening to adults, and following safety rules. Positive behavior will be reinforced throughout the trip.",
+            "type": "paragraph",
+            "text": "04 Behaviour expectations: Children are briefed beforehand on staying with their group, listening to adults, and following safety rules."
           },
           {
-            type: "paragraph",
-            text:
-              "Inclement Weather: In case of inclement weather or other unforeseen circumstances, the field trip may be rescheduled or canceled. Parents will be notified of any changes as soon as possible.",
-          },
-        ],
+            "type": "note",
+            "title": "WEATHER & CANCELLATION",
+            "text": "\"Trips may be rescheduled or cancelled for safety.\" In case of inclement weather or unforeseen circumstances, a trip may be rescheduled or cancelled, with parents notified as soon as possible. The school may also cancel or modify plans due to safety concerns or insufficient participation."
+          }
+        ]
       },
-    ],
-  },
+      {
+        "title": "Return & Feedback",
+        "blocks": [
+          {
+            "type": "paragraph",
+            "text": "Every effort is made to return by the scheduled time; parents are contacted immediately in the event of a significant delay. Staff provide a brief report on the day's activities afterward, and parents are encouraged to share feedback or concerns. A parent who prefers their child not participate may arrange for the child to remain at school instead."
+          }
+        ]
+      }
+    ]
+  }
 ];
