@@ -6,12 +6,8 @@ on:
   pull_request:
     branches: [main]
 
-permissions:
-  contents: read
-
 jobs:
   frontend:
-    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[pages-preview]')
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,7 +23,6 @@ jobs:
       - run: CI=true npm run build
 
   backend:
-    if: github.event_name != 'push' || !contains(github.event.head_commit.message, '[pages-preview]')
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -55,25 +50,3 @@ jobs:
       - name: Show server log on failure
         if: failure()
         run: cat server.log
-
-  deploy_preview_pages:
-    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[pages-preview]')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-      - id: deployment
-        uses: actions/deploy-pages@v4
