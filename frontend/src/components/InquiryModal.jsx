@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +28,7 @@ const initial = {
 
 export default function InquiryModal({ open, onOpenChange }) {
   const [form, setForm] = useState(initial);
+  const lastFocusedElementRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
@@ -83,10 +84,23 @@ export default function InquiryModal({ open, onOpenChange }) {
   const inputCls =
     "w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-brand-ink placeholder:text-brand-ink/50 focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/30";
 
+  useEffect(() => {
+    if (open) {
+      lastFocusedElementRef.current = document.activeElement;
+    }
+  }, [open]);
+
   return (
-    <Dialog open={open} onOpenChange={close}>
+    <Dialog open={open} onOpenChange={close} modal>
       <DialogContent
         data-testid="inquiry-modal"
+        aria-modal="true"
+        aria-labelledby={success ? "inquiry-success-title" : "inquiry-dialog-title"}
+        aria-describedby={success ? "inquiry-success-description" : "inquiry-dialog-description"}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          lastFocusedElementRef.current?.focus?.();
+        }}
         className="mx-4 max-w-2xl rounded-3xl border-0 bg-brand-cream p-0 shadow-soft-lg sm:mx-0"
       >
         {success ? (
@@ -94,10 +108,10 @@ export default function InquiryModal({ open, onOpenChange }) {
             <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/15 text-brand-green">
               <Check size={32} strokeWidth={2.5} />
             </div>
-            <h3 className="mt-6 font-poppins text-3xl font-bold text-brand-ink">
+            <h3 id="inquiry-success-title" className="mt-6 font-poppins text-3xl font-bold text-brand-ink">
               Thank you for reaching out.
             </h3>
-            <p className="mt-3 text-brand-ink/70">
+            <p id="inquiry-success-description" className="mt-3 text-brand-ink/70">
               We’ve received your note and will respond within one business day.
             </p>
             <button
@@ -112,10 +126,10 @@ export default function InquiryModal({ open, onOpenChange }) {
         ) : (
           <div className="space-y-6 p-6 sm:space-y-8 sm:p-8 md:p-10">
             <DialogHeader>
-              <DialogTitle className="font-poppins text-3xl font-bold tracking-tight text-brand-ink">
+              <DialogTitle id="inquiry-dialog-title" className="font-poppins text-3xl font-bold tracking-tight text-brand-ink">
                 General inquiry
               </DialogTitle>
-              <DialogDescription className="max-w-2xl text-base leading-7 text-brand-ink/75">
+              <DialogDescription id="inquiry-dialog-description" className="max-w-2xl text-base leading-7 text-brand-ink/75">
                 A light, low-pressure note to help our team understand your family’s needs.
                 We’ll reply in a thoughtful, personal way.
               </DialogDescription>

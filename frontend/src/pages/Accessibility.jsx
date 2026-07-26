@@ -13,8 +13,8 @@ export default function Accessibility() {
   return (
     <Section size="xl" surface="cream" reveal={false}>
       <PageMeta
-        title="Accessibility Statement — Tiny Explorers Bermuda"
-        description="Our commitment to an accessible website for every family, and how to reach us about accessibility issues."
+        title="Accessibility | Tiny Explorers Nursery & Preschool"
+        description="Read the Tiny Explorers accessibility statement and learn how to report any website accessibility issue to our team."
       />
       <Container size="prose">
         <Eyebrow color="orange">Accessibility</Eyebrow>

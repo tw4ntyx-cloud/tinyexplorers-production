@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Tiny Explorers Nursery & Preschool</title>
+        <script>
+          (function redirectToSpa() {
+            var segmentCount = 1;
+            var loc = window.location;
+            var pathname = loc.pathname.split('/').slice(1 + segmentCount).join('/');
+            var search = loc.search ? loc.search.slice(1).replace(/&/g, '~and~') : '';
+            var hash = loc.hash || '';
+            var target = loc.protocol + '//' + loc.hostname + (loc.port ? ':' + loc.port : '') +
+              loc.pathname.split('/').slice(0, 1 + segmentCount).join('/') + '/?/' + pathname +
+              (search ? '&' + search : '') + hash;
+            loc.replace(target);
+          })();
+        </script>
+    </head>
+    <body></body>
+</html>

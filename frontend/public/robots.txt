@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tinyexplorersv3.vercel.app/sitemap.xml
+Sitemap: https://tw4ntyx-cloud.github.io/tinyexplorers-production/sitemap.xml

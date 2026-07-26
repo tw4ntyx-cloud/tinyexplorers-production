@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Download, Home } from "lucide-react";
 import { Section, Container, Eyebrow } from "../components/ui/Section";
 import Button from "../components/ui/Button";
-import { PARENT_POLICIES } from "../data/content";
+import { getPublicAssetUrl, PARENT_POLICIES } from "../data/content";
 import NotFound from "./NotFound";
 import PageMeta from "../components/PageMeta";
 
@@ -17,7 +17,10 @@ export default function PolicyPage() {
 
   return (
     <>
-      <PageMeta title={`${policy.title} — Tiny Explorers Bermuda`} description={policy.summary} />
+      <PageMeta
+        title={`${policy.title} | Tiny Explorers Nursery & Preschool`}
+        description={policy.summary}
+      />
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24">
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-0 h-[36rem] bg-[radial-gradient(50%_40%_at_50%_0%,rgba(251,194,71,0.18)_0%,transparent_72%)]" />
         <Container size="prose">
@@ -60,7 +63,7 @@ export default function PolicyPage() {
                 </h2>
               </div>
               <a
-                href={`/policies-docs/${encodeURIComponent(policy.downloadFile)}`}
+                href={getPublicAssetUrl(`/policies-docs/${encodeURIComponent(policy.downloadFile)}`)}
                 download={policy.downloadFile}
                 className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-brand-cream px-4 py-2 text-sm font-semibold text-brand-ink transition hover:bg-white"
               >

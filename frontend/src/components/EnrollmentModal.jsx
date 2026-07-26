@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,12 +31,19 @@ const initial = {
 
 export default function EnrollmentModal({ open, onOpenChange, program }) {
   const [form, setForm] = useState(initial);
+  const lastFocusedElementRef = useRef(null);
 
   useEffect(() => {
     if (open && program) {
       setForm((current) => ({ ...current, program }));
     }
   }, [open, program]);
+
+  useEffect(() => {
+    if (open) {
+      lastFocusedElementRef.current = document.activeElement;
+    }
+  }, [open]);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
@@ -90,9 +97,16 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
     "w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-brand-ink placeholder:text-brand-ink/50 focus:border-brand-orange focus:outline-none focus:ring-2 focus:ring-brand-orange/30";
 
   return (
-    <Dialog open={open} onOpenChange={close}>
+    <Dialog open={open} onOpenChange={close} modal>
       <DialogContent
         data-testid="enrollment-modal"
+        aria-modal="true"
+        aria-labelledby={success ? "enrollment-success-title" : "enrollment-dialog-title"}
+        aria-describedby={success ? "enrollment-success-description" : "enrollment-dialog-description"}
+        onCloseAutoFocus={(event) => {
+          event.preventDefault();
+          lastFocusedElementRef.current?.focus?.();
+        }}
         className="mx-4 max-w-2xl rounded-3xl border-0 bg-brand-cream p-0 shadow-soft-lg sm:mx-0"
       >
         {success ? (
@@ -100,10 +114,10 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
             <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/15 text-brand-green">
               <Check size={32} strokeWidth={2.5} />
             </div>
-            <h3 className="mt-6 font-poppins text-3xl font-bold text-brand-ink">
+            <h3 id="enrollment-success-title" className="mt-6 font-poppins text-3xl font-bold text-brand-ink">
               Thank you!
             </h3>
-            <p className="mt-3 text-brand-ink/70">
+            <p id="enrollment-success-description" className="mt-3 text-brand-ink/70">
               Your inquiry is in. A member of our enrollment team will be in
               touch within one business day.
             </p>
@@ -118,10 +132,10 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
         ) : (
           <div className="space-y-6 p-6 sm:space-y-8 sm:p-8 md:p-10">
             <DialogHeader>
-              <DialogTitle className="font-poppins text-3xl font-bold tracking-tight text-brand-ink">
+              <DialogTitle id="enrollment-dialog-title" className="font-poppins text-3xl font-bold tracking-tight text-brand-ink">
                 Start an enrollment inquiry
               </DialogTitle>
-              <DialogDescription className="text-brand-ink/70">
+              <DialogDescription id="enrollment-dialog-description" className="text-brand-ink/70">
                 Tell us a little about your family. No obligation — just a warm
                 conversation to see if we're the right fit.
               </DialogDescription>
@@ -130,11 +144,13 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
             <form onSubmit={onSubmit} className="mt-6 space-y-4" data-testid="enrollment-form">
               <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                  <label htmlFor="enrollment-parent-name" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                     Parent name *
                   </label>
                   <input
+                    id="enrollment-parent-name"
                     type="text"
+                    autoComplete="name"
                     value={form.parent_name}
                     onChange={update("parent_name")}
                     placeholder="Alex Smith"
@@ -147,11 +163,13 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
                   <FieldError id="enrollment-parent-name-error" message={errors.parent_name} />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                  <label htmlFor="enrollment-email" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                     Email *
                   </label>
                   <input
+                    id="enrollment-email"
                     type="email"
+                    autoComplete="email"
                     value={form.email}
                     onChange={update("email")}
                     placeholder="alex@example.com"
@@ -164,11 +182,13 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
                   <FieldError id="enrollment-email-error" message={errors.email} />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                  <label htmlFor="enrollment-phone" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                     Phone
                   </label>
                   <input
+                    id="enrollment-phone"
                     type="tel"
+                    autoComplete="tel"
                     value={form.phone}
                     onChange={update("phone")}
                     placeholder="+1 (441) ..."
@@ -177,10 +197,11 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                  <label htmlFor="enrollment-child-age" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                     Child's age *
                   </label>
                   <input
+                    id="enrollment-child-age"
                     type="text"
                     value={form.child_age}
                     onChange={update("child_age")}
@@ -194,10 +215,11 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
                   <FieldError id="enrollment-child-age-error" message={errors.child_age} />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                  <label htmlFor="enrollment-program" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                     Program of interest
                   </label>
                   <select
+                    id="enrollment-program"
                     value={form.program}
                     onChange={update("program")}
                     data-testid="enrollment-program"
@@ -211,10 +233,11 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                  <label htmlFor="enrollment-start-date" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                     Ideal start date
                   </label>
                   <input
+                    id="enrollment-start-date"
                     type="text"
                     value={form.start_date}
                     onChange={update("start_date")}
@@ -225,10 +248,11 @@ export default function EnrollmentModal({ open, onOpenChange, program }) {
                 </div>
               </div>
               <div>
-                <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
+                <label htmlFor="enrollment-message" className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-brand-ink/70">
                   Anything we should know?
                 </label>
                 <textarea
+                  id="enrollment-message"
                   rows={4}
                   value={form.message}
                   onChange={update("message")}

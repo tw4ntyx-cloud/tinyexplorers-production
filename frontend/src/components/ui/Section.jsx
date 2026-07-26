@@ -47,7 +47,7 @@ export function Section({
   // Initial state slightly translated down + transparent; flips on inView.
   // Class is motion-safe — fully respected by prefers-reduced-motion.
   const revealCls = reveal
-    ? `motion-safe:transition-all motion-safe:duration-[900ms] motion-safe:ease-soft ${
+    ? `motion-safe:transition-all motion-safe:duration-1000 motion-safe:ease-soft ${
         inView
           ? "motion-safe:opacity-100 motion-safe:translate-y-0"
           : "motion-safe:opacity-0 motion-safe:translate-y-4"

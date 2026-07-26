@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <Section size="xl" surface="cream" reveal={false}>
       <Helmet>
-        <title>Page not found — Tiny Explorers Bermuda</title>
+        <title>Page Not Found | Tiny Explorers Nursery & Preschool</title>
         <meta name="robots" content="noindex" />
       </Helmet>
       <Container size="prose" className="text-center">

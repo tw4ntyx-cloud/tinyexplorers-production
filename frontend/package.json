@@ -1,6 +1,7 @@
 {
   "name": "frontend",
   "version": "0.1.0",
+  "homepage": "https://tw4ntyx-cloud.github.io/tinyexplorers-production",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",

@@ -6,18 +6,15 @@
         <meta name="theme-color" content="#FFF7EE" />
 
         <!-- Primary SEO -->
-        <title>Tiny Explorers — Bermuda Early Childhood Center | Hamilton</title>
-        <meta name="description" content="Tiny Explorers is Bermuda's premier early childhood center in Hamilton. A calm, Montessori-inspired preschool for ages 6 months – 8 years. Now enrolling for Fall 2026." />
+        <title>Home | Tiny Explorers Nursery & Preschool</title>
+        <meta name="description" content="Discover Tiny Explorers Nursery & Preschool in Bermuda, with calm early-years spaces, thoughtful care, and play-based programs for children from infancy through after-school." />
         <meta name="author" content="Tiny Explorers Bermuda" />
         <meta name="keywords" content="Bermuda preschool, Hamilton daycare, Montessori Bermuda, early childhood education, infant care Bermuda, Tiny Explorers" />
-        <link rel="canonical" href="https://tinyexplorersv3.vercel.app/" />
 
         <!-- Open Graph -->
-        <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Tiny Explorers" />
-        <meta property="og:title" content="Tiny Explorers — Bermuda Early Childhood Center" />
-        <meta property="og:description" content="Where little minds grow through play, care, and confidence. A Montessori-inspired preschool in Hamilton, Bermuda." />
-        <meta property="og:url" content="https://tinyexplorersv3.vercel.app/" />
+        <meta property="og:title" content="Home | Tiny Explorers Nursery & Preschool" />
+        <meta property="og:description" content="Discover Tiny Explorers Nursery & Preschool in Bermuda, with calm early-years spaces, thoughtful care, and play-based programs for children from infancy through after-school." />
         <meta property="og:image" content="https://images.unsplash.com/photo-1763310225230-6e15b125935a?crop=entropy&cs=srgb&fm=jpg&w=1200&h=630&fit=crop&q=85" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -25,8 +22,8 @@
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Tiny Explorers — Bermuda Early Childhood Center" />
-        <meta name="twitter:description" content="Where little minds grow through play, care, and confidence. Now enrolling for Fall 2026." />
+        <meta name="twitter:title" content="Home | Tiny Explorers Nursery & Preschool" />
+        <meta name="twitter:description" content="Discover Tiny Explorers Nursery & Preschool in Bermuda, with calm early-years spaces, thoughtful care, and play-based programs for children from infancy through after-school." />
         <meta name="twitter:image" content="https://images.unsplash.com/photo-1763310225230-6e15b125935a?crop=entropy&cs=srgb&fm=jpg&w=1200&h=630&fit=crop&q=85" />
 
         <!-- Icons -->
@@ -52,7 +49,7 @@
           "name": "Tiny Explorers",
           "image": "https://images.unsplash.com/photo-1763310225230-6e15b125935a?crop=entropy&cs=srgb&fm=jpg&w=1200&h=630&fit=crop&q=85",
           "description": "Bermuda-based early childhood center for ages 6 months to 8 years. Montessori and Reggio Emilia-inspired curriculum.",
-          "url": "https://tinyexplorersv3.vercel.app/",
+          "url": "https://tw4ntyx-cloud.github.io/tinyexplorers-production/",
           "telephone": "+1-441-123-4567",
           "email": "hello@tinyexplorers.bm",
           "priceRange": "$$",
@@ -75,6 +72,21 @@
         </script>
     </head>
     <body>
+        <script>
+          (function redirectGitHubPagesRoute() {
+            var search = window.location.search;
+            if (!search.startsWith('?/')) return;
+            var decoded = search
+              .slice(2)
+              .split('&')
+              .map(function (segment) {
+                return segment.replace(/~and~/g, '&');
+              })
+              .join('?');
+            var newUrl = window.location.pathname.replace(/\/$/, '') + '/' + decoded + window.location.hash;
+            window.history.replaceState(null, '', newUrl.replace(/\/\//g, '/'));
+          })();
+        </script>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
     </body>

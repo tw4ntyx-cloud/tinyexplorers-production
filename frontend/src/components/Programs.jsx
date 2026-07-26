@@ -32,6 +32,9 @@ export default function Programs({ onEnroll }) {
   const [selectedProgram, setSelectedProgram] = useState(PROGRAMS[0]);
   const [infoOpen, setInfoOpen] = useState(false);
 
+  const getProgramAnchorId = (name) =>
+    `program-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}`;
+
   const openProgramInfo = (program) => {
     setSelectedProgram(program);
     setInfoOpen(true);
@@ -74,7 +77,7 @@ export default function Programs({ onEnroll }) {
 
         <div className="mt-14 grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {PROGRAMS.map((p) => (
-            <article key={p.name} data-testid={p.testId} className="group flex flex-col">
+            <article id={getProgramAnchorId(p.name)} key={p.name} data-testid={p.testId} className="group flex flex-col">
               {/* Image — 4:5, rounded, warm-graded. No dark scrim. */}
               <div className="image-warm relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-brand-cream">
                 <SmartImage

@@ -88,7 +88,6 @@ export default function Parents() {
       <AdmissionsModal
         open={admissionsOpen}
         onOpenChange={setAdmissionsOpen}
-        onOpenInquiry={openEnroll}
       />
 
       {/* ─────────── Operating hours ─────────── */}
@@ -246,12 +245,6 @@ export default function Parents() {
       </Section>
 
       {/* ─────────── Safety ─────────── */}
-      <AdmissionsModal
-        open={admissionsOpen}
-        onOpenChange={setAdmissionsOpen}
-        onOpenInquiry={openEnroll}
-      />
-
       <Section id="safety" testId="parents-safety" surface="white" size="lg">
         <Container>
           <div className="flex items-start gap-4">

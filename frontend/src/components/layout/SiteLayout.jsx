@@ -87,10 +87,16 @@ export default function SiteLayout() {
   }, [pathname, hash]);
 
   return (
-    <EnrollContext.Provider value={{ open: openEnroll, openAdmissions }}>
+    <EnrollContext.Provider value={{ open: openEnroll, openAdmissions, openInquiry }}>
       <div className="App min-h-screen bg-brand-cream text-brand-ink">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-brand-ink focus:shadow-soft"
+        >
+          Skip to content
+        </a>
         <Navbar onEnroll={openEnroll} />
-        <main className="relative overflow-hidden">
+        <main id="main-content" tabIndex="-1" className="relative overflow-hidden">
           <div
             key={pathname}
             className="animate-in fade-in-0 slide-in-from-bottom-2 duration-500 ease-soft"

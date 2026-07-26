@@ -116,16 +116,29 @@ export const IMAGES = {
  * changes, this is the only place to edit.
  */
 
+const PUBLIC_URL = process.env.PUBLIC_URL || "";
+
 /**
  * Canonical production origin — used for canonical/OG URLs and the sitemap.
- * Update this once the site moves to a permanent custom domain.
+ * The route path comes from PUBLIC_URL so project-style GitHub Pages
+ * deployments resolve correctly without hardcoded document paths.
  */
-export const SITE_URL = "https://tinyexplorersv3.vercel.app";
+export const SITE_URL = process.env.REACT_APP_SITE_URL || "https://tw4ntyx-cloud.github.io";
+
+export function getPublicAssetUrl(path) {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${PUBLIC_URL}${normalizedPath}`;
+}
+
+export function getCanonicalUrl(pathname = "/") {
+  const normalizedPath = pathname === "/" ? "" : pathname;
+  return `${SITE_URL}${getPublicAssetUrl(normalizedPath)}`;
+}
 
 export const DEFAULT_META = {
-  title: "Tiny Explorers — Bermuda Early Childhood Center | Hamilton",
+  title: "Home | Tiny Explorers Nursery & Preschool",
   description:
-    "Tiny Explorers is Bermuda's premier early childhood center in Hamilton. A calm, Montessori-inspired preschool for ages 6 months – 8 years. Now enrolling for Fall 2026.",
+    "Discover Tiny Explorers Nursery & Preschool in Bermuda, with calm early-years spaces, thoughtful care, and play-based programs for children from infancy through after-school.",
 };
 
 export const BRAND = {
@@ -381,10 +394,10 @@ export const FOOTER = {
     {
       title: "Programs",
       links: [
-        { label: "Infant Care", to: "/#programs" },
-        { label: "Toddler Program", to: "/#programs" },
-        { label: "Preschool", to: "/#programs" },
-        { label: "After School", to: "/#programs" },
+        { label: "Infant Care", to: "/#program-infant-care" },
+        { label: "Toddler Program", to: "/#program-toddler-program" },
+        { label: "Preschool", to: "/#program-preschool-program" },
+        { label: "After School", to: "/#program-after-school-care" },
       ],
     },
     {
@@ -426,9 +439,9 @@ export const FOOTER = {
  * ════════════════════════════════════════════════════════════════════ */
 export const PHILOSOPHY = {
   meta: {
-    title: "Our Philosophy — Tiny Explorers Bermuda",
+    title: "Our Philosophy | Tiny Explorers Nursery & Preschool",
     description:
-      "How we teach, and why. A Montessori and Reggio Emilia-inspired approach to early childhood, designed for Bermuda families.",
+      "Learn how Tiny Explorers approaches early childhood education through calm environments, respectful guidance, and close partnership with families.",
   },
   hero: {
     eyebrow: "Our Philosophy",
@@ -540,9 +553,9 @@ export const PHILOSOPHY = {
  * ════════════════════════════════════════════════════════════════════ */
 export const WELLNESS_PAGE = {
   meta: {
-    title: "Wellness & Care — Tiny Explorers Bermuda",
+    title: "Wellness & Care | Tiny Explorers Nursery & Preschool",
     description:
-      "On-call health support, allergy-aware routines, calm sleep spaces, and a wellness philosophy designed around the whole child.",
+      "See how Tiny Explorers supports children's wellbeing with calm routines, healthy daily habits, and responsive family communication.",
   },
   hero: {
     eyebrow: "Wellness & Care",
@@ -642,9 +655,9 @@ export const WELLNESS_PAGE = {
  * ════════════════════════════════════════════════════════════════════ */
 export const ADVENTURES = {
   meta: {
-    title: "Adventures & Field Trips — Tiny Explorers Bermuda",
+    title: "Adventures & Field Trips | Tiny Explorers Nursery & Preschool",
     description:
-      "Beyond the classroom: Bermuda's reefs, gardens, museums, and seasonal workshops. A curated calendar of discovery for our children.",
+      "Explore the outings, nature walks, and cultural experiences that extend learning beyond the classroom at Tiny Explorers.",
   },
   hero: {
     eyebrow: "Adventures & Field Trips",
@@ -733,9 +746,9 @@ export const ADVENTURES = {
  * ════════════════════════════════════════════════════════════════════ */
 export const PARENTS = {
   meta: {
-    title: "Parent Information — Tiny Explorers Bermuda",
+    title: "Parent Information | Tiny Explorers Nursery & Preschool",
     description:
-      "Operating hours, daily schedules, age groups, meals, safety, FAQ, and everything else you might need.",
+      "Find practical parent information about hours, age groups, daily rhythm, communication, and school routines at Tiny Explorers.",
   },
   hero: {
     eyebrow: "Parent Information",
@@ -825,9 +838,9 @@ export const PARENTS = {
  * ════════════════════════════════════════════════════════════════════ */
 export const ADMISSIONS = {
   meta: {
-    title: "Admissions — Tiny Explorers Bermuda",
+    title: "Admissions | Tiny Explorers Nursery & Preschool",
     description:
-      "Visit, apply, enroll. A calm, four-step admissions process for Bermuda families joining Tiny Explorers.",
+      "Review the Tiny Explorers admissions process, from first inquiry to tour, application, and enrollment preparation.",
   },
   hero: {
     eyebrow: "Admissions",

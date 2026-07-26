@@ -1,97 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/accessibility</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/accessibility</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/philosophy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/philosophy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/wellness</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/wellness</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/adventures</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/adventures</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/parents</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/parents</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/admissions</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/admissions</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/complaint-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/complaint-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/discipline-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/discipline-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/enrollment-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/enrollment-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/fire-emergency-evacuation-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/fire-emergency-evacuation-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/mandatory-reporter-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/mandatory-reporter-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/media-viewing-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/media-viewing-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/media-photography-consent-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/media-photography-consent-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/medicine-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/medicine-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/open-door-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/open-door-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/privacy-confidentiality-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/privacy-confidentiality-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/safe-sleep-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/safe-sleep-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://tinyexplorersv3.vercel.app/policies/transport-field-trip-policy</loc>
+    <loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/policies/transport-field-trip-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
