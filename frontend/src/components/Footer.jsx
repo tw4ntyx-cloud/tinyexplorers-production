@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Loader2, CheckCircle2 } from "lucide-react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
 import { toast } from "sonner";
 import api from "../lib/api";
 import FieldError from "./ui/FieldError";
 import { BRAND, FOOTER } from "../data/content";
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
  * Footer — premium expansion.
@@ -39,29 +41,59 @@ function FooterLink({ to, children }) {
 
 export default function Footer({ onEnroll }) {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  // status: idle | loading | success | duplicate | error
+  const [status, setStatus] = useState("idle");
+  const [statusMessage, setStatusMessage] = useState("");
+  const submittingRef = useRef(false);
+  // honeypot: hidden from real users, only bots fill it in
+  const [companyHoneypot, setCompanyHoneypot] = useState("");
 
   const onSubscribe = async (e) => {
     e.preventDefault();
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      setError("Please enter a valid email.");
-      toast.error("Please enter a valid email.");
+    if (submittingRef.current) return; // guard against rapid repeated clicks
+
+    const normalized = email.trim().toLowerCase();
+    if (!normalized || !EMAIL_PATTERN.test(normalized)) {
+      setError("Please enter a valid email address.");
       return;
     }
+    if (companyHoneypot) {
+      // silently "succeed" for bots without hitting the API
+      setStatus("success");
+      setStatusMessage("You're on the list! Thanks for subscribing to Tiny Explorers updates.");
+      return;
+    }
+
     setError("");
-    setLoading(true);
+    submittingRef.current = true;
+    setStatus("loading");
     try {
-      const { data } = await api.post("/newsletter", { email });
-      toast.success(data.message || "Subscribed!");
+      const { data } = await api.post("/newsletter", { email: normalized });
+      if (data?.already_subscribed) {
+        setStatus("duplicate");
+        setStatusMessage(
+          data.message || "You're already on our list — thanks for being part of the Tiny Explorers community!"
+        );
+      } else {
+        setStatus("success");
+        setStatusMessage("You're on the list! Thanks for subscribing to Tiny Explorers updates.");
+      }
       setEmail("");
     } catch (err) {
-      const msg = err?.response?.data?.detail || "Could not subscribe. Please try again.";
-      toast.error(typeof msg === "string" ? msg : "Could not subscribe.");
+      setStatus("error");
+      const msg = err?.response?.data?.detail;
+      setStatusMessage(
+        typeof msg === "string" ? msg : "Something went wrong. Please try again in a moment."
+      );
+      toast.error("Could not subscribe. Please try again.");
     } finally {
-      setLoading(false);
+      submittingRef.current = false;
     }
   };
+
+  const isLoading = status === "loading";
+  const isSubscribed = status === "success" || status === "duplicate";
 
   return (
     <footer
@@ -130,36 +162,86 @@ export default function Footer({ onEnroll }) {
               {FOOTER.newsletter_lede ||
                 "Open house dates, parenting essays, and the occasional poem from a three-year-old."}
             </p>
-            <form
-              onSubmit={onSubscribe}
-              data-testid="newsletter-form"
-              noValidate
-              className="mt-5 flex items-center gap-2 rounded-full bg-white p-1.5 shadow-soft ring-1 ring-black/5"
-            >
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  if (error) setError("");
-                }}
-                placeholder="your@email.com"
-                data-testid="newsletter-input"
-                className="min-w-0 flex-1 rounded-full bg-transparent px-4 py-2 text-sm text-brand-ink placeholder:text-brand-ink/50 focus:outline-none focus:ring-2 focus:ring-brand-orange/40"
-                aria-label="Email for newsletter"
-                aria-invalid={!!error}
-                aria-describedby={error ? "newsletter-email-error" : undefined}
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                data-testid="newsletter-submit"
-                className="inline-flex items-center justify-center rounded-full bg-brand-orange px-5 py-2 text-sm font-semibold text-white transition-all duration-300 ease-soft hover:scale-[1.02] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+
+            {isSubscribed ? (
+              <div
+                role="status"
+                aria-live="polite"
+                data-testid="newsletter-success"
+                className="mt-5 flex items-start gap-3 rounded-2xl bg-white p-4 shadow-soft ring-1 ring-black/5"
               >
-                {loading ? <Loader2 size={14} className="animate-spin" /> : "Subscribe"}
-              </button>
-            </form>
+                <CheckCircle2 size={20} className="mt-0.5 flex-none text-brand-orange" aria-hidden="true" />
+                <div>
+                  <p className="font-poppins text-[14px] font-bold text-brand-ink">You're on the list!</p>
+                  <p className="mt-0.5 text-[13px] leading-snug text-brand-ink/70">
+                    {statusMessage.includes("already")
+                      ? statusMessage
+                      : "Thanks for subscribing to Tiny Explorers updates."}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <form
+                onSubmit={onSubscribe}
+                data-testid="newsletter-form"
+                noValidate
+                className="mt-5 flex items-center gap-2 rounded-full bg-white p-1.5 shadow-soft ring-1 ring-black/5"
+              >
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (error) setError("");
+                    if (status === "error") setStatus("idle");
+                  }}
+                  placeholder="your@email.com"
+                  data-testid="newsletter-input"
+                  autoComplete="email"
+                  disabled={isLoading}
+                  className="min-w-0 flex-1 rounded-full bg-transparent px-4 py-2 text-sm text-brand-ink placeholder:text-brand-ink/50 focus:outline-none focus:ring-2 focus:ring-brand-orange/40"
+                  aria-label="Email for newsletter"
+                  aria-invalid={!!error}
+                  aria-describedby={error ? "newsletter-email-error" : undefined}
+                />
+                {/* Honeypot: hidden from sighted users and screen readers, only bots fill this in */}
+                <input
+                  type="text"
+                  name="company"
+                  value={companyHoneypot}
+                  onChange={(e) => setCompanyHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute h-0 w-0 opacity-0"
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  data-testid="newsletter-submit"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-orange px-5 py-2 text-sm font-semibold text-white transition-all duration-300 ease-soft hover:scale-[1.02] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 size={14} className="animate-spin" aria-hidden="true" />
+                      <span className="sr-only">Subscribing…</span>
+                    </>
+                  ) : (
+                    "Subscribe"
+                  )}
+                </button>
+              </form>
+            )}
             <FieldError id="newsletter-email-error" message={error} />
+            {status === "error" && (
+              <p role="alert" className="mt-1.5 text-xs font-medium text-red-600">
+                {statusMessage}
+              </p>
+            )}
 
             <div className="mt-5">
               <Button

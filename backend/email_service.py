@@ -160,7 +160,7 @@ class EmailService:
     def send_newsletter_welcome(email: str):
         """Send welcome email to new newsletter subscriber."""
         if not RESEND_API_KEY:
-            logger.warning(f"Email disabled: Would send newsletter welcome to {email}")
+            logger.warning("Email disabled: would send newsletter welcome email (RESEND_API_KEY not set)")
             return
 
         subject = "Welcome to Tiny Explorers Updates"
@@ -206,10 +206,10 @@ class EmailService:
                     "html": html_body,
                 }
             )
-            logger.info(f"Newsletter welcome email sent to {email}")
+            logger.info("Newsletter welcome email sent")
             return email_result
         except Exception as e:
-            logger.error(f"Failed to send newsletter welcome to {email}: {str(e)}")
+            logger.error(f"Failed to send newsletter welcome email: {str(e)}")
             return None
 
     @staticmethod

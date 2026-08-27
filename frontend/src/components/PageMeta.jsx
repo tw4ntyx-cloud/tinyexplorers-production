@@ -12,7 +12,8 @@ import { DEFAULT_META, getCanonicalUrl } from "../data/content";
  */
 export default function PageMeta({ title, description }) {
   const inRouter = useInRouterContext();
-  const pathname = inRouter ? useLocation().pathname : "/";
+  const location = useLocation();
+  const pathname = inRouter ? location.pathname : "/";
   const resolvedTitle = title || DEFAULT_META.title;
   const resolvedDescription = description || DEFAULT_META.description;
   const url = getCanonicalUrl(pathname);

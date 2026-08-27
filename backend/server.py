@@ -206,7 +206,9 @@ class NewsletterEntry(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     email: EmailStr
+    status: str = "pending"
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class EnrollmentCreate(BaseModel):
@@ -308,7 +310,10 @@ async def health() -> Dict[str, str]:
 @api_router.post("/newsletter", status_code=201)
 @limiter.limit("10/minute")
 async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> Dict[str, Any]:
-    existing = await db.newsletter.find_one({"email": payload.email}, {"_id": 0})
+    # Normalize so "Foo@Example.com " and "foo@example.com" are treated as the same subscriber.
+    normalized_email = payload.email.strip().lower()
+
+    existing = await db.newsletter.find_one({"email": normalized_email}, {"_id": 0})
     if existing:
         return {
             "success": True,
@@ -316,12 +321,16 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
             "already_subscribed": True,
         }
 
-    entry = NewsletterEntry(email=payload.email)
+    entry = NewsletterEntry(email=normalized_email)
     doc = entry.model_dump()
     doc["created_at"] = doc["created_at"].isoformat()
+    doc["updated_at"] = doc["updated_at"].isoformat()
     await db.newsletter.insert_one(doc)
 
-    await send_newsletter_welcome(payload.email)
+    # Subscriber is recorded as "pending" here; an authorized admin reviews the
+    # subscription_requests (newsletter) table and adds approved emails to the
+    # "Tiny Explorers Newsletter" Google Group. See docs/google-workspace-newsletter.md.
+    await send_newsletter_welcome(normalized_email)
 
     return {"success": True, "message": "Thanks for subscribing!", "id": entry.id}
 
@@ -330,8 +339,12 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
 async def list_newsletter() -> List[NewsletterEntry]:
     rows = await db.newsletter.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
     for row in rows:
-        if isinstance(row.get("created_at"), str):
-            row["created_at"] = datetime.fromisoformat(row["created_at"])
+        for field in ("created_at", "updated_at"):
+            if isinstance(row.get(field), str):
+                row[field] = datetime.fromisoformat(row[field])
+            elif field not in row:
+                row[field] = row.get("created_at")
+        row.setdefault("status", "pending")
     return rows
 
 

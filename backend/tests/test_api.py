@@ -56,7 +56,8 @@ class TestServiceStatus:
 # ----- Newsletter -----
 class TestNewsletter:
     def test_subscribe_valid(self, client, admin_client):
-        email = f"TEST_news_{uuid.uuid4().hex[:8]}@example.com"
+        # Mixed case + surrounding whitespace should be trimmed and normalized to lowercase.
+        email = f"  TEST_news_{uuid.uuid4().hex[:8]}@Example.com "
         r = client.post(f"{BASE_URL}/api/newsletter", json={"email": email})
         assert r.status_code == 201
         data = r.json()
@@ -68,9 +69,11 @@ class TestNewsletter:
         rows = lst.json()
         assert isinstance(rows, list)
         emails = [row.get("email") for row in rows]
-        assert email in emails
+        assert email.strip().lower() in emails
         for row in rows:
             assert "_id" not in row
+            assert row.get("status") == "pending"
+            assert "updated_at" in row
 
     def test_subscribe_duplicate(self, client):
         email = f"TEST_dup_{uuid.uuid4().hex[:8]}@example.com"
@@ -81,6 +84,15 @@ class TestNewsletter:
         assert r2.status_code in (200, 201)
         data = r2.json()
         assert data.get("already_subscribed") is True
+
+    def test_subscribe_duplicate_case_insensitive(self, client):
+        # "Foo@Example.com" and "foo@example.com " should be treated as the same subscriber.
+        base = f"TEST_case_{uuid.uuid4().hex[:8]}"
+        r1 = client.post(f"{BASE_URL}/api/newsletter", json={"email": f"{base}@Example.com"})
+        assert r1.status_code == 201
+        r2 = client.post(f"{BASE_URL}/api/newsletter", json={"email": f" {base}@example.com "})
+        assert r2.status_code in (200, 201)
+        assert r2.json().get("already_subscribed") is True
 
     def test_subscribe_invalid_email(self, client):
         r = client.post(f"{BASE_URL}/api/newsletter", json={"email": "not-an-email"})
