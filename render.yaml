@@ -21,6 +21,15 @@ services:
         sync: false
       - key: CORS_ALLOW_CREDENTIALS
         value: "false"
+      # NOTE: Render is not a Google Cloud environment, so it cannot provide
+      # Application Default Credentials (keyless auth) for Google Workspace
+      # out of the box — only GOOGLE_SERVICE_ACCOUNT_JSON (a downloaded key)
+      # would work here, which is unavailable if your Google Cloud org
+      # enforces iam.managed.disableServiceAccountKeyCreation. See
+      # docs/google-workspace-newsletter.md for the keyless-friendly hosting
+      # comparison (e.g. Google Cloud Run) if that policy applies to you.
+      - key: GOOGLE_SERVICE_ACCOUNT_EMAIL
+        sync: false
       - key: GOOGLE_SERVICE_ACCOUNT_JSON
         sync: false
       - key: GOOGLE_WORKSPACE_ADMIN_EMAIL

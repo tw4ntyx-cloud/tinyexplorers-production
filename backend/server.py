@@ -407,6 +407,7 @@ async def sync_pending_newsletter_subscribers() -> Dict[str, Any]:
         "subscribed": subscribed,
         "still_pending": still_pending,
         "google_workspace_configured": not not_configured,
+        "google_workspace_auth_mode": google_workspace.configured_auth_mode(),
     }
 
 

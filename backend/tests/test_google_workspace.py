@@ -56,12 +56,67 @@ def _admin_headers():
 class TestGoogleWorkspaceModule:
     def test_not_configured_when_env_vars_missing(self):
         with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", ""), patch.object(
-            google_workspace, "GOOGLE_WORKSPACE_ADMIN_EMAIL", ""
-        ), patch.object(google_workspace, "GOOGLE_NEWSLETTER_GROUP_EMAIL", ""):
+            google_workspace, "GOOGLE_SERVICE_ACCOUNT_EMAIL", ""
+        ), patch.object(google_workspace, "GOOGLE_WORKSPACE_ADMIN_EMAIL", ""), patch.object(
+            google_workspace, "GOOGLE_NEWSLETTER_GROUP_EMAIL", ""
+        ):
             assert google_workspace.is_configured() is False
+            assert google_workspace.configured_auth_mode() == "not_configured"
+
+    def test_auth_mode_service_account_key_when_json_set(self):
+        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", "{}"), patch.object(
+            google_workspace, "GOOGLE_SERVICE_ACCOUNT_EMAIL", ""
+        ), patch.object(google_workspace, "GOOGLE_WORKSPACE_ADMIN_EMAIL", "admin@example.com"), patch.object(
+            google_workspace, "GOOGLE_NEWSLETTER_GROUP_EMAIL", "newsletter@example.com"
+        ):
+            assert google_workspace.configured_auth_mode() == "service_account_key"
+            assert google_workspace.is_configured() is True
+
+    def test_auth_mode_keyless_when_only_service_account_email_set(self):
+        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", ""), patch.object(
+            google_workspace, "GOOGLE_SERVICE_ACCOUNT_EMAIL", "newsletter-sync@project.iam.gserviceaccount.com"
+        ), patch.object(google_workspace, "GOOGLE_WORKSPACE_ADMIN_EMAIL", "admin@example.com"), patch.object(
+            google_workspace, "GOOGLE_NEWSLETTER_GROUP_EMAIL", "newsletter@example.com"
+        ):
+            assert google_workspace.configured_auth_mode() == "keyless"
+            assert google_workspace.is_configured() is True
+
+    def test_auth_mode_missing_admin_or_group_email_is_not_configured(self):
+        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", "{}"), patch.object(
+            google_workspace, "GOOGLE_WORKSPACE_ADMIN_EMAIL", ""
+        ), patch.object(google_workspace, "GOOGLE_NEWSLETTER_GROUP_EMAIL", "newsletter@example.com"):
+            assert google_workspace.configured_auth_mode() == "not_configured"
+
+    def test_build_service_prefers_json_key_when_both_configured(self):
+        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", "{}"), patch.object(
+            google_workspace, "GOOGLE_SERVICE_ACCOUNT_EMAIL", "newsletter-sync@project.iam.gserviceaccount.com"
+        ), patch.object(
+            google_workspace, "_credentials_from_json_key", return_value="json-creds"
+        ) as mock_json, patch.object(
+            google_workspace, "_credentials_keyless", return_value="keyless-creds"
+        ) as mock_keyless, patch(
+            "googleapiclient.discovery.build", return_value="service"
+        ):
+            google_workspace._build_service()
+        mock_json.assert_called_once()
+        mock_keyless.assert_not_called()
+
+    def test_build_service_uses_keyless_when_no_json_key(self):
+        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", ""), patch.object(
+            google_workspace, "_credentials_keyless", return_value="keyless-creds"
+        ) as mock_keyless, patch.object(
+            google_workspace, "_credentials_from_json_key", return_value="json-creds"
+        ) as mock_json, patch(
+            "googleapiclient.discovery.build", return_value="service"
+        ):
+            google_workspace._build_service()
+        mock_keyless.assert_called_once()
+        mock_json.assert_not_called()
 
     def test_add_subscriber_not_configured_returns_without_network_call(self):
-        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", ""):
+        with patch.object(google_workspace, "GOOGLE_SERVICE_ACCOUNT_JSON", ""), patch.object(
+            google_workspace, "GOOGLE_SERVICE_ACCOUNT_EMAIL", ""
+        ):
             result = asyncio.run(google_workspace.add_subscriber_to_group("someone@example.com"))
         assert result == "not_configured"
 

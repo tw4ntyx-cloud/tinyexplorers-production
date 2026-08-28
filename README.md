@@ -217,18 +217,36 @@ The project is currently CRA. The easiest path:
 **Recommended for next sprint:** migrate to Next.js for SSR + better SEO. The
 component tree is already isolated from routing concerns and ports cleanly.
 
-### Backend (Render / Fly / Railway)
+### Backend (Google Cloud Run recommended; Render/Fly/Railway also possible)
 
-Standard FastAPI + uvicorn deployment. Required env vars:
+Standard FastAPI + uvicorn deployment (already containerized —
+`backend/Dockerfile`). Required env vars:
 
 - `MONGO_URL` — MongoDB connection string
 - `DB_NAME` — database name
 - `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://tinyexplorers.bm`)
 - `CORS_ALLOW_CREDENTIALS` — `true`/`false`
 - `ADMIN_API_KEY` — shared secret for admin-only GET/sync endpoints
-- `GOOGLE_SERVICE_ACCOUNT_JSON`, `GOOGLE_WORKSPACE_ADMIN_EMAIL`,
-  `GOOGLE_NEWSLETTER_GROUP_EMAIL` — optional Google Workspace newsletter
-  automation; see [docs/google-workspace-newsletter.md](docs/google-workspace-newsletter.md)
+- Google Workspace newsletter automation (optional — see
+  [docs/google-workspace-newsletter.md](docs/google-workspace-newsletter.md)):
+  - `GOOGLE_WORKSPACE_ADMIN_EMAIL`, `GOOGLE_NEWSLETTER_GROUP_EMAIL` — always required
+  - `GOOGLE_SERVICE_ACCOUNT_EMAIL` — **keyless** auth (recommended; requires
+    running on Google Cloud compute with an attached service account, e.g.
+    Cloud Run)
+  - `GOOGLE_SERVICE_ACCOUNT_JSON` — legacy/local-only auth using a downloaded
+    key; unusable if your Google Cloud org enforces
+    `iam.managed.disableServiceAccountKeyCreation` (keep that policy enabled)
+
+**Hosting note:** the Google Workspace integration supports a *keyless*
+authentication mode (Application Default Credentials + domain-wide
+delegation) that only works out of the box on Google Cloud compute — Cloud
+Run, GCE, or GKE. If the organization's Google Cloud policy blocks
+service-account key creation (as is the case here), **Google Cloud Run is
+the simplest backend host** for this app: it materially simplifies secure
+keyless Google Workspace auth compared with an external PaaS like Render,
+which would otherwise need Workload Identity Federation with an external
+OIDC provider — meaningfully more setup for the same result. This is a
+recommendation only; nothing has been deployed or migrated.
 
 ### Connecting the final production domain (config-only, no code changes)
 
