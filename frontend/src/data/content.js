@@ -151,8 +151,8 @@ export const BRAND = {
   description: "A Bermuda-based early childhood center where curiosity meets care. Hamilton & Paget campuses.",
   established: "Est. 2026",
   location: "Hamilton · Bermuda",
-  phone: "+1 (441) 123-4567",
-  phoneHref: "tel:+14411234567",
+  // PRE-LAUNCH TODO: no verified phone number yet — email is the sole contact
+  // method until a real Tiny Explorers phone number is confirmed.
   email: "hello@tinyexplorersbda.com",
   address: "12 Reid Street, Hamilton HM 11, Bermuda",
 };

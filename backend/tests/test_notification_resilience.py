@@ -80,3 +80,39 @@ class TestNotificationFailureNeverLosesSubmission:
         listing = client.get("/api/admissions", headers={"X-Admin-Key": ADMIN_API_KEY})
         assert listing.status_code == 200
         assert any(row["email"] == "robin@example.com" for row in listing.json())
+
+    def test_inquiry_persists_and_returns_201_even_when_resend_raises(self, client):
+        with patch.object(email_service, "RESEND_API_KEY", "dummy-key-for-test"), patch.object(
+            email_service.resend.Emails, "send", side_effect=RuntimeError("Resend is temporarily unavailable")
+        ):
+            resp = client.post(
+                "/api/inquiry",
+                json={
+                    "parent_name": "Casey Test",
+                    "email": "casey@example.com",
+                    "child_age": "4 years",
+                },
+            )
+
+        assert resp.status_code == 201
+        assert resp.json()["success"] is True
+
+        listing = client.get("/api/inquiry", headers={"X-Admin-Key": ADMIN_API_KEY})
+        assert listing.status_code == 200
+        assert any(row["email"] == "casey@example.com" for row in listing.json())
+
+    def test_newsletter_persists_and_returns_201_even_when_resend_raises(self, client):
+        with patch.object(email_service, "RESEND_API_KEY", "dummy-key-for-test"), patch.object(
+            email_service.resend.Emails, "send", side_effect=RuntimeError("Resend is temporarily unavailable")
+        ):
+            resp = client.post(
+                "/api/newsletter",
+                json={"email": "morgan@example.com"},
+            )
+
+        assert resp.status_code == 201
+        assert resp.json()["success"] is True
+
+        listing = client.get("/api/newsletter", headers={"X-Admin-Key": ADMIN_API_KEY})
+        assert listing.status_code == 200
+        assert any(row["email"] == "morgan@example.com" for row in listing.json())

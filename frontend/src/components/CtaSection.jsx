@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Phone, Calendar } from "lucide-react";
+import { ArrowRight, Mail, Calendar } from "lucide-react";
 import { Container } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
 import { IMAGES, BRAND } from "../data/content";
@@ -76,12 +76,12 @@ export default function CtaSection() {
                   />
                 </button>
                 <a
-                  href={BRAND.phoneHref}
-                  data-testid="cta-call-button"
+                  href={`mailto:${BRAND.email}`}
+                  data-testid="cta-email-button"
                   className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-white px-7 py-4 text-base font-semibold text-brand-ink transition-colors duration-300 ease-soft hover:border-brand-ink/30"
                 >
-                  <Phone size={16} strokeWidth={2.5} className="text-brand-orange" />
-                  {BRAND.phone}
+                  <Mail size={16} strokeWidth={2.5} className="text-brand-orange" />
+                  {BRAND.email}
                 </a>
               </div>
 

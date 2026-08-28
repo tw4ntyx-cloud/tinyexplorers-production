@@ -337,11 +337,11 @@ export default function Navbar({ onEnroll }) {
 
         <div className="hidden items-center gap-3 lg:flex">
           <a
-            href={BRAND.phoneHref}
-            data-testid="nav-phone"
+            href={`mailto:${BRAND.email}`}
+            data-testid="nav-contact-email"
             className="text-sm font-medium text-brand-ink/70 transition-colors duration-200 ease-soft hover:text-brand-ink"
           >
-            {BRAND.phone}
+            {BRAND.email}
           </a>
           <Button
             variant="accent"
@@ -399,11 +399,11 @@ export default function Navbar({ onEnroll }) {
                   Book a Visit
                 </Button>
                 <a
-                  href={BRAND.phoneHref}
+                  href={`mailto:${BRAND.email}`}
                   onClick={() => setOpen(false)}
                   className="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-brand-ink/65"
                 >
-                  or call {BRAND.phone}
+                  or email {BRAND.email}
                 </a>
               </div>
             </div>

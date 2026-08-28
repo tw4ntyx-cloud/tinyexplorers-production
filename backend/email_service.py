@@ -85,8 +85,7 @@ class EmailService:
               
               <p style="border-top: 1px solid #e5e5e5; padding-top: 20px; margin-top: 40px; color: #888; font-size: 12px;">
                 Tiny Explorers Bermuda Ltd.<br>
-                Hamilton, Bermuda<br>
-                <a href="{WEBSITE_URL}" style="color: #FF6B2C; text-decoration: none;">{WEBSITE_URL}</a>
+                Hamilton, Bermuda
               </p>
             </div>
           </body>
@@ -201,7 +200,8 @@ class EmailService:
               </p>
               
               <p style="border-top: 1px solid #e5e5e5; padding-top: 20px; color: #888; font-size: 12px;">
-                Tiny Explorers Bermuda Ltd. | <a href="{WEBSITE_URL}" style="color: #FF6B2C; text-decoration: none;">{WEBSITE_URL}</a>
+                Tiny Explorers Bermuda Ltd.<br>
+                Hamilton, Bermuda
               </p>
             </div>
           </body>

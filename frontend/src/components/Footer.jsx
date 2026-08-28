@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Mail, Phone, MapPin, Loader2, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Loader2, CheckCircle2 } from "lucide-react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
 import { toast } from "sonner";
@@ -126,10 +126,6 @@ export default function Footer({ onEnroll }) {
                 <MapPin size={16} strokeWidth={2.5} className="mt-0.5 flex-none text-brand-orange" />
                 <span>{BRAND.address}</span>
               </div>
-              <a href={BRAND.phoneHref} className="flex items-center gap-2.5 transition hover:text-brand-ink">
-                <Phone size={16} strokeWidth={2.5} className="text-brand-orange" />
-                {BRAND.phone}
-              </a>
               <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2.5 transition hover:text-brand-ink">
                 <Mail size={16} strokeWidth={2.5} className="text-brand-orange" />
                 {BRAND.email}

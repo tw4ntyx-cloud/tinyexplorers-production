@@ -48,6 +48,9 @@ class TestEnrollmentConfirmationEmail:
         assert f"{TEST_WEBSITE_URL}/philosophy" in html
         assert f"{TEST_WEBSITE_URL}/#gallery" in html
         assert f"{TEST_WEBSITE_URL}/wellness" in html
+        # Footer must not print the raw staging/website URL as visible text
+        assert f">{TEST_WEBSITE_URL}<" not in html
+        assert "Hamilton, Bermuda" in html
 
     def test_contains_no_invalid_bm_domain_or_placeholder_phone(self):
         html = _captured_html(
@@ -111,5 +114,7 @@ class TestGenericAdminNotificationEmail:
 class TestNewsletterWelcomeEmail:
     def test_uses_configured_website_url_no_invalid_domain(self):
         html = _captured_html(email_service.EmailService.send_newsletter_welcome, email="subscriber@example.com")
-        assert TEST_WEBSITE_URL in html
         assert "tinyexplorers.bm" not in html.lower()
+        # Footer must not print the raw staging/website URL as visible text
+        assert TEST_WEBSITE_URL not in html
+        assert "Tiny Explorers Bermuda Ltd." in html

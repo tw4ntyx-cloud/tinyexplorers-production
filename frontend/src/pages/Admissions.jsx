@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, Phone, MapPin } from "lucide-react";
+import { Calendar, Mail, MapPin } from "lucide-react";
 
 import PageHero from "../components/page/PageHero";
 import FAQ from "../components/page/FAQ";
@@ -105,11 +105,11 @@ function VisitBlock({ visit, onEnroll }) {
                 Book a tour
               </Button>
               <a
-                href={BRAND.phoneHref}
+                href={`mailto:${BRAND.email}`}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-brand-ink/75 hover:text-brand-ink"
               >
-                <Phone size={15} strokeWidth={2.5} className="text-brand-orange" />
-                or call {BRAND.phone}
+                <Mail size={15} strokeWidth={2.5} className="text-brand-orange" />
+                or email {BRAND.email}
               </a>
             </div>
           </div>

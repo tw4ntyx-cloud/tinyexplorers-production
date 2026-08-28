@@ -160,6 +160,10 @@ class TestEnrollment:
         r = client.post(f"{BASE_URL}/api/enrollment", json=payload)
         assert r.status_code == 422
 
+    def test_list_requires_admin_key(self, client):
+        r = client.get(f"{BASE_URL}/api/enrollment")
+        assert r.status_code == 401
+
 
 # ----- Inquiry -----
 class TestInquiry:
