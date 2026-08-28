@@ -9,6 +9,7 @@ import secrets
 
 from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Request
+from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, ConfigDict, EmailStr, Field
 from pymongo.errors import PyMongoError
@@ -151,6 +152,40 @@ class MockDatabase:
         self.admissions = InMemoryCollection()
 
 
+class DatabaseUnavailableError(RuntimeError):
+    """Raised when MongoDB is required (production) but unreachable."""
+
+
+class _UnavailableCollection:
+    """Every operation fails loudly instead of silently "succeeding" in memory."""
+
+    async def find_one(self, *args: Any, **kwargs: Any) -> Any:
+        raise DatabaseUnavailableError("MongoDB is not available")
+
+    async def insert_one(self, *args: Any, **kwargs: Any) -> Any:
+        raise DatabaseUnavailableError("MongoDB is not available")
+
+    async def update_one(self, *args: Any, **kwargs: Any) -> Any:
+        raise DatabaseUnavailableError("MongoDB is not available")
+
+    def find(self, *args: Any, **kwargs: Any) -> Any:
+        raise DatabaseUnavailableError("MongoDB is not available")
+
+
+class UnavailableDatabase:
+    """Sentinel used in production when MongoDB is configured but unreachable.
+
+    Unlike MockDatabase, every collection access raises so requests fail
+    loudly (503) instead of appearing to succeed without real persistence.
+    """
+
+    def __init__(self) -> None:
+        self.newsletter = _UnavailableCollection()
+        self.enrollment = _UnavailableCollection()
+        self.inquiry = _UnavailableCollection()
+        self.admissions = _UnavailableCollection()
+
+
 def _is_placeholder_mongo_url(url: str) -> bool:
     """Detect literal template/example MONGO_URL values only.
 
@@ -182,11 +217,33 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 client: Optional[AsyncIOMotorClient] = None
 db: Any = MockDatabase()
+# One of: "not_configured" (dev fallback), "connected", "unavailable" (configured but unreachable).
+mongo_status: str = "not_configured"
+
+
+@app.exception_handler(DatabaseUnavailableError)
+async def handle_database_unavailable(request: Request, exc: DatabaseUnavailableError) -> JSONResponse:
+    logger.error("Database unavailable while handling %s %s", request.method, request.url.path)
+    return JSONResponse(status_code=503, content={"detail": "Service temporarily unavailable. Please try again shortly."})
+
+
+@app.exception_handler(PyMongoError)
+async def handle_pymongo_error(request: Request, exc: PyMongoError) -> JSONResponse:
+    # Log the exception type/message only — pymongo error strings do not include
+    # credentials, and MONGO_URL itself is never interpolated here.
+    logger.error(
+        "MongoDB operation failed for %s %s (%s): %s",
+        request.method,
+        request.url.path,
+        type(exc).__name__,
+        exc,
+    )
+    return JSONResponse(status_code=503, content={"detail": "Service temporarily unavailable. Please try again shortly."})
 
 
 @app.on_event("startup")
 async def startup_db() -> None:
-    global client, db
+    global client, db, mongo_status
 
     logger.setLevel(LOG_LEVEL)
     logger.info("Starting Tiny Explorers API in %s mode", ENVIRONMENT)
@@ -204,22 +261,34 @@ async def startup_db() -> None:
             "The backend will run in local fallback mode without persistent storage."
         )
         db = MockDatabase()
+        mongo_status = "not_configured"
         return
 
     try:
-        client = AsyncIOMotorClient(MONGO_URL, serverSelectionTimeoutMS=3000)
+        client = AsyncIOMotorClient(MONGO_URL, serverSelectionTimeoutMS=5000)
         await client.admin.command("ping")
         db = client[DB_NAME]
+        mongo_status = "connected"
         logger.info("Connected to MongoDB database %s", DB_NAME)
     except PyMongoError as exc:
-        logger.warning(
-            "Unable to connect to MongoDB at %s: %s. "
-            "Continuing with in-memory fallback storage.",
-            MONGO_URL,
+        # Never interpolate MONGO_URL itself here — only the exception, whose
+        # message never includes credentials.
+        logger.error(
+            "MongoDB connectivity check failed (%s): %s. "
+            "This is commonly caused by Atlas Network Access/IP allowlist, DNS, "
+            "or credential/auth configuration outside this application.",
+            type(exc).__name__,
             exc,
         )
         client = None
-        db = MockDatabase()
+        mongo_status = "unavailable"
+        if ENVIRONMENT == "production":
+            # Never silently serve requests as if persistence worked — every
+            # collection access will raise instead of appearing to succeed.
+            db = UnavailableDatabase()
+        else:
+            logger.warning("Continuing with in-memory fallback storage (non-production).")
+            db = MockDatabase()
 
 
 # ---------- Models ----------
@@ -333,7 +402,11 @@ async def root() -> Dict[str, str]:
 
 @api_router.get("/health")
 async def health() -> Dict[str, str]:
-    return {"status": "healthy", "time": datetime.now(timezone.utc).isoformat()}
+    return {
+        "status": "healthy",
+        "time": datetime.now(timezone.utc).isoformat(),
+        "database": mongo_status,
+    }
 
 
 @api_router.post("/newsletter", status_code=201)
@@ -363,7 +436,9 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
     doc = entry.model_dump()
     doc["created_at"] = doc["created_at"].isoformat()
     doc["updated_at"] = doc["updated_at"].isoformat()
-    await db.newsletter.insert_one(doc)
+    result = await db.newsletter.insert_one(doc)
+    if not getattr(result, "inserted_id", None):
+        raise HTTPException(status_code=500, detail="Could not save subscription")
 
     await send_newsletter_welcome(normalized_email)
 
