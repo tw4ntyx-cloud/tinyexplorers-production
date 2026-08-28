@@ -432,7 +432,7 @@ export const FOOTER = {
     {
       title: "Connect",
       links: [
-        { label: "Book a Tour", href: TOUR_BOOKING.url, external: true },
+        { label: "Book a Tour", action: "tour" },
         { label: "Adventures", to: "/adventures" },
         { label: "Gallery", to: "/#gallery" },
         { label: "Careers", to: "/parents#careers" },

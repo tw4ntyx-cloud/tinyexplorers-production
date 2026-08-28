@@ -3,7 +3,8 @@ import { ArrowUpRight, Camera } from "lucide-react";
 import { Section, Container, SectionHeader } from "./ui/Section";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./ui/dialog";
 import SmartImage from "./ui/SmartImage";
-import { IMAGES, TOUR_BOOKING } from "../data/content";
+import { IMAGES } from "../data/content";
+import { useTour } from "./layout/SiteLayout";
 
 /**
  * Gallery — refined.
@@ -66,6 +67,7 @@ function Tile({ source, label, time, span, onOpen }) {
 
 export default function Gallery() {
   const [openIndex, setOpenIndex] = useState(null);
+  const openTour = useTour();
   const activeTile = openIndex !== null ? TILES[openIndex] : null;
 
   return (
@@ -76,16 +78,17 @@ export default function Gallery() {
           title="Moments from our week."
           lede="An everyday glimpse — gardens, studios, snack tables and the quiet corners in between."
         >
-          <a
-            href={TOUR_BOOKING.url}
+          <button
+            type="button"
+            onClick={openTour}
             data-testid="gallery-tour-link"
             className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-brand-cream px-6 py-3 text-sm font-semibold text-brand-ink transition-colors duration-300 ease-soft hover:border-brand-ink/30"
-            aria-label="Book a 30-minute campus tour with Google Calendar"
+            aria-label="Open tour information"
           >
             <Camera size={14} strokeWidth={2.5} />
             Book a campus tour
             <ArrowUpRight size={15} strokeWidth={2.5} />
-          </a>
+          </button>
         </SectionHeader>
 
         <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-6 md:grid-rows-2 md:gap-6">

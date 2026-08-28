@@ -3,7 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
-import { BRAND, NAV, TOUR_BOOKING } from "../data/content";
+import { BRAND, NAV } from "../data/content";
+import { useTour } from "./layout/SiteLayout";
 
 /**
  * Premium navbar — router-aware, dropdown-capable, scroll-locked mobile.
@@ -43,19 +44,12 @@ function isActiveTo(currentPath, to) {
   return currentPath === target || currentPath.startsWith(target + "/");
 }
 
-function NavLinkBase({ to, href, external, children, isActive, onClick, className = "" }) {
+function NavLinkBase({ to, children, isActive, onClick, className = "" }) {
   const base =
     "rounded-full px-4 py-2 text-sm font-medium transition duration-300 ease-soft hover:bg-brand-ink/5 hover:text-brand-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-cream";
   const state = isActive
     ? "text-brand-ink bg-brand-ink/10 shadow-[inset_0_0_0_1px_rgba(31,31,31,0.06)]"
     : "text-brand-ink/80";
-  if (href || external) {
-    return (
-      <a href={href || to} onClick={onClick} className={`${base} ${state} ${className}`}>
-        {children}
-      </a>
-    );
-  }
   return (
     <Link to={resolveLinkTo(to)} onClick={onClick} className={`${base} ${state} ${className}`}>
       {children}
@@ -197,15 +191,9 @@ function Dropdown({ label, items, currentPath, onItemClick }) {
               );
               return (
                 <li key={item.to || item.href || item.label}>
-                  {item.href || item.external ? (
-                    <a href={item.href || item.to} onClick={handleItemClick} role="menuitem" className={itemClassName}>
-                      {content}
-                    </a>
-                  ) : (
-                    <Link to={resolveLinkTo(item.to)} onClick={handleItemClick} role="menuitem" className={itemClassName}>
-                      {content}
-                    </Link>
-                  )}
+                  <Link to={resolveLinkTo(item.to)} onClick={handleItemClick} role="menuitem" className={itemClassName}>
+                    {content}
+                  </Link>
                 </li>
               );
             })}
@@ -225,8 +213,6 @@ function MobileGroup({ item, currentPath, onClose }) {
     return (
       <NavLinkBase
         to={item.to}
-        href={item.href}
-        external={item.external}
         isActive={active}
         onClick={onClose}
         className="!rounded-2xl !px-4 !py-3.5 !text-base"
@@ -276,15 +262,9 @@ function MobileGroup({ item, currentPath, onClose }) {
             );
             return (
               <li key={child.to || child.href || child.label}>
-                {child.href || child.external ? (
-                  <a href={child.href || child.to} onClick={onClose} className={itemClassName}>
-                    {content}
-                  </a>
-                ) : (
-                  <Link to={resolveLinkTo(child.to)} onClick={onClose} className={itemClassName}>
-                    {content}
-                  </Link>
-                )}
+                <Link to={resolveLinkTo(child.to)} onClick={onClose} className={itemClassName}>
+                  {content}
+                </Link>
               </li>
             );
           })}
@@ -297,6 +277,7 @@ function MobileGroup({ item, currentPath, onClose }) {
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const openTour = useTour();
   const { pathname } = useLocation();
 
   // Scroll-shrink effect
@@ -370,10 +351,10 @@ export default function Navbar() {
           <Button
             variant="accent"
             size="sm"
-            href={TOUR_BOOKING.url}
+            onClick={openTour}
             testId="nav-book-tour-button"
             icon={false}
-            aria-label="Book a 30-minute nursery tour with Google Calendar"
+            aria-label="Open tour information"
           >
             Book a Tour
           </Button>
@@ -414,11 +395,13 @@ export default function Navbar() {
                 <Button
                   variant="accent"
                   className="!w-full"
-                  href={TOUR_BOOKING.url}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    openTour();
+                  }}
                   testId="mobile-book-tour-button"
                   icon={false}
-                  aria-label="Book a 30-minute nursery tour with Google Calendar"
+                  aria-label="Open tour information"
                 >
                   Book a Tour
                 </Button>

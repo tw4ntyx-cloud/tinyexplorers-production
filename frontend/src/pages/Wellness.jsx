@@ -11,7 +11,8 @@ import SmartImage from "../components/ui/SmartImage";
 import ContentModal from "../components/ContentModal";
 import PageMeta from "../components/PageMeta";
 import { SplatFrame, DoodleDots } from "../components/decor/Splat";
-import { WELLNESS_PAGE, IMAGES, TOUR_BOOKING } from "../data/content";
+import { WELLNESS_PAGE, IMAGES } from "../data/content";
+import { useTour } from "../components/layout/SiteLayout";
 
 /**
  * Wellness & Care page — the deeper, dedicated page.
@@ -26,6 +27,7 @@ import { WELLNESS_PAGE, IMAGES, TOUR_BOOKING } from "../data/content";
  */
 export default function Wellness() {
   const [rhythmOpen, setRhythmOpen] = useState(false);
+  const openTour = useTour();
   const w = WELLNESS_PAGE;
 
   const rhythmModalSections = [
@@ -74,8 +76,8 @@ export default function Wellness() {
       >
         <Button
           variant="primary"
-          href={TOUR_BOOKING.url}
-          aria-label="Schedule a 30-minute wellness tour with Google Calendar"
+          onClick={openTour}
+          aria-label="Open tour information"
         >
           Schedule a wellness tour
         </Button>
@@ -400,8 +402,8 @@ export default function Wellness() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Button
                   variant="accent"
-                  href={TOUR_BOOKING.url}
-                  aria-label="Schedule a 30-minute wellness tour with Google Calendar"
+                  onClick={openTour}
+                  aria-label="Open tour information"
                 >
                   Schedule a wellness tour
                 </Button>

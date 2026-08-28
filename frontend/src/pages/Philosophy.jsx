@@ -7,7 +7,8 @@ import SmartImage from "../components/ui/SmartImage";
 import { SplatFrame, DoodleSmile, DoodleDots } from "../components/decor/Splat";
 import ContentModal from "../components/ContentModal";
 import PageMeta from "../components/PageMeta";
-import { PHILOSOPHY, IMAGES, TOUR_BOOKING } from "../data/content";
+import { PHILOSOPHY, IMAGES } from "../data/content";
+import { useTour } from "../components/layout/SiteLayout";
 
 /**
  * Philosophy page — editorial storytelling.
@@ -24,6 +25,7 @@ import { PHILOSOPHY, IMAGES, TOUR_BOOKING } from "../data/content";
  */
 export default function Philosophy() {
   const [wellnessOpen, setWellnessOpen] = useState(false);
+  const openTour = useTour();
   const p = PHILOSOPHY;
 
   const wellnessModalSections = [
@@ -68,9 +70,9 @@ export default function Philosophy() {
       >
         <Button
           variant="primary"
-          href={TOUR_BOOKING.url}
+          onClick={openTour}
           testId="philosophy-hero-cta"
-          aria-label="Book a 30-minute campus visit with Google Calendar"
+          aria-label="Open tour information"
         >
           Book a campus visit
         </Button>
@@ -339,8 +341,8 @@ export default function Philosophy() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Button
                   variant="accent"
-                  href={TOUR_BOOKING.url}
-                  aria-label="Book a 30-minute campus visit with Google Calendar"
+                  onClick={openTour}
+                  aria-label="Open tour information"
                 >
                   Book a campus visit
                 </Button>

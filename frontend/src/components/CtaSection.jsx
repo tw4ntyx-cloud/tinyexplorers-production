@@ -4,6 +4,7 @@ import { Container } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
 import { IMAGES, BRAND, TOUR_BOOKING } from "../data/content";
 import { SplatFrame, DoodleSmile, DoodleCurl, DoodleBurst } from "./decor/Splat";
+import { useTour } from "./layout/SiteLayout";
 
 /**
  * CTA section — pivoted from the previous dark `bg-brand-ink` mesh-gradient
@@ -19,6 +20,7 @@ import { SplatFrame, DoodleSmile, DoodleCurl, DoodleBurst } from "./decor/Splat"
  * 2 curated doodles. That's it.
  */
 export default function CtaSection() {
+  const openTour = useTour();
   return (
     <section id="cta" data-testid="cta-section" className="relative py-24 md:py-32">
       <Container size="narrow">
@@ -61,11 +63,12 @@ export default function CtaSection() {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a
-                  href={TOUR_BOOKING.url}
+                <button
+                  type="button"
+                  onClick={openTour}
                   data-testid="cta-primary-button"
                   className="group inline-flex items-center gap-2 rounded-full bg-brand-orange px-8 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:shadow-soft-lg"
-                  aria-label="Schedule a 30-minute nursery tour with Google Calendar"
+                  aria-label="Open tour information"
                 >
                   Schedule a Tour
                   <ArrowRight
@@ -73,7 +76,7 @@ export default function CtaSection() {
                     strokeWidth={2.5}
                     className="transition-transform duration-300 group-hover:translate-x-1"
                   />
-                </a>
+                </button>
                 <a
                   href={`mailto:${BRAND.email}`}
                   data-testid="cta-email-button"

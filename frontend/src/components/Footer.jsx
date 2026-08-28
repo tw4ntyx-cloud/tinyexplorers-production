@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import api from "../lib/api";
 import FieldError from "./ui/FieldError";
 import { BRAND, FOOTER } from "../data/content";
+import { useTour } from "./layout/SiteLayout";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -30,12 +31,16 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *  has live social accounts to link to.
  */
 
-function FooterLink({ to, href, children }) {
-  if (href) {
+function FooterLink({ to, action, onTour, children }) {
+  if (action === "tour") {
     return (
-      <a href={href} className="text-[15px] text-brand-ink/70 transition hover:text-brand-ink">
+      <button
+        type="button"
+        onClick={onTour}
+        className="text-left text-[15px] text-brand-ink/70 transition hover:text-brand-ink"
+      >
         {children}
-      </a>
+      </button>
     );
   }
   return (
@@ -46,6 +51,7 @@ function FooterLink({ to, href, children }) {
 }
 
 export default function Footer({ onEnroll }) {
+  const openTour = useTour();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   // status: idle | loading | success | duplicate | error
@@ -148,7 +154,7 @@ export default function Footer({ onEnroll }) {
               <ul className="mt-5 space-y-3">
                 {col.links.map((l) => (
                   <li key={`${col.title}-${l.label}`}>
-                    <FooterLink to={l.to} href={l.href}>{l.label}</FooterLink>
+                    <FooterLink to={l.to} action={l.action} onTour={openTour}>{l.label}</FooterLink>
                   </li>
                 ))}
               </ul>

@@ -5,6 +5,7 @@ import Footer from "../Footer";
 import EnrollmentModal from "../EnrollmentModal";
 import AdmissionsModal from "../AdmissionsModal";
 import InquiryModal from "../InquiryModal";
+import TourModal from "../TourModal";
 
 /**
  * <SiteLayout> — the consistent page shell.
@@ -15,10 +16,12 @@ import InquiryModal from "../InquiryModal";
  *   - <Footer>           premium footer (single instance across pages)
  *   - <AdmissionsModal>  global admissions modal (opened by CTAs like Hero, CtaSection)
  *   - <EnrollmentModal>  lifted from App.js so any page can open it
+ *   - <TourModal>        introduction step before Google Calendar scheduling
  *
  * Provides an `EnrollContext` so any descendant can call:
  *   - `openEnroll(program)` — opens enrollment inquiry modal
  *   - `openAdmissions()` — opens admissions modal
+ *   - `openTour()` — opens the tour intro modal
  * Without prop-drilling — pages, sections, page-hero CTAs, etc.
  *
  * Also: scrolls to top on route change (cleaner navigation feel), and
@@ -26,17 +29,19 @@ import InquiryModal from "../InquiryModal";
  * to a hash inside a new page.
  */
 
-const EnrollContext = createContext({ open: () => {}, openAdmissions: () => {}, openInquiry: () => {} });
+const EnrollContext = createContext({ open: () => {}, openAdmissions: () => {}, openInquiry: () => {}, openTour: () => {} });
 
 export const useEnroll = () => useContext(EnrollContext).open;
 export const useAdmissions = () => useContext(EnrollContext).openAdmissions;
 export const useInquiry = () => useContext(EnrollContext).openInquiry;
+export const useTour = () => useContext(EnrollContext).openTour;
 
 export default function SiteLayout() {
   const [enrollOpen, setEnrollOpen] = useState(false);
   const [enrollProgram, setEnrollProgram] = useState("");
   const [admissionsOpen, setAdmissionsOpen] = useState(false);
   const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
 
   const openEnroll = (program = "") => {
     setEnrollProgram(program);
@@ -66,6 +71,14 @@ export default function SiteLayout() {
     setInquiryOpen(value);
   };
 
+  const openTour = () => {
+    setTourOpen(true);
+  };
+
+  const closeTour = (value) => {
+    setTourOpen(value);
+  };
+
   const { pathname, hash } = useLocation();
 
   // Scroll-to-top on route change. If there's a hash, jump to that element
@@ -87,7 +100,7 @@ export default function SiteLayout() {
   }, [pathname, hash]);
 
   return (
-    <EnrollContext.Provider value={{ open: openEnroll, openAdmissions, openInquiry }}>
+    <EnrollContext.Provider value={{ open: openEnroll, openAdmissions, openInquiry, openTour }}>
       <div className="App min-h-screen bg-brand-cream text-brand-ink">
         <a
           href="#main-content"
@@ -110,6 +123,7 @@ export default function SiteLayout() {
           onOpenChange={closeAdmissions}
         />
         <InquiryModal open={inquiryOpen} onOpenChange={closeInquiry} />
+        <TourModal open={tourOpen} onOpenChange={closeTour} />
         <EnrollmentModal
           open={enrollOpen}
           onOpenChange={closeEnroll}

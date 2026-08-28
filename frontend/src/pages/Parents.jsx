@@ -6,7 +6,8 @@ import FAQ from "../components/page/FAQ";
 import Button from "../components/ui/Button";
 import AdmissionsModal from "../components/AdmissionsModal";
 import PageMeta from "../components/PageMeta";
-import { PARENTS, IMAGES, PARENT_POLICIES, BRAND, TOUR_BOOKING } from "../data/content";
+import { PARENTS, IMAGES, PARENT_POLICIES, BRAND } from "../data/content";
+import { useTour } from "../components/layout/SiteLayout";
 
 /**
  * Parents page — minimal premium information architecture.
@@ -42,6 +43,7 @@ function IconBadge({ Icon, color = "#FF6B2C" }) {
 
 export default function Parents() {
   const [admissionsOpen, setAdmissionsOpen] = useState(false);
+  const openTour = useTour();
   const p = PARENTS;
 
   return (
@@ -377,8 +379,8 @@ export default function Parents() {
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
                 <Button
                   variant="accent"
-                  href={TOUR_BOOKING.url}
-                  aria-label="Book a 30-minute campus tour with Google Calendar"
+                  onClick={openTour}
+                  aria-label="Open tour information"
                 >
                   Book a campus tour
                 </Button>

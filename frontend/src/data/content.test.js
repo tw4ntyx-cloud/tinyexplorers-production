@@ -46,11 +46,12 @@ describe("tour booking configuration", () => {
     expect(matches).toEqual(["data/content.js"]);
   });
 
-  it("wires the footer Book a Tour link to the centralized URL", () => {
+  it("marks the footer Book a Tour link as a tour action", () => {
     const connectColumn = FOOTER.columns.find((column) => column.title === "Connect");
     const bookTourLink = connectColumn.links.find((link) => link.label === "Book a Tour");
 
-    expect(bookTourLink.href).toBe(TOUR_BOOKING.url);
+    expect(bookTourLink.action).toBe("tour");
+    expect(bookTourLink.href).toBeUndefined();
     expect(bookTourLink.to).toBeUndefined();
   });
 
@@ -61,7 +62,7 @@ describe("tour booking configuration", () => {
     expect(modalSource).not.toContain("We can arrange a calm tour");
   });
 
-  it("routes visible tour CTAs through the centralized booking config", () => {
+  it("routes visible tour CTA components through the TourModal trigger", () => {
     const ctaFiles = [
       "src/components/CtaSection.jsx",
       "src/components/Gallery.jsx",
@@ -76,10 +77,41 @@ describe("tour booking configuration", () => {
     for (const file of ctaFiles) {
       const source = fs.readFileSync(path.join(process.cwd(), file), "utf8");
 
-      expect(source).toContain("TOUR_BOOKING.url");
+      expect(source).toContain("useTour");
       expect(source).not.toMatch(/href=["']#(?:cta|visit)["']/);
       expect(source).not.toMatch(/javascript:void\(0\)/);
       expect(source).not.toMatch(/tinyexplorers\.bm|admin\.tinyexplorers|123-4567|555-0100/i);
     }
+  });
+
+  it("keeps the Google Calendar URL only in config, the modal, env docs, and tests", () => {
+    const srcRoot = path.join(process.cwd(), "src");
+    const matches = [];
+
+    const walk = (dir) => {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          walk(fullPath);
+        } else if (/\.(js|jsx)$/.test(entry.name) && !entry.name.endsWith(".test.js")) {
+          const contents = fs.readFileSync(fullPath, "utf8");
+          if (contents.includes("TOUR_BOOKING.url")) {
+            matches.push(path.relative(srcRoot, fullPath));
+          }
+        }
+      }
+    };
+
+    walk(srcRoot);
+
+    expect(matches.sort()).toEqual(["components/TourModal.jsx"].sort());
+  });
+
+  it("keeps TourModal as an introduction, not a duplicate booking form", () => {
+    const modalSource = fs.readFileSync(path.join(process.cwd(), "src/components/TourModal.jsx"), "utf8");
+
+    expect(modalSource).toContain("TOUR_BOOKING.url");
+    expect(modalSource).toContain("Choose a Tour Time");
+    expect(modalSource).not.toMatch(/<input|<textarea|<select|api\.post|resend|mongodb/i);
   });
 });

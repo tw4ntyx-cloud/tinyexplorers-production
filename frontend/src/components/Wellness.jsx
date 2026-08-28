@@ -3,7 +3,8 @@ import { Stethoscope, Wind, MessageCircleHeart, ArrowRight } from "lucide-react"
 import { Section, Container, Eyebrow } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
 import { SplatFrame, DoodleDots } from "./decor/Splat";
-import { IMAGES, WELLNESS, TOUR_BOOKING } from "../data/content";
+import { IMAGES, WELLNESS } from "../data/content";
+import { useTour } from "./layout/SiteLayout";
 
 /**
  * Wellness & Care — the homepage's emotional trust anchor.
@@ -36,6 +37,7 @@ const PILLAR_ICONS = {
 };
 
 export default function Wellness() {
+  const openTour = useTour();
   return (
     <Section
       id="wellness"
@@ -102,11 +104,12 @@ export default function Wellness() {
             </ul>
 
             <div className="mt-11">
-              <a
-                href={TOUR_BOOKING.url}
+              <button
+                type="button"
+                onClick={openTour}
                 data-testid="wellness-cta"
                 className="group inline-flex items-center gap-2 rounded-full bg-brand-ink px-7 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange hover:shadow-soft-lg"
-                aria-label="Schedule a 30-minute wellness tour with Google Calendar"
+                aria-label="Open tour information"
               >
                 {WELLNESS.cta}
                 <ArrowRight
@@ -114,7 +117,7 @@ export default function Wellness() {
                   strokeWidth={2.5}
                   className="transition-transform duration-300 group-hover:translate-x-1"
                 />
-              </a>
+              </button>
             </div>
           </div>
 

@@ -11,7 +11,7 @@ import { SplatFrame, DoodleSmile } from "../components/decor/Splat";
 import PageMeta from "../components/PageMeta";
 
 import { ADMISSIONS, IMAGES, BRAND, TOUR_BOOKING } from "../data/content";
-import { useInquiry } from "../components/layout/SiteLayout";
+import { useInquiry, useTour } from "../components/layout/SiteLayout";
 
 /**
  * Admissions page.
@@ -69,7 +69,7 @@ function ProcessSteps({ steps }) {
   );
 }
 
-function VisitBlock({ visit }) {
+function VisitBlock({ visit, onTour }) {
   return (
     <Section id="visit" testId="admissions-visit" size="lg">
       <Container>
@@ -104,9 +104,9 @@ function VisitBlock({ visit }) {
               <Button
                 variant="accent"
                 size="lg"
-                href={TOUR_BOOKING.url}
+                onClick={onTour}
                 testId="admissions-book-tour"
-                aria-label="Book a 30-minute nursery tour with Google Calendar"
+                aria-label="Open tour information"
               >
                 Book a tour
               </Button>
@@ -201,7 +201,7 @@ function TuitionWaitlist({ tuition, waitlist }) {
   );
 }
 
-function ClosingCta({ onInquiry }) {
+function ClosingCta({ onInquiry, onTour }) {
   return (
     <Section testId="admissions-closing" size="default">
       <Container size="narrow">
@@ -220,9 +220,9 @@ function ClosingCta({ onInquiry }) {
             <Button
               variant="secondary"
               size="lg"
-              href={TOUR_BOOKING.url}
+              onClick={onTour}
               icon="arrow-up-right"
-              aria-label="Book a 30-minute nursery tour with Google Calendar"
+              aria-label="Open tour information"
             >
               Book a tour
             </Button>
@@ -238,6 +238,7 @@ function ClosingCta({ onInquiry }) {
 
 export default function Admissions() {
   const openInquiry = useInquiry();
+  const openTour = useTour();
   const { hero, steps, visit, tuition, waitlist, faq, meta } = ADMISSIONS;
 
   return (
@@ -262,9 +263,9 @@ export default function Admissions() {
         <Button
           variant="secondary"
           size="lg"
-          href={TOUR_BOOKING.url}
+          onClick={openTour}
           icon="arrow-up-right"
-          aria-label="Book a 30-minute nursery tour with Google Calendar"
+          aria-label="Open tour information"
         >
           {hero.cta_secondary}
         </Button>
@@ -272,7 +273,7 @@ export default function Admissions() {
 
       <ProcessSteps steps={steps} />
 
-      <VisitBlock visit={visit} />
+      <VisitBlock visit={visit} onTour={openTour} />
 
       <TuitionWaitlist tuition={tuition} waitlist={waitlist} />
 
@@ -292,7 +293,7 @@ export default function Admissions() {
         surface="white"
       />
 
-      <ClosingCta onInquiry={openInquiry} />
+      <ClosingCta onInquiry={openInquiry} onTour={openTour} />
     </>
   );
 }
