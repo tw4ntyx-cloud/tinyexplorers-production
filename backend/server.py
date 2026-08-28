@@ -152,16 +152,25 @@ class MockDatabase:
 
 
 def _is_placeholder_mongo_url(url: str) -> bool:
-    lowered = url.lower()
-    return (
-        not url
-        or "username" in lowered
-        or "password" in lowered
-        or "cluster.mongodb.net" in lowered
-        or "example.com" in lowered
-        or "<" in lowered
-        or ">" in lowered
-    )
+    """Detect literal template/example MONGO_URL values only.
+
+    Must NOT reject legitimate credentials/hostnames that merely contain
+    words like "username"/"password", or normal *.mongodb.net Atlas hosts —
+    only exact placeholder patterns copied from docs/.env.example.
+    """
+    stripped = url.strip()
+    if not stripped:
+        return True
+    if "<" in stripped or ">" in stripped or "..." in stripped:
+        return True
+    lowered = stripped.lower()
+    if "//user:pass@" in lowered or "//username:password@" in lowered:
+        return True
+    if "://cluster.mongodb.net" in lowered or "@cluster.mongodb.net" in lowered:
+        return True
+    if "://example.com" in lowered or "@example.com" in lowered:
+        return True
+    return False
 
 
 app = FastAPI(title="Tiny Explorers API")
