@@ -1,3 +1,6 @@
+# Points at the current temporary GitHub Pages review URL. At launch,
+# regenerate this file for https://tinyexplorersbda.com (static file, not
+# environment-driven).
 User-agent: *
 Allow: /
 

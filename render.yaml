@@ -19,6 +19,11 @@ services:
       # but its domain must be verified in Resend before production sending works.
       - key: FROM_EMAIL
         sync: false
+      # Public website URL used in outgoing email links. Set to the current
+      # GitHub Pages review URL for pre-launch testing; change to
+      # https://tinyexplorersbda.com at launch — no code changes required.
+      - key: WEBSITE_URL
+        sync: false
       - key: ADMIN_API_KEY
         sync: false
       - key: CORS_ORIGINS

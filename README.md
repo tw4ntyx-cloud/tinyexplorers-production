@@ -224,7 +224,7 @@ Standard FastAPI + uvicorn deployment (already containerized —
 
 - `MONGO_URL` — MongoDB connection string
 - `DB_NAME` — database name
-- `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://tinyexplorers.bm`)
+- `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://tinyexplorersbda.com`)
 - `CORS_ALLOW_CREDENTIALS` — `true`/`false`
 - `ADMIN_API_KEY` — shared secret for admin-only GET/sync endpoints
 - `RESEND_API_KEY` — Resend API key for transactional email (enrollment/inquiry/
@@ -235,6 +235,12 @@ Standard FastAPI + uvicorn deployment (already containerized —
   `hello@tinyexplorersbda.com`
 - `FROM_EMAIL` — sending identity for all outgoing email; its domain must be
   verified in Resend. Default/recommended: `hello@tinyexplorersbda.com`
+- `WEBSITE_URL` — public website URL used in outgoing email links (e.g. the
+  enrollment confirmation's "philosophy", "gallery", and "wellness" links).
+  Currently the temporary GitHub Pages review URL
+  (`https://tw4ntyx-cloud.github.io/tinyexplorers-production`) so those links
+  work during pre-launch testing. At launch, change to
+  `https://tinyexplorersbda.com` — no code changes required.
 - Google Workspace newsletter automation (optional — see
   [docs/google-workspace-newsletter.md](docs/google-workspace-newsletter.md)):
   - `GOOGLE_WORKSPACE_ADMIN_EMAIL`, `GOOGLE_NEWSLETTER_GROUP_EMAIL` — always required
@@ -267,9 +273,15 @@ config need to change — no source edits:
 | Variable | Set to |
 |---|---|
 | `REACT_APP_BACKEND_URL` (frontend build) | `https://<final-api-domain>` |
-| `CORS_ORIGINS` (backend) | `https://<final-frontend-domain>` |
+| `REACT_APP_WEBSITE_URL` (frontend build) | `https://tinyexplorersbda.com` |
+| `WEBSITE_URL` (backend) | `https://tinyexplorersbda.com` |
+| `CORS_ORIGINS` (backend) | `https://tinyexplorersbda.com` |
 | `GOOGLE_NEWSLETTER_GROUP_EMAIL` (backend) | `newsletter@tinyexplorersbda.com` (already the target) |
 
 `frontend/src/lib/api.js` already reads `REACT_APP_BACKEND_URL` at build
 time and falls back to relative `/api` only when it's unset — it never
-hardcodes a GitHub Pages, Render, or `localhost` URL.
+hardcodes a GitHub Pages, Render, or `localhost` URL. Likewise,
+`frontend/src/data/content.js` reads `REACT_APP_WEBSITE_URL` for
+canonical/OG URLs and structured data, and `backend/email_service.py` reads
+`WEBSITE_URL` for links inside outgoing emails — both default to the
+current GitHub Pages review URL until changed.

@@ -20,6 +20,10 @@ RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 # Canonical staff notification recipient / sender identity for this deployment.
 ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "hello@tinyexplorersbda.com")
 FROM_EMAIL = os.environ.get("FROM_EMAIL", "hello@tinyexplorersbda.com")
+# Public website used in email links. Defaults to the current GitHub Pages
+# staging deployment so links work during pre-launch testing; set to
+# https://tinyexplorersbda.com in production once that domain is live.
+WEBSITE_URL = os.environ.get("WEBSITE_URL", "https://tw4ntyx-cloud.github.io/tinyexplorers-production").rstrip("/")
 
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -64,15 +68,15 @@ class EmailService:
                   <strong>In the meantime:</strong>
                 </p>
                 <ul style="margin: 10px 0 0 0; padding-left: 20px; font-size: 14px;">
-                  <li>Explore our <a href="https://tinyexplorers.bm/philosophy" style="color: #FF6B2C; text-decoration: none;">philosophy and approach</a></li>
-                  <li>Check out our <a href="https://tinyexplorers.bm/#gallery" style="color: #FF6B2C; text-decoration: none;">photo gallery</a></li>
-                  <li>Learn about our <a href="https://tinyexplorers.bm/wellness" style="color: #FF6B2C; text-decoration: none;">wellness & care practices</a></li>
+                  <li>Explore our <a href="{WEBSITE_URL}/philosophy" style="color: #FF6B2C; text-decoration: none;">philosophy and approach</a></li>
+                  <li>Check out our <a href="{WEBSITE_URL}/#gallery" style="color: #FF6B2C; text-decoration: none;">photo gallery</a></li>
+                  <li>Learn about our <a href="{WEBSITE_URL}/wellness" style="color: #FF6B2C; text-decoration: none;">wellness & care practices</a></li>
                 </ul>
               </div>
               
               <p style="font-size: 16px; margin-bottom: 20px;">
-                If you have any urgent questions, feel free to call us at <a href="tel:+14415550100" style="color: #FF6B2C; text-decoration: none;">+1 (441) 555-0100</a> 
-                or email <a href="mailto:admissions@tinyexplorers.bm" style="color: #FF6B2C; text-decoration: none;">admissions@tinyexplorers.bm</a>.
+                If you have any questions, feel free to email us at
+                <a href="mailto:hello@tinyexplorersbda.com" style="color: #FF6B2C; text-decoration: none;">hello@tinyexplorersbda.com</a>.
               </p>
               
               <p style="font-size: 16px; margin-bottom: 40px;">
@@ -82,7 +86,7 @@ class EmailService:
               <p style="border-top: 1px solid #e5e5e5; padding-top: 20px; margin-top: 40px; color: #888; font-size: 12px;">
                 Tiny Explorers Bermuda Ltd.<br>
                 Hamilton, Bermuda<br>
-                <a href="https://tinyexplorers.bm" style="color: #FF6B2C; text-decoration: none;">tinyexplorers.bm</a>
+                <a href="{WEBSITE_URL}" style="color: #FF6B2C; text-decoration: none;">{WEBSITE_URL}</a>
               </p>
             </div>
           </body>
@@ -142,10 +146,6 @@ class EmailService:
                 <p style="margin: 0 0 15px 0;"><strong>Child Age:</strong> {safe_child_age}</p>
                 <p style="margin: 0;"><strong>Program Interest:</strong> {safe_program}</p>
               </div>
-              
-              <p style="font-size: 14px; color: #666;">
-                <a href="https://admin.tinyexplorers.bm/inquiries/{inquiry_id}" style="color: #FF6B2C; text-decoration: none;">View in admin dashboard →</a>
-              </p>
             </div>
           </body>
         </html>
@@ -201,7 +201,7 @@ class EmailService:
               </p>
               
               <p style="border-top: 1px solid #e5e5e5; padding-top: 20px; color: #888; font-size: 12px;">
-                Tiny Explorers Bermuda Ltd. | <a href="https://tinyexplorers.bm" style="color: #FF6B2C; text-decoration: none;">tinyexplorers.bm</a>
+                Tiny Explorers Bermuda Ltd. | <a href="{WEBSITE_URL}" style="color: #FF6B2C; text-decoration: none;">{WEBSITE_URL}</a>
               </p>
             </div>
           </body>
@@ -244,6 +244,10 @@ class EmailService:
               </p>
               <p style="font-size: 16px; margin-bottom: 20px;">
                 Our team will be in touch within one business day.
+              </p>
+              <p style="font-size: 14px; margin-bottom: 20px;">
+                Questions in the meantime? Email us at
+                <a href="mailto:hello@tinyexplorersbda.com" style="color: #FF6B2C; text-decoration: none;">hello@tinyexplorersbda.com</a>.
               </p>
               <p style="border-top: 1px solid #e5e5e5; padding-top: 20px; margin-top: 40px; color: #888; font-size: 12px;">
                 Tiny Explorers Bermuda Ltd.<br>Hamilton, Bermuda

@@ -122,8 +122,12 @@ const PUBLIC_URL = process.env.PUBLIC_URL || "";
  * Canonical production origin — used for canonical/OG URLs and the sitemap.
  * The route path comes from PUBLIC_URL so project-style GitHub Pages
  * deployments resolve correctly without hardcoded document paths.
+ *
+ * Defaults to the current GitHub Pages staging origin. At launch, set
+ * REACT_APP_WEBSITE_URL=https://tinyexplorersbda.com at build time — no
+ * source changes required.
  */
-export const SITE_URL = process.env.REACT_APP_SITE_URL || "https://tw4ntyx-cloud.github.io";
+export const SITE_URL = process.env.REACT_APP_WEBSITE_URL || "https://tw4ntyx-cloud.github.io";
 
 export function getPublicAssetUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
@@ -149,7 +153,7 @@ export const BRAND = {
   location: "Hamilton · Bermuda",
   phone: "+1 (441) 123-4567",
   phoneHref: "tel:+14411234567",
-  email: "hello@tinyexplorers.bm",
+  email: "hello@tinyexplorersbda.com",
   address: "12 Reid Street, Hamilton HM 11, Bermuda",
 };
 
