@@ -224,3 +224,26 @@ Standard FastAPI + uvicorn deployment. Required env vars:
 - `MONGO_URL` — MongoDB connection string
 - `DB_NAME` — database name
 - `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://tinyexplorers.bm`)
+- `CORS_ALLOW_CREDENTIALS` — `true`/`false`
+- `ADMIN_API_KEY` — shared secret for admin-only GET/sync endpoints
+- `GOOGLE_SERVICE_ACCOUNT_JSON`, `GOOGLE_WORKSPACE_ADMIN_EMAIL`,
+  `GOOGLE_NEWSLETTER_GROUP_EMAIL` — optional Google Workspace newsletter
+  automation; see [docs/google-workspace-newsletter.md](docs/google-workspace-newsletter.md)
+
+### Connecting the final production domain (config-only, no code changes)
+
+The current GitHub Pages URL
+(`https://tw4ntyx-cloud.github.io/tinyexplorers-production/`) is a
+**temporary preview**, not the production deployment. When the
+organization's real domain is ready, only environment variables/hosting
+config need to change — no source edits:
+
+| Variable | Set to |
+|---|---|
+| `REACT_APP_BACKEND_URL` (frontend build) | `https://<final-api-domain>` |
+| `CORS_ORIGINS` (backend) | `https://<final-frontend-domain>` |
+| `GOOGLE_NEWSLETTER_GROUP_EMAIL` (backend) | `newsletter@tinyexplorersbda.com` (already the target) |
+
+`frontend/src/lib/api.js` already reads `REACT_APP_BACKEND_URL` at build
+time and falls back to relative `/api` only when it's unset — it never
+hardcodes a GitHub Pages, Render, or `localhost` URL.

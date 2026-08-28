@@ -21,6 +21,12 @@ services:
         sync: false
       - key: CORS_ALLOW_CREDENTIALS
         value: "false"
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: GOOGLE_WORKSPACE_ADMIN_EMAIL
+        sync: false
+      - key: GOOGLE_NEWSLETTER_GROUP_EMAIL
+        sync: false
       - key: ENVIRONMENT
         value: production
       - key: LOG_LEVEL

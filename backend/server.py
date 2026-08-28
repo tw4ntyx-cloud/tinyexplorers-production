@@ -17,6 +17,7 @@ from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 from starlette.middleware.cors import CORSMiddleware
 
+import google_workspace
 from email_service import (
     send_enrollment_admin_notification,
     send_enrollment_confirmation,
@@ -123,6 +124,21 @@ class InMemoryCollection:
 
         return InsertOneResult(inserted_id=_id)
 
+    async def update_one(self, query: Dict[str, Any], update: Dict[str, Any]) -> Any:
+        matched = 0
+        for document in self._documents:
+            if _matches(document, query):
+                matched = 1
+                document.update(update.get("$set", {}))
+                break
+
+        class UpdateResult:
+            def __init__(self, matched_count: int) -> None:
+                self.matched_count = matched_count
+                self.modified_count = matched_count
+
+        return UpdateResult(matched_count=matched)
+
     def find(self, query: Optional[Dict[str, Any]] = None, projection: Optional[Dict[str, Any]] = None) -> InMemoryCursor:
         return InMemoryCursor(list(self._documents), query=query, projection=projection)
 
@@ -199,6 +215,10 @@ async def startup_db() -> None:
 
 # ---------- Models ----------
 class NewsletterCreate(BaseModel):
+    email: EmailStr
+
+
+class NewsletterUnsubscribe(BaseModel):
     email: EmailStr
 
 
@@ -322,14 +342,20 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
         }
 
     entry = NewsletterEntry(email=normalized_email)
+
+    # Try to add the subscriber to the Google Group right away. If Google
+    # Workspace isn't configured (no credentials yet) or the attempt fails,
+    # the record is preserved as "pending" for later retry via the admin
+    # sync endpoint — it is never discarded. See docs/google-workspace-newsletter.md.
+    membership_result = await google_workspace.add_subscriber_to_group(normalized_email)
+    if membership_result in ("added", "already_member"):
+        entry.status = "subscribed"
+
     doc = entry.model_dump()
     doc["created_at"] = doc["created_at"].isoformat()
     doc["updated_at"] = doc["updated_at"].isoformat()
     await db.newsletter.insert_one(doc)
 
-    # Subscriber is recorded as "pending" here; an authorized admin reviews the
-    # subscription_requests (newsletter) table and adds approved emails to the
-    # "Tiny Explorers Newsletter" Google Group. See docs/google-workspace-newsletter.md.
     await send_newsletter_welcome(normalized_email)
 
     return {"success": True, "message": "Thanks for subscribing!", "id": entry.id}
@@ -346,6 +372,67 @@ async def list_newsletter() -> List[NewsletterEntry]:
                 row[field] = row.get("created_at")
         row.setdefault("status", "pending")
     return rows
+
+
+@api_router.post("/admin/newsletter/sync", dependencies=[Depends(require_admin)])
+async def sync_pending_newsletter_subscribers() -> Dict[str, Any]:
+    """Retry Google Group membership for subscribers still marked "pending".
+
+    Admin-only (same shared-secret gate as the other admin GET endpoints).
+    Safe to call repeatedly or from a future scheduled job — it only ever
+    touches records whose status is "pending" and never removes a record.
+    """
+    pending = await db.newsletter.find({"status": "pending"}, {"_id": 0}).to_list(1000)
+
+    subscribed = 0
+    still_pending = 0
+    not_configured = False
+
+    for row in pending:
+        result = await google_workspace.add_subscriber_to_group(row["email"])
+        if result in ("added", "already_member"):
+            await db.newsletter.update_one(
+                {"id": row["id"]},
+                {"$set": {"status": "subscribed", "updated_at": datetime.now(timezone.utc).isoformat()}},
+            )
+            subscribed += 1
+        else:
+            if result == "not_configured":
+                not_configured = True
+            still_pending += 1
+
+    return {
+        "success": True,
+        "checked": len(pending),
+        "subscribed": subscribed,
+        "still_pending": still_pending,
+        "google_workspace_configured": not not_configured,
+    }
+
+
+@api_router.post("/admin/newsletter/unsubscribe", dependencies=[Depends(require_admin)])
+async def unsubscribe_newsletter_subscriber(payload: NewsletterUnsubscribe) -> Dict[str, Any]:
+    """Mark a subscriber unsubscribed and best-effort remove them from the Google Group.
+
+    Admin-only for now: there is no public unsubscribe endpoint yet. See
+    docs/google-workspace-newsletter.md for the recommended secure,
+    token-based self-service unsubscribe flow to build before exposing this
+    publicly. This endpoint exists so staff have a safe interim way to honor
+    unsubscribe requests (e.g. received by email or phone).
+    """
+    normalized_email = payload.email.strip().lower()
+    existing = await db.newsletter.find_one({"email": normalized_email}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="No matching subscriber found")
+
+    await google_workspace.remove_subscriber_from_group(normalized_email)
+
+    await db.newsletter.update_one(
+        {"email": normalized_email},
+        {"$set": {"status": "unsubscribed", "updated_at": datetime.now(timezone.utc).isoformat()}},
+    )
+
+    return {"success": True, "status": "unsubscribed"}
 
 
 @api_router.post("/enrollment", status_code=201)

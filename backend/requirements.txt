@@ -23,6 +23,10 @@ resend==2.10.0
 # Rate limiting
 slowapi==0.1.10
 
+# Google Workspace Admin SDK (newsletter group membership sync — server-side only)
+google-api-python-client==2.154.0
+google-auth==2.36.0
+
 # Authentication (for Phase 2)
 python-jose==3.5.0
 passlib==1.7.4
