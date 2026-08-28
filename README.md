@@ -212,7 +212,9 @@ The project is currently CRA. The easiest path:
 1. Connect this repo to a new Vercel project, set the **root directory** to `frontend`.
 2. Build command: `npm run build --legacy-peer-deps` (or remove the `@emergentbase/visual-edits` dep first).
 3. Output directory: `build`.
-4. Add env var `REACT_APP_BACKEND_URL` pointing to your deployed API.
+4. Add env vars `REACT_APP_BACKEND_URL` pointing to your deployed API and
+  `REACT_APP_TOUR_BOOKING_URL` pointing to the public Google Calendar
+  appointment schedule.
 
 **Recommended for next sprint:** migrate to Next.js for SSR + better SEO. The
 component tree is already isolated from routing concerns and ports cleanly.
@@ -274,6 +276,7 @@ config need to change — no source edits:
 |---|---|
 | `REACT_APP_BACKEND_URL` (frontend build) | `https://<final-api-domain>` |
 | `REACT_APP_WEBSITE_URL` (frontend build) | `https://tinyexplorersbda.com` |
+| `REACT_APP_TOUR_BOOKING_URL` (frontend build) | `https://calendar.app.google/PKmUZbas6Hyo397WA` |
 | `WEBSITE_URL` (backend) | `https://tinyexplorersbda.com` |
 | `CORS_ORIGINS` (backend) | `https://tinyexplorersbda.com` |
 | `GOOGLE_NEWSLETTER_GROUP_EMAIL` (backend) | `newsletter@tinyexplorersbda.com` (already the target) |
@@ -285,3 +288,6 @@ hardcodes a GitHub Pages, Render, or `localhost` URL. Likewise,
 canonical/OG URLs and structured data, and `backend/email_service.py` reads
 `WEBSITE_URL` for links inside outgoing emails — both default to the
 current GitHub Pages review URL until changed.
+Book-a-tour CTAs read `REACT_APP_TOUR_BOOKING_URL`; Google Calendar remains
+the source of truth for tour availability, confirmations, reminders, and
+booking conflicts.

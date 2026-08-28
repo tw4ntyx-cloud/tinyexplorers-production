@@ -30,8 +30,14 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *  has live social accounts to link to.
  */
 
-function FooterLink({ to, children }) {
-  // hash-only ("/#programs") => react-router Link handles it
+function FooterLink({ to, href, children }) {
+  if (href) {
+    return (
+      <a href={href} className="text-[15px] text-brand-ink/70 transition hover:text-brand-ink">
+        {children}
+      </a>
+    );
+  }
   return (
     <Link to={to} className="text-[15px] text-brand-ink/70 transition hover:text-brand-ink">
       {children}
@@ -142,7 +148,7 @@ export default function Footer({ onEnroll }) {
               <ul className="mt-5 space-y-3">
                 {col.links.map((l) => (
                   <li key={`${col.title}-${l.label}`}>
-                    <FooterLink to={l.to}>{l.label}</FooterLink>
+                    <FooterLink to={l.to} href={l.href}>{l.label}</FooterLink>
                   </li>
                 ))}
               </ul>

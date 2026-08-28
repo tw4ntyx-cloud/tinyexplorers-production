@@ -95,7 +95,7 @@ export default function SiteLayout() {
         >
           Skip to content
         </a>
-        <Navbar onEnroll={openEnroll} />
+        <Navbar />
         <main id="main-content" tabIndex="-1" className="relative overflow-hidden">
           <div
             key={pathname}

@@ -129,6 +129,13 @@ const PUBLIC_URL = process.env.PUBLIC_URL || "";
  */
 export const SITE_URL = process.env.REACT_APP_WEBSITE_URL || "https://tw4ntyx-cloud.github.io";
 
+export const TOUR_BOOKING = {
+  url: process.env.REACT_APP_TOUR_BOOKING_URL || "https://calendar.app.google/PKmUZbas6Hyo397WA",
+  name: "Tiny Explorers Nursery Tour",
+  duration: "30 minutes",
+  location: "59 Victoria St, Hamilton, Bermuda",
+};
+
 export function getPublicAssetUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${PUBLIC_URL}${normalizedPath}`;
@@ -425,7 +432,7 @@ export const FOOTER = {
     {
       title: "Connect",
       links: [
-        { label: "Book a Tour", to: "/admissions#visit" },
+        { label: "Book a Tour", href: TOUR_BOOKING.url, external: true },
         { label: "Adventures", to: "/adventures" },
         { label: "Gallery", to: "/#gallery" },
         { label: "Careers", to: "/parents#careers" },
@@ -832,7 +839,7 @@ export const PARENTS = {
       { q: "Do you accept children with additional needs?", a: "We welcome inquiries from every family. We work closely with occupational therapists, speech therapists, and family pediatricians on individual plans. Where we're not the right fit, we'll say so kindly." },
       { q: "How do you handle screens and technology?", a: "We don't use screens with the children during the program day. Educators use tablets only for daily-note photo capture, away from the children's view." },
       { q: "What is the educator-to-child ratio?", a: "1:3 in infant care, 1:4 in toddlers, 1:6 in preschool, and 1:8 in after-school care. All below Bermuda Ministry minimums." },
-      { q: "Can I tour before applying?", a: "Yes, and we encourage it. Tours run every Wednesday morning and the first Saturday of each month. Book one from the Admissions page." },
+      { q: "Can I tour before applying?", a: "Yes, and we encourage it. Book a 30-minute nursery tour online through our Google Calendar appointment schedule." },
     ],
   },
 };
@@ -880,13 +887,13 @@ export const ADMISSIONS = {
   },
   visit: {
     eyebrow: "Visit us",
-    title: "Tours every Wednesday morning.",
+    title: "Book a 30-minute nursery tour.",
     lede:
-      "Bring your child, or come alone if it's easier. Either is welcome. Tours last about an hour and include a walk through every program room, a conversation with our admissions lead, and unhurried time to ask anything you'd like.",
+      "Come and experience Tiny Explorers Nursery & Preschool in person. Google Calendar handles available times, booking confirmations, invitations, and reminders.",
     bullets: [
-      "Wednesday mornings, 9:30 AM",
-      "First Saturday of the month, 10:00 AM",
-      "Private weekday afternoons available by appointment",
+      "Explore the learning environment and programme rooms",
+      "Learn about our approach to early childhood education",
+      "Ask questions during a 30-minute visit at 59 Victoria St, Hamilton",
     ],
   },
   tuition: {

@@ -17,7 +17,6 @@ import { useEnroll } from "../components/layout/SiteLayout";
  *
  * Extracted from App.js so it slots cleanly alongside the new routed pages.
  * The page sections themselves (Hero, Features, etc.) are unchanged.
- * Hero and CtaSection use useAdmissions() internally.
  * Other sections use `useEnroll()` for program-specific inquiries.
  */
 export default function Home() {
@@ -29,7 +28,7 @@ export default function Home() {
       <ParentPoliciesSection />
       <Features />
       <Environment />
-      <Wellness onEnroll={openEnroll} />
+      <Wellness />
       <Programs onEnroll={openEnroll} />
       <DayRhythm />
       <Testimonial />

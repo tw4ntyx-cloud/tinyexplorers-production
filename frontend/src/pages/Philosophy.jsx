@@ -7,8 +7,7 @@ import SmartImage from "../components/ui/SmartImage";
 import { SplatFrame, DoodleSmile, DoodleDots } from "../components/decor/Splat";
 import ContentModal from "../components/ContentModal";
 import PageMeta from "../components/PageMeta";
-import { PHILOSOPHY, IMAGES } from "../data/content";
-import { useEnroll } from "../components/layout/SiteLayout";
+import { PHILOSOPHY, IMAGES, TOUR_BOOKING } from "../data/content";
 
 /**
  * Philosophy page — editorial storytelling.
@@ -24,7 +23,6 @@ import { useEnroll } from "../components/layout/SiteLayout";
  * sparingly (single smile, single dots cluster).
  */
 export default function Philosophy() {
-  const openEnroll = useEnroll();
   const [wellnessOpen, setWellnessOpen] = useState(false);
   const p = PHILOSOPHY;
 
@@ -68,7 +66,12 @@ export default function Philosophy() {
         backingClass="bg-brand-orange/20"
         testId="philosophy-hero"
       >
-        <Button variant="primary" onClick={openEnroll} testId="philosophy-hero-cta">
+        <Button
+          variant="primary"
+          href={TOUR_BOOKING.url}
+          testId="philosophy-hero-cta"
+          aria-label="Book a 30-minute campus visit with Google Calendar"
+        >
           Book a campus visit
         </Button>
         <Button variant="secondary" icon={false} onClick={() => setWellnessOpen(true)}>
@@ -331,10 +334,14 @@ export default function Philosophy() {
                 Come and feel the calm in person.
               </h2>
               <p className="mx-auto mt-5 max-w-xl text-[1.0625rem] leading-[1.7] text-brand-ink/70">
-                The philosophy is easier to feel than to read. Spend an hour with us — we keep tours short and unhurried.
+                The philosophy is easier to feel than to read. Book a 30-minute tour and experience Tiny Explorers in person.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Button variant="accent" onClick={openEnroll}>
+                <Button
+                  variant="accent"
+                  href={TOUR_BOOKING.url}
+                  aria-label="Book a 30-minute campus visit with Google Calendar"
+                >
                   Book a campus visit
                 </Button>
                 <Button variant="secondary" icon={false} onClick={() => setWellnessOpen(true)}>

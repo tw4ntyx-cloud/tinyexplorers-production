@@ -33,7 +33,7 @@ const initialForm = {
   start_timing: "Soon — I'm exploring options now.",
   child_focus: "A calm, predictable day with warm teachers.",
   program: PROGRAMS[0].programOption,
-  interest: "I’d love a welcoming tour first.",
+  interest: "I’d like help choosing the right next step.",
 };
 
 export default function AdmissionsModal({ open, onOpenChange }) {
@@ -290,11 +290,11 @@ export default function AdmissionsModal({ open, onOpenChange }) {
                   </p>
                   <div className="mt-4 space-y-4 text-sm leading-7 text-brand-ink/75">
                     <p>
-                      What feels most helpful right now? We can arrange a calm tour, or simply begin a warm inquiry.
+                      What feels most helpful right now? We can answer admissions questions or help you decide what comes next.
                     </p>
                     <div className="grid gap-3 sm:grid-cols-2">
                       {[
-                        "I’d love a welcoming tour first.",
+                        "I’d like help choosing the right next step.",
                         "I’m ready to inquire and learn more.",
                       ].map((option) => (
                         <label

@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Logo from "./Logo";
 import Button from "./ui/Button";
-import { BRAND, NAV } from "../data/content";
+import { BRAND, NAV, TOUR_BOOKING } from "../data/content";
 
 /**
  * Premium navbar — router-aware, dropdown-capable, scroll-locked mobile.
@@ -43,12 +43,19 @@ function isActiveTo(currentPath, to) {
   return currentPath === target || currentPath.startsWith(target + "/");
 }
 
-function NavLinkBase({ to, children, isActive, onClick, className = "" }) {
+function NavLinkBase({ to, href, external, children, isActive, onClick, className = "" }) {
   const base =
     "rounded-full px-4 py-2 text-sm font-medium transition duration-300 ease-soft hover:bg-brand-ink/5 hover:text-brand-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2 focus-visible:ring-offset-brand-cream";
   const state = isActive
     ? "text-brand-ink bg-brand-ink/10 shadow-[inset_0_0_0_1px_rgba(31,31,31,0.06)]"
     : "text-brand-ink/80";
+  if (href || external) {
+    return (
+      <a href={href || to} onClick={onClick} className={`${base} ${state} ${className}`}>
+        {children}
+      </a>
+    );
+  }
   return (
     <Link to={resolveLinkTo(to)} onClick={onClick} className={`${base} ${state} ${className}`}>
       {children}
@@ -171,27 +178,34 @@ function Dropdown({ label, items, currentPath, onItemClick }) {
           <ul className="relative flex flex-col gap-1 p-2">
             {items.map((item) => {
               const active = isActiveTo(currentPath, item.to);
-              return (
-                <li key={item.to}>
-                  <Link
-                    to={resolveLinkTo(item.to)}
-                    onClick={handleItemClick}
-                    role="menuitem"
-                    className={`block rounded-xl px-4 py-3 transition-colors duration-200 ease-soft ${
-                      active
-                        ? "bg-brand-cream text-brand-ink shadow-[inset_0_0_0_1px_rgba(31,31,31,0.06)]"
-                        : "text-brand-ink/80 hover:bg-brand-cream/70 hover:text-brand-ink"
-                    }`}
-                  >
-                    <div className="font-poppins text-[14px] font-semibold leading-tight text-brand-ink">
-                      {item.label}
+              const itemClassName = `block rounded-xl px-4 py-3 transition-colors duration-200 ease-soft ${
+                active
+                  ? "bg-brand-cream text-brand-ink shadow-[inset_0_0_0_1px_rgba(31,31,31,0.06)]"
+                  : "text-brand-ink/80 hover:bg-brand-cream/70 hover:text-brand-ink"
+              }`;
+              const content = (
+                <>
+                  <div className="font-poppins text-[14px] font-semibold leading-tight text-brand-ink">
+                    {item.label}
+                  </div>
+                  {item.desc && (
+                    <div className="mt-0.5 text-[12.5px] leading-snug text-brand-ink/65">
+                      {item.desc}
                     </div>
-                    {item.desc && (
-                      <div className="mt-0.5 text-[12.5px] leading-snug text-brand-ink/65">
-                        {item.desc}
-                      </div>
-                    )}
-                  </Link>
+                  )}
+                </>
+              );
+              return (
+                <li key={item.to || item.href || item.label}>
+                  {item.href || item.external ? (
+                    <a href={item.href || item.to} onClick={handleItemClick} role="menuitem" className={itemClassName}>
+                      {content}
+                    </a>
+                  ) : (
+                    <Link to={resolveLinkTo(item.to)} onClick={handleItemClick} role="menuitem" className={itemClassName}>
+                      {content}
+                    </Link>
+                  )}
                 </li>
               );
             })}
@@ -211,6 +225,8 @@ function MobileGroup({ item, currentPath, onClose }) {
     return (
       <NavLinkBase
         to={item.to}
+        href={item.href}
+        external={item.external}
         isActive={active}
         onClick={onClose}
         className="!rounded-2xl !px-4 !py-3.5 !text-base"
@@ -243,24 +259,32 @@ function MobileGroup({ item, currentPath, onClose }) {
         <ul className="mb-2 ml-3 mt-1 flex flex-col gap-1 border-l border-brand-ink/10 pl-3">
           {item.items.map((child) => {
             const active = isActiveTo(currentPath, child.to);
+            const itemClassName = `block rounded-xl px-4 py-3 text-[15px] transition-colors duration-200 ease-soft ${
+              active
+                ? "bg-brand-cream font-semibold text-brand-ink"
+                : "text-brand-ink/75 hover:bg-brand-cream"
+            }`;
+            const content = (
+              <>
+                {child.label}
+                {child.desc && (
+                  <span className="mt-0.5 block text-[12.5px] leading-snug text-brand-ink/70">
+                    {child.desc}
+                  </span>
+                )}
+              </>
+            );
             return (
-              <li key={child.to}>
-                <Link
-                  to={resolveLinkTo(child.to)}
-                  onClick={onClose}
-                  className={`block rounded-xl px-4 py-3 text-[15px] transition-colors duration-200 ease-soft ${
-                    active
-                      ? "bg-brand-cream font-semibold text-brand-ink"
-                      : "text-brand-ink/75 hover:bg-brand-cream"
-                  }`}
-                >
-                  {child.label}
-                  {child.desc && (
-                    <span className="mt-0.5 block text-[12.5px] leading-snug text-brand-ink/70">
-                      {child.desc}
-                    </span>
-                  )}
-                </Link>
+              <li key={child.to || child.href || child.label}>
+                {child.href || child.external ? (
+                  <a href={child.href || child.to} onClick={onClose} className={itemClassName}>
+                    {content}
+                  </a>
+                ) : (
+                  <Link to={resolveLinkTo(child.to)} onClick={onClose} className={itemClassName}>
+                    {content}
+                  </Link>
+                )}
               </li>
             );
           })}
@@ -270,7 +294,7 @@ function MobileGroup({ item, currentPath, onClose }) {
   );
 }
 
-export default function Navbar({ onEnroll }) {
+export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
@@ -346,11 +370,12 @@ export default function Navbar({ onEnroll }) {
           <Button
             variant="accent"
             size="sm"
-            onClick={onEnroll}
-            testId="nav-enroll-button"
+            href={TOUR_BOOKING.url}
+            testId="nav-book-tour-button"
             icon={false}
+            aria-label="Book a 30-minute nursery tour with Google Calendar"
           >
-            Book a Visit
+            Book a Tour
           </Button>
         </div>
 
@@ -389,14 +414,13 @@ export default function Navbar({ onEnroll }) {
                 <Button
                   variant="accent"
                   className="!w-full"
-                  onClick={() => {
-                    setOpen(false);
-                    onEnroll && onEnroll();
-                  }}
-                  testId="mobile-enroll-button"
+                  href={TOUR_BOOKING.url}
+                  onClick={() => setOpen(false)}
+                  testId="mobile-book-tour-button"
                   icon={false}
+                  aria-label="Book a 30-minute nursery tour with Google Calendar"
                 >
-                  Book a Visit
+                  Book a Tour
                 </Button>
                 <a
                   href={`mailto:${BRAND.email}`}

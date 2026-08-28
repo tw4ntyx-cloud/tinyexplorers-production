@@ -11,8 +11,7 @@ import SmartImage from "../components/ui/SmartImage";
 import ContentModal from "../components/ContentModal";
 import PageMeta from "../components/PageMeta";
 import { SplatFrame, DoodleDots } from "../components/decor/Splat";
-import { WELLNESS_PAGE, IMAGES } from "../data/content";
-import { useEnroll } from "../components/layout/SiteLayout";
+import { WELLNESS_PAGE, IMAGES, TOUR_BOOKING } from "../data/content";
 
 /**
  * Wellness & Care page — the deeper, dedicated page.
@@ -26,7 +25,6 @@ import { useEnroll } from "../components/layout/SiteLayout";
  * cream throughout, the most "wellness brand" surface of the site.
  */
 export default function Wellness() {
-  const openEnroll = useEnroll();
   const [rhythmOpen, setRhythmOpen] = useState(false);
   const w = WELLNESS_PAGE;
 
@@ -74,7 +72,11 @@ export default function Wellness() {
         backingClass="bg-brand-green/25"
         testId="wellness-hero"
       >
-        <Button variant="primary" onClick={openEnroll}>
+        <Button
+          variant="primary"
+          href={TOUR_BOOKING.url}
+          aria-label="Schedule a 30-minute wellness tour with Google Calendar"
+        >
           Schedule a wellness tour
         </Button>
         <Button variant="secondary" icon={false} onClick={() => setRhythmOpen(true)}>
@@ -396,7 +398,11 @@ export default function Wellness() {
                 Visit our Hamilton campus, meet our care team, and ask the hard questions. We're built for it.
               </p>
               <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <Button variant="accent" onClick={openEnroll}>
+                <Button
+                  variant="accent"
+                  href={TOUR_BOOKING.url}
+                  aria-label="Schedule a 30-minute wellness tour with Google Calendar"
+                >
                   Schedule a wellness tour
                 </Button>
                 <Button variant="secondary" to="/parents" icon={false}>

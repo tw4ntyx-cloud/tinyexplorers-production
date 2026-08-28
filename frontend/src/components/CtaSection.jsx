@@ -2,9 +2,8 @@ import React from "react";
 import { ArrowRight, Mail, Calendar } from "lucide-react";
 import { Container } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
-import { IMAGES, BRAND } from "../data/content";
+import { IMAGES, BRAND, TOUR_BOOKING } from "../data/content";
 import { SplatFrame, DoodleSmile, DoodleCurl, DoodleBurst } from "./decor/Splat";
-import { useAdmissions } from "./layout/SiteLayout";
 
 /**
  * CTA section — pivoted from the previous dark `bg-brand-ink` mesh-gradient
@@ -20,7 +19,6 @@ import { useAdmissions } from "./layout/SiteLayout";
  * 2 curated doodles. That's it.
  */
 export default function CtaSection() {
-  const openAdmissions = useAdmissions();
   return (
     <section id="cta" data-testid="cta-section" className="relative py-24 md:py-32">
       <Container size="narrow">
@@ -58,15 +56,16 @@ export default function CtaSection() {
               </p>
 
               <p className="mt-6 max-w-xl text-pretty text-[1.0625rem] leading-[1.7] text-brand-ink/70">
-                Book a private tour of our Hamilton campus or start an
-                enrollment inquiry — we'll get back to you within one business day.
+                Come and experience Tiny Explorers Nursery & Preschool in person.
+                Tours are 30 minutes, and secure online scheduling is handled by Google Calendar.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <button
-                  onClick={openAdmissions}
+                <a
+                  href={TOUR_BOOKING.url}
                   data-testid="cta-primary-button"
                   className="group inline-flex items-center gap-2 rounded-full bg-brand-orange px-8 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:shadow-soft-lg"
+                  aria-label="Schedule a 30-minute nursery tour with Google Calendar"
                 >
                   Schedule a Tour
                   <ArrowRight
@@ -74,7 +73,7 @@ export default function CtaSection() {
                     strokeWidth={2.5}
                     className="transition-transform duration-300 group-hover:translate-x-1"
                   />
-                </button>
+                </a>
                 <a
                   href={`mailto:${BRAND.email}`}
                   data-testid="cta-email-button"
@@ -86,9 +85,9 @@ export default function CtaSection() {
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-ink/70">
-                <span>Open tours weekly</span>
+                <span>{TOUR_BOOKING.duration} visits</span>
                 <span className="text-brand-orange">●</span>
-                <span>1 business-day reply</span>
+                <span>Google Calendar scheduling</span>
                 <span className="text-brand-orange">●</span>
                 <span>No commitment</span>
               </div>

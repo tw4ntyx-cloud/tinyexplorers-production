@@ -10,8 +10,8 @@ import SmartImage from "../components/ui/SmartImage";
 import { SplatFrame, DoodleSmile } from "../components/decor/Splat";
 import PageMeta from "../components/PageMeta";
 
-import { ADMISSIONS, IMAGES, BRAND } from "../data/content";
-import { useEnroll, useInquiry } from "../components/layout/SiteLayout";
+import { ADMISSIONS, IMAGES, BRAND, TOUR_BOOKING } from "../data/content";
+import { useInquiry } from "../components/layout/SiteLayout";
 
 /**
  * Admissions page.
@@ -69,7 +69,7 @@ function ProcessSteps({ steps }) {
   );
 }
 
-function VisitBlock({ visit, onEnroll }) {
+function VisitBlock({ visit }) {
   return (
     <Section id="visit" testId="admissions-visit" size="lg">
       <Container>
@@ -101,7 +101,13 @@ function VisitBlock({ visit, onEnroll }) {
             </ul>
 
             <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Button variant="accent" size="lg" onClick={onEnroll} testId="admissions-book-tour">
+              <Button
+                variant="accent"
+                size="lg"
+                href={TOUR_BOOKING.url}
+                testId="admissions-book-tour"
+                aria-label="Book a 30-minute nursery tour with Google Calendar"
+              >
                 Book a tour
               </Button>
               <a
@@ -149,7 +155,7 @@ function VisitBlock({ visit, onEnroll }) {
                 Visit us
               </div>
               <div className="mt-1.5 font-poppins text-[1rem] font-semibold leading-snug text-brand-ink">
-                {BRAND.address}
+                {TOUR_BOOKING.location}
               </div>
             </div>
           </div>
@@ -204,12 +210,21 @@ function ClosingCta({ onInquiry }) {
             When you're ready, we're here.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-[1.05rem] leading-[1.7] text-brand-ink/70">
-            Reach out for an inquiry, a tour, or simply a conversation. We answer
-            every message ourselves — usually within one business day.
+            Start an inquiry, or book a 30-minute tour online when you are ready to visit.
+            We answer every message ourselves — usually within one business day.
           </p>
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
             <Button variant="accent" size="lg" onClick={onInquiry}>
               Start an inquiry
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              href={TOUR_BOOKING.url}
+              icon="arrow-up-right"
+              aria-label="Book a 30-minute nursery tour with Google Calendar"
+            >
+              Book a tour
             </Button>
             <Button variant="secondary" size="lg" href={`mailto:${BRAND.email}`} icon={false}>
               {BRAND.email}
@@ -222,7 +237,6 @@ function ClosingCta({ onInquiry }) {
 }
 
 export default function Admissions() {
-  const openEnroll = useEnroll();
   const openInquiry = useInquiry();
   const { hero, steps, visit, tuition, waitlist, faq, meta } = ADMISSIONS;
 
@@ -245,14 +259,20 @@ export default function Admissions() {
         <Button variant="accent" size="lg" onClick={openInquiry} testId="admissions-hero-inquire">
           {hero.cta_primary}
         </Button>
-        <Button variant="secondary" size="lg" href="#visit" icon={false}>
+        <Button
+          variant="secondary"
+          size="lg"
+          href={TOUR_BOOKING.url}
+          icon="arrow-up-right"
+          aria-label="Book a 30-minute nursery tour with Google Calendar"
+        >
           {hero.cta_secondary}
         </Button>
       </PageHero>
 
       <ProcessSteps steps={steps} />
 
-      <VisitBlock visit={visit} onEnroll={openEnroll} />
+      <VisitBlock visit={visit} />
 
       <TuitionWaitlist tuition={tuition} waitlist={waitlist} />
 
