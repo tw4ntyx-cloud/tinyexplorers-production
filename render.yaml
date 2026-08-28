@@ -11,8 +11,12 @@ services:
         value: tiny_explorers
       - key: RESEND_API_KEY
         sync: false
+      # Canonical Tiny Explorers address for this deployment: hello@tinyexplorersbda.com
+      # (staff notification recipient). Set manually in the Render dashboard.
       - key: ADMIN_EMAIL
         sync: false
+      # Sending identity — recommended default is also hello@tinyexplorersbda.com,
+      # but its domain must be verified in Resend before production sending works.
       - key: FROM_EMAIL
         sync: false
       - key: ADMIN_API_KEY

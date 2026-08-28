@@ -17,8 +17,9 @@ logger = logging.getLogger(__name__)
 
 # Initialize Resend client
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admissions@tinyexplorers.bm")
-FROM_EMAIL = os.environ.get("FROM_EMAIL", "enrollment@tinyexplorers.bm")
+# Canonical staff notification recipient / sender identity for this deployment.
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "hello@tinyexplorersbda.com")
+FROM_EMAIL = os.environ.get("FROM_EMAIL", "hello@tinyexplorersbda.com")
 
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
@@ -104,7 +105,15 @@ class EmailService:
             return None
 
     @staticmethod
-    def send_enrollment_admin_notification(parent_name: str, parent_email: str, phone: str, child_age: str, program: str, inquiry_id: str):
+    def send_enrollment_admin_notification(
+        parent_name: str,
+        parent_email: str,
+        phone: str,
+        child_age: str,
+        program: str,
+        inquiry_id: str,
+        submitted_at: str,
+    ):
         """Send admin notification when new enrollment inquiry received."""
         if not RESEND_API_KEY:
             logger.warning(f"Email disabled: Would send admin notification for inquiry {inquiry_id}")
@@ -115,6 +124,7 @@ class EmailService:
         safe_phone = html.escape(phone) if phone else "Not provided"
         safe_child_age = html.escape(child_age)
         safe_program = html.escape(program)
+        safe_submitted_at = html.escape(submitted_at)
 
         subject = f"New Enrollment Inquiry: {parent_name}"
         html_body = f"""
@@ -125,6 +135,7 @@ class EmailService:
 
               <div style="background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                 <p style="margin: 0 0 15px 0;"><strong>Inquiry ID:</strong> {inquiry_id}</p>
+                <p style="margin: 0 0 15px 0;"><strong>Submitted:</strong> {safe_submitted_at}</p>
                 <p style="margin: 0 0 15px 0;"><strong>Parent Name:</strong> {safe_parent_name}</p>
                 <p style="margin: 0 0 15px 0;"><strong>Email:</strong> <a href="mailto:{safe_parent_email}" style="color: #FF6B2C;">{safe_parent_email}</a></p>
                 <p style="margin: 0 0 15px 0;"><strong>Phone:</strong> {safe_phone}</p>
@@ -308,7 +319,15 @@ async def send_enrollment_confirmation(parent_email: str, parent_name: str, inqu
     )
 
 
-async def send_enrollment_admin_notification(parent_name: str, parent_email: str, phone: str, child_age: str, program: str, inquiry_id: str):
+async def send_enrollment_admin_notification(
+    parent_name: str,
+    parent_email: str,
+    phone: str,
+    child_age: str,
+    program: str,
+    inquiry_id: str,
+    submitted_at: str,
+):
   return EmailService.send_enrollment_admin_notification(
     parent_name=parent_name,
     parent_email=parent_email,
@@ -316,6 +335,7 @@ async def send_enrollment_admin_notification(parent_name: str, parent_email: str
     child_age=child_age,
     program=program,
     inquiry_id=inquiry_id,
+    submitted_at=submitted_at,
   )
 
 

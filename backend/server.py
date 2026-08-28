@@ -545,6 +545,7 @@ async def submit_enrollment(request: Request, payload: EnrollmentCreate) -> Dict
         child_age=payload.child_age,
         program=payload.program,
         inquiry_id=entry.id,
+        submitted_at=entry.created_at.strftime("%Y-%m-%d %H:%M UTC"),
     )
 
     return {
@@ -590,6 +591,7 @@ async def submit_inquiry(request: Request, payload: InquiryCreate) -> Dict[str, 
             "Child Age": payload.child_age,
             "Preferred Contact": payload.contact_method,
             "Message": payload.message,
+            "Submitted": entry.created_at.strftime("%Y-%m-%d %H:%M UTC"),
         },
         reference_id=entry.id,
     )
@@ -641,6 +643,7 @@ async def submit_admissions(request: Request, payload: AdmissionsCreate) -> Dict
             "What Matters Most": payload.child_focus,
             "Program": payload.program,
             "Next Step Interest": payload.interest,
+            "Submitted": entry.created_at.strftime("%Y-%m-%d %H:%M UTC"),
         },
         reference_id=entry.id,
     )

@@ -227,6 +227,14 @@ Standard FastAPI + uvicorn deployment (already containerized —
 - `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://tinyexplorers.bm`)
 - `CORS_ALLOW_CREDENTIALS` — `true`/`false`
 - `ADMIN_API_KEY` — shared secret for admin-only GET/sync endpoints
+- `RESEND_API_KEY` — Resend API key for transactional email (enrollment/inquiry/
+  admissions confirmations + staff notifications); email sending is safely
+  disabled (logged only) when unset
+- `ADMIN_EMAIL` — staff notification recipient for enrollment, admissions, and
+  general inquiry submissions. Canonical value for this deployment:
+  `hello@tinyexplorersbda.com`
+- `FROM_EMAIL` — sending identity for all outgoing email; its domain must be
+  verified in Resend. Default/recommended: `hello@tinyexplorersbda.com`
 - Google Workspace newsletter automation (optional — see
   [docs/google-workspace-newsletter.md](docs/google-workspace-newsletter.md)):
   - `GOOGLE_WORKSPACE_ADMIN_EMAIL`, `GOOGLE_NEWSLETTER_GROUP_EMAIL` — always required
