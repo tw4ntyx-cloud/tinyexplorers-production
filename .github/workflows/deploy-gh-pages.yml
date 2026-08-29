@@ -1,0 +1,66 @@
+name: Deploy GitHub Pages
+
+"on":
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/deploy-gh-pages.yml"
+      - "frontend/**"
+      - "README.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: github-pages-branch-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and publish frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run frontend tests
+        run: CI=true npm test -- --watchAll=false --runInBand
+
+      - name: Build frontend
+        run: CI=true npm run build
+
+      - name: Verify GitHub Pages build output
+        run: |
+          test -f build/index.html
+          test -f build/404.html
+          test -d build/static
+          grep -q 'src="/tinyexplorers-production/static/js/' build/index.html
+          grep -q 'href="/tinyexplorers-production/static/css/' build/index.html
+          grep -R "https://calendar.app.google/PKmUZbas6Hyo397WA" build/static/js/*.js >/dev/null
+          grep -R "https://tinyexplorers-production-784723417768.us-east1.run.app" build/static/js/*.js >/dev/null
+          ! grep -RilE 'tinyexplorers\.bm|123-4567|555-0100|admin\.tinyexplorers|javascript:void\(0\)' build
+          touch build/.nojekyll
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: frontend/build
+          force_orphan: true
+          enable_jekyll: false
+          commit_message: "deploy: publish frontend from ${{ github.sha }}"
