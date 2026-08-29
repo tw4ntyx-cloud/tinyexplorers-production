@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/tinyexplorers-production/static/css/main.aedb3de6.css",
+    "main.js": "/tinyexplorers-production/static/js/main.300f7fe0.js",
+    "index.html": "/tinyexplorers-production/index.html",
+    "main.aedb3de6.css.map": "/tinyexplorers-production/static/css/main.aedb3de6.css.map",
+    "main.300f7fe0.js.map": "/tinyexplorers-production/static/js/main.300f7fe0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aedb3de6.css",
+    "static/js/main.300f7fe0.js"
+  ]
+}
