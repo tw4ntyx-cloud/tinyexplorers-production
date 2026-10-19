@@ -107,7 +107,7 @@ API will be available at `http://localhost:8000/api`.
 If you want to start both backend and frontend in a Codespace or local dev environment, from the repository root run:
 
 ```bash
-# Start backend (uses workspace venv if present)
+# Start backend (uses backend/.venv if present, else python3)
 ./backend/run.sh &
 
 # Start frontend
@@ -235,6 +235,9 @@ Standard FastAPI + uvicorn deployment (already containerized —
 - `DB_NAME` — database name
 - `CORS_ORIGINS` — comma-separated allowed origins (e.g. `https://tinyexplorersbda.com`)
 - `CORS_ALLOW_CREDENTIALS` — `true`/`false`
+- `TRUSTED_PROXY_HOPS` — set to `1` on Google Cloud Run so rate limits apply
+  per visitor (default `0` ignores `X-Forwarded-For`)
+- `EMAIL_SEND_TIMEOUT_SECONDS` — max wait for Resend per email (default `10`)
 - `ADMIN_API_KEY` — shared secret for admin-only GET/sync endpoints
 - `RESEND_API_KEY` — Resend API key for transactional email (enrollment/inquiry/
   admissions confirmations + staff notifications); email sending is safely

@@ -86,12 +86,12 @@ There is **no admin UI** in this repository and **no end-user authentication**.
 - Final domain `tinyexplorersbda.com` is **not yet connected**; the site is a preview.
 - See PRODUCTION_READINESS.md for blockers and DEVELOPMENT_ROADMAP.md for next steps.
 
-## Related repositories (same owner, not inspected)
+## Related repositories (same owner)
 
 | Repo | Visibility | Last push | Likely role (inferred from names/paths) |
 |---|---|---|---|
 | `tinyexplorers-production` (this) | **public** | 2026-08-29 | Authoritative current source |
-| `tinyexplorers-admin` | private | 2026-07-21 | Possibly an admin dashboard — unknown |
+| `tinyexplorers-admin` | private | 2026-07-21 | **Inspected 2026-10-19: empty placeholder** (README only) — no dashboard exists |
 | `tinyexplorersv3` | private | 2026-07-06 | Predecessor; `run_dev.sh` still points at `/workspaces/tinyexplorersv3`; Vercel preview `tinyexplorersv3.vercel.app` audited in `docs/production-audit.md` |
 | `tinyexplorersv4-wp` | private | 2026-05-15 | WordPress attempt — unknown |
 | `tinyexplorers` | private | 2026-05-13 | Earliest version — unknown |
@@ -104,6 +104,8 @@ There is **no admin UI** in this repository and **no end-user authentication**.
 | `README.md` | Mostly current (setup + env vars); its "Open backlog" is superseded by the roadmap |
 | `docs/google-workspace-newsletter.md` | Current |
 | `docs/newsletter-privacy-update.md` | Current draft awaiting owner approval |
+| `docs/OWNER_CONFIRMATIONS.md` | Current — business facts awaiting owner approval |
+| `docs/security/*` | Security incident notes (C1) |
 | `docs/policies/*` | Source copies of parent policies |
 | `ARCHITECTURE_AUDIT.md`, `IMPLEMENTATION_*.md`, `PROGRESS_DASHBOARD.md` | **Historical** (June 2026) — many statements no longer true |
 | `docs/production-audit.md` | Historical; audits the old Vercel v3 site; file is actually RTF |

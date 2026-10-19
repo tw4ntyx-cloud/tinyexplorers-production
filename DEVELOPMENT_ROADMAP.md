@@ -18,32 +18,31 @@ Effort scale: **XS** < 1 h · **S** ≤ ½ day · **M** 1–2 days · **L** 3–
 | Confirm Atlas tier/backups; who receives alerts | H6 | Owner | XS |
 | Decide frontend host for the real domain | M1 | Owner (recommendation in PRODUCTION_READINESS §6) | XS |
 
-## Milestone 1 — Safe hardening (recommended first development milestone)
+## Milestone 1 — Safe hardening ✅ complete on branch (2026-10-19), awaiting review/merge
 
-Small, low-risk changes, each its own commit, all on a feature branch with CI green.
-No visual redesign, no infrastructure changes.
+| # | Task | Finding | Status |
+|---|---|---|---|
+| 1.1 | Replace realistic Atlas URI in test with synthetic values; document exposure + rotation steps | C1 | ✅ Done (rotation itself = owner, M0) |
+| 1.2 | Fix mobile clipping in `Environment.jsx` | H1 | ✅ Done, browser-verified |
+| 1.3 | Remove `@emergentbase/visual-edits` | H5 | ✅ Done |
+| 1.4 | Email off the event loop with bounded wait; mask emails in logs | H2 | ✅ Done |
+| 1.5 | Backend dependency upgrades (FastAPI/Starlette, PyMongo/Motor, crypto, etc.); drop unused auth libs; lifespan | H4, M5 | ✅ Done — `pip-audit` clean |
+| 1.6 | Frontend runtime deps | H4 | ✅ axios 1.20.0; react-router v7 deferred (advisories not reachable) |
+| 1.7 | Mongo indexes incl. unique `newsletter.email`, race-safe insert | H8 | ✅ Done — check prod for duplicate emails before deploy |
+| 1.8 | Trusted-proxy-aware rate-limit key (`TRUSTED_PROXY_HOPS`) | H3 | ✅ Code done — needs env var + verification on Cloud Run (M2) |
+| 1.9 | Inquiry phone field (client + server validation) | H7 | ✅ Done |
+| 1.10 | Dev scripts, CI runs all backend tests, untrack `__pycache__` | M6, L | ✅ Done |
+| 1.11 | Owner-approved content corrections | C2, C4, H9 | ⏳ Blocked on `docs/OWNER_CONFIRMATIONS.md` answers |
 
-| # | Task | Finding | Effort | Risk |
-|---|---|---|---|---|
-| 1.1 | Replace realistic Atlas URI in test with an obvious fake (after C1 rotation) | C1 | XS | None |
-| 1.2 | Fix mobile clipping in `Environment.jsx` (grid track / `min-w-0`) | H1 | XS | Low — verify at 360/390/768/1440 |
-| 1.3 | Remove `@emergentbase/visual-edits` from `package.json` + lockfile | H5 | XS | Low |
-| 1.4 | Run Resend calls via `asyncio.to_thread` (or `run_in_threadpool`) | H2 | S | Low — existing resilience tests cover it |
-| 1.5 | Upgrade `python-multipart`, `cryptography`; drop `python-jose`/`passlib`/`PyJWT`/`bcrypt` | H4 | S | Low — run full backend suite |
-| 1.6 | Upgrade `axios`, `react-router-dom` (minor versions) | H4 | S | Low |
-| 1.7 | Create Mongo indexes on startup (unique `newsletter.email`, `created_at` on all) | H8 | S | Low–Med (unique index fails if duplicates already exist — check first) |
-| 1.8 | Trust Cloud Run proxy headers (`--proxy-headers --forwarded-allow-ips`) and key limiter on client IP | H3 | S | Med — verify on staging revision |
-| 1.9 | Inquiry form: conditional phone field when "Phone" selected (backend `phone` optional field) | H7 | S | Low |
-| 1.10 | Run all backend tests in CI; fix `run_dev.sh`/`run.sh` paths; untrack `__pycache__` | L, M6 | XS | None |
-| 1.11 | Apply owner-approved content corrections (address, dates) | C2, H9 | XS | None |
-
-**Milestone total: ~3–4 days.** Dependencies: 1.1 after C1 rotation; 1.11 after owner input.
+Tests at completion: frontend 20/20, backend unit 76/76, live API 22/22, production build + Pages artifact checks pass.
 
 ## Milestone 2 — Launch readiness (domain cutover)
 
 | # | Task | Finding | Effort | Depends on |
 |---|---|---|---|---|
-| 2.1 | Choose/configure frontend host for `tinyexplorersbda.com` (+ `www` redirect, HTTPS) | C3, M1 | S | M0 host decision |
+| 2.0 | Deploy Milestone 1 backend to a Cloud Run **revision with no traffic**, set `TRUSTED_PROXY_HOPS=1`, check duplicate newsletter emails, verify, then shift traffic | H3, H8 | S | Owner approval, C1 rotation |
+| 2.0b | Apply approved content wording (A1–A4, B1–B15) and photography decision | C2, C4 | S–M | Owner answers |
+| 2.1 | Configure frontend host for `tinyexplorersbda.com` (recommended Cloudflare Pages; + `www` redirect, HTTPS) | C3, M1 | S | M0 host decision |
 | 2.2 | Make base path environment-driven: `homepage`/`PUBLIC_URL`, 404 strategy, robots/sitemap generated at build | C3 | M | 2.1 |
 | 2.3 | Update deploy workflow assertions; keep GitHub Pages as preview with `noindex` (or retire) | C3 | S | 2.2 |
 | 2.4 | Backend env: `WEBSITE_URL`, `CORS_ORIGINS` (apex + www), fresh `ADMIN_API_KEY` in Secret Manager | C3 | XS | 2.1 |
@@ -61,7 +60,9 @@ No visual redesign, no infrastructure changes.
 
 | Task | Effort | Notes |
 |---|---|---|
-| Lightweight admin view for submissions (or evaluate the private `tinyexplorers-admin` repo) | L | Today staff rely on emails + `X-Admin-Key` API |
+| Admin dashboard (the private `tinyexplorers-admin` repo is an **empty placeholder** — build new): server-side admin auth (e.g. Google sign-in allowlist), pagination/filters, status + notes, CSV export, delete/anonymise for privacy requests, audit log | L (read-only 2–4 d; workflow +2–3 d) | Never put `ADMIN_API_KEY` in browser code |
+| react-router v7 upgrade (clears remaining runtime advisories) | M | Pair with Vite migration |
+| Docker hardening: non-root user, `HEALTHCHECK` | XS | |
 | Migrate CRA → Vite | M–L | Removes ~96 build-tool advisories; keep React/Tailwind/components |
 | Pre-render routes for social previews (e.g. `react-snap`/Vite SSG) or Next.js | L–XL | Only if SEO/social sharing is a priority |
 | `FastAPI` lifespan, non-root Docker user, healthcheck, newer FastAPI/Uvicorn | S | |

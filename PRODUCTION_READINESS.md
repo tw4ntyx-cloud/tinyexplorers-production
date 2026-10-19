@@ -8,6 +8,23 @@ Evidence labels used below:
 - **Suspected**: plausible from the code or config, but not reproduced.
 - **Unverified**: depends on systems this audit could not reach.
 
+## 0. Remediation status (updated 2026-10-19, Milestone 1, branch `claude/trusting-ramanujan-v9r2or`, not yet merged or deployed)
+
+| ID | Status | Notes |
+|---|---|---|
+| C1 | **Repo side done; rotation pending (owner)** | Fixture replaced with synthetic values. Exposure documented with exact Atlas/Cloud Run steps in `docs/security/2026-10-mongodb-credential-exposure.md`. History not rewritten. |
+| C2, C4, H9 | **Awaiting owner** | Consolidated with proposed neutral wording in `docs/OWNER_CONFIRMATIONS.md`. Nothing published. |
+| H1 | **Fixed** | `grid-cols-1` on the Environment grid. Chromium shows no overflow at 360/390/768px on any page. |
+| H2 | **Fixed** | Email runs in a worker thread with a bounded wait (`EMAIL_SEND_TIMEOUT_SECONDS`, default 10). Parent emails are masked in logs. |
+| H3 | **Fixed in code; needs `TRUSTED_PROXY_HOPS=1` on Cloud Run** | The default (0) ignores `X-Forwarded-For`. Confirm on a Cloud Run revision before relying on it. |
+| H4 | **Fixed (backend); mostly fixed (frontend)** | `pip-audit` is clean (FastAPI 0.146 / Starlette 1.9, PyMongo 4.19, etc.; unused auth libs removed). axios 1.20.0. The react-router v6 advisories (open redirect via `<Link>` with user-controlled URLs; SSR) are **not reachable**: all link targets are static and there is no SSR. The fix needs a v7 upgrade, which is deferred. The remaining npm advisories are CRA build tooling. |
+| H5 | **Fixed** | Emergent dependency removed; `npm ci` uses the public registry only. |
+| H7 | **Fixed** | Inquiry form requires a phone number for Phone/Text contact (client and server). |
+| H8 | **Fixed** | Unique `newsletter.email` index plus `created_at`/`status` indexes created at startup, and race-safe insert. Admin list cap (500) is unchanged. **Before deploy:** check production for existing duplicate emails, otherwise the unique index is skipped (logged) until they are removed. |
+| M5 | **Partly fixed** | Moved to FastAPI `lifespan`. Docker non-root user and healthcheck are still open. |
+| M6 | **Fixed** | `run_dev.sh` and `backend/run.sh` repaired and executable; `__pycache__` untracked. |
+| CI gap (Low) | **Fixed** | CI now runs all backend unit tests plus the live API tests. |
+
 ## 1. What was actually verified
 
 | Check | Result |
@@ -139,7 +156,7 @@ Keep the current architecture. It suits a small marketing and admissions site, a
 | Concern | Recommendation | Why |
 |---|---|---|
 | API hosting | **Keep Google Cloud Run** (min instances 0–1, max ~3). | Already deployed. It is the only host that supports keyless Google Workspace auth without extra setup (README, `docs/google-workspace-newsletter.md`). Near-zero cost at this traffic. Revision-based rollback. Railway would work for the API itself but loses keyless Workspace auth, so it brings no benefit here. Render (`render.yaml`) has the same issue. |
-| Frontend hosting | Short term: GitHub Pages with a custom domain is acceptable. **Recommended:** Cloudflare Pages, Netlify or Vercel for the apex domain. | Root-path hosting removes the `404.html` redirect hack; real HTTP security headers (CSP/HSTS); preview deploys per PR. All have free tiers. Firebase Hosting is an option to keep everything in Google Cloud. |
+| Frontend hosting | **Recommended: Cloudflare Pages** for the production domain. Keep GitHub Pages as the preview until cutover. See §7. | Free for commercial use. Proper SPA fallback (HTTP 200). Security headers. Preview deploys. Works with a private repo. |
 | Database | Keep MongoDB Atlas. Confirm the tier has backups (M10+ for continuous backup; on M0/Flex, schedule `mongodump` exports). | Low volume; the data model is simple. |
 | Email | Keep Resend with the verified domain; add DMARC. | Already integrated and tested. |
 | Monitoring | Cloud Run built-in logs and metrics, an uptime check and an alert policy; optional Sentry for frontend JS errors. | Little to set up, low cost. |
@@ -147,3 +164,38 @@ Keep the current architecture. It suits a small marketing and admissions site, a
 | Framework | No migration before launch. After launch, consider CRA → Vite (days of work, low risk). Next.js only if SEO or social previews become a business priority. | Stability first. |
 
 Estimated running cost: Cloud Run ~$0–5/mo, Atlas $0 (M0) to ~$57/mo (M10 with backups), Resend free–$20/mo, static hosting $0, plus the domain.
+
+## 7. Frontend hosting evaluation (for the eventual production domain)
+
+The frontend is a static React SPA (~190 kB gzipped JS+CSS, plus ~15 MB of policy PDFs/DOCX). Any static host works. The deciding factors are:
+- SPA deep-link handling;
+- HTTP security headers;
+- commercial-use terms;
+- whether the repository can be made private;
+- maintenance effort.
+
+Pricing and limits change often. Re-check each provider's current plan page before committing.
+
+| Criterion | GitHub Pages (current preview) | **Cloudflare Pages** | Netlify | Vercel |
+|---|---|---|---|---|
+| Cost for this site | Free (public repo). Private repo requires a paid GitHub plan. | Free tier: generous builds, unlimited static bandwidth | Free tier with usage limits; paid above them | **Hobby plan is non-commercial only**, so a business site needs Pro (per-seat monthly fee) |
+| Commercial use on free tier | Allowed, but not intended for commercial "online business" use; acceptable for a brochure site | Yes | Yes | No |
+| SPA deep links (`/philosophy`) | **`404.html` redirect hack: deep links are first served with HTTP 404**, which hurts indexing of every page except `/` | `_redirects`: `/* /index.html 200` | `_redirects`: `/* /index.html 200` | `vercel.json` rewrites (already in repo) |
+| Security headers (CSP, HSTS, frame-ancestors) | **Not configurable** | `_headers` file | `_headers` / `netlify.toml` | `vercel.json` (already drafted) |
+| HTTPS + custom apex domain | Yes (Let's Encrypt); apex via A records | Yes; apex is easiest with Cloudflare DNS (nameserver move), or a CNAME for `www` | Yes; apex via their DNS or ALIAS/A records | Yes |
+| Preview deploy per branch/PR | No (single site) | Yes | Yes | Yes |
+| Private repository | Paid plan needed | Yes | Yes | Yes |
+| Build compatibility (CRA, Node 20) | Already working via Actions | Yes (or deploy the Actions-built folder with `wrangler`) | Yes | Yes |
+| Extras | none | Free DDoS/CDN, privacy-friendly Web Analytics | Form handling, split testing | Analytics, edge functions |
+| Migration effort from today | none | Small: base path `/`, `_headers`, `_redirects`, DNS | Small (same as Cloudflare) | Small (config exists) but adds a paid seat |
+| Lock-in | Low | Low | Low | Low |
+
+**Recommendation:** Cloudflare Pages.
+- It is free for commercial use and serves deep links with HTTP 200, which fixes the SEO problem above.
+- It supports real CSP/HSTS headers and per-PR previews.
+- It lets the repository be made private (see C1).
+- Netlify is a close second.
+- Vercel is technically fine, but adds a recurring seat cost for a commercial site.
+- GitHub Pages is acceptable as a preview, but not recommended for production because of the 404-status deep links and the lack of headers.
+
+Cutover is roadmap Milestone 2 and needs owner approval: DNS changes and connecting the domain.
