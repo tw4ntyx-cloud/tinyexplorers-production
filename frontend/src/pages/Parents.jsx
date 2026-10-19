@@ -258,9 +258,9 @@ export default function Parents() {
           </div>
           <ul className="mt-14 grid gap-7 sm:grid-cols-2 lg:gap-8">
             {[
-              { title: "Secure entry", body: "Keycard access. Front desk staffed continuously." },
-              { title: "Trained adults", body: "Every staff member background-checked, first-aid certified, re-trained annually." },
-              { title: "Practiced drills", body: "Fire, hurricane, and lockdown drills run termly — calmly and child-appropriately." },
+              { title: "Secure entry", body: "Keycard access, a monitored visitor log, and CCTV at every entrance." },
+              { title: "Trained adults", body: "Certified lead educators, two staff trained in pediatric first aid in every classroom, and annual safeguarding training for every adult." },
+              { title: "Practiced drills", body: "Fire, hurricane, and lockdown drills, practiced regularly — calmly and child-appropriately." },
               { title: "On-site first aid", body: "Two qualified first-aiders on duty during all school hours." },
             ].map((item) => (
               <li

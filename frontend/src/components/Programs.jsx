@@ -59,7 +59,7 @@ export default function Programs({ onEnroll }) {
         <SectionHeader
           eyebrow="Programs"
           title="A program for every stage of small."
-          lede="Four thoughtfully designed programs — from first steps to the early school years. Every classroom is led by certified educators with Bermuda Ministry of Education registration."
+          lede="Four thoughtfully designed programs — from first steps to the early school years. Every classroom is led by certified educators, and Tiny Explorers is registered with the Bermuda Ministry of Education."
         >
           <button
             onClick={onEnroll}

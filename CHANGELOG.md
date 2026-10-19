@@ -26,6 +26,10 @@ History before this file existed is summarised from `git log`.
 - 2026-10-19 — `run_dev.sh` / `backend/run.sh` pointed at an old workspace and were not executable.
 
 ### Changed
+- 2026-10-19 — Round-2 owner answers applied: unconfirmed front-desk, staff-certification,
+  multilingual, no-screens and vaccination-schedule claims removed or aligned with the nursery's
+  own Media Viewing, Enrollment and Fire policies; Ministry registration stated accurately;
+  privacy policy now states six-month retention for non-enrolling enquiries (PDF/DOCX regenerated).
 - 2026-10-19 — Site content updated to owner-confirmed facts: town-only address (street
   shared after tour booking), Hamilton only, "Now enrolling"/"Opening soon" instead of
   Fall 2026, per-programme ratios, confirmed staff/safety/facility claims only, unnamed

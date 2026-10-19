@@ -230,6 +230,13 @@ Cutover is roadmap Milestone 2 and needs owner approval: DNS changes and connect
 | Docker non-root user + `HEALTHCHECK` | XS | Ships with the next backend deploy |
 | Enquiry digest + CSV export | ~1.5 d | Proposal: `docs/ENQUIRY_DIGEST_PROPOSAL.md` (awaiting decisions) |
 
+### Owner items still open after round 2 (2026-10-19)
+
+- Privacy request contact (Q11) and PIPA reviewer and date (Q12). **Launch blockers.**
+- Name of the Owner/Director signing privacy policy v1.1 (Q14).
+- Retention promise needs an approved deletion method, automatic or manual (see `docs/OWNER_CONFIRMATIONS.md`).
+- Drill frequency: the Fire & Emergency Evacuation Plan says monthly; the owner was unsure.
+
 ### Needs the owner (cannot be resolved by development)
 
 | Item | Finding | What is needed |

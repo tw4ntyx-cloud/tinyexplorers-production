@@ -133,6 +133,13 @@ Test results at completion:
 - **Digest/CSV proposal:** `docs/ENQUIRY_DIGEST_PROPOSAL.md`.
 - **Sandbox note:** the dev servers here stop when the session is idle. Restart with `.devcontainer/start-preview.sh`.
 
+**Session 5 (round-2 owner answers):**
+- Applied to site content: Ministry registration wording; removed unconfirmed front-desk, every-staff, multilingual, no-screens, vaccination-schedule and "below minimums" claims.
+- Drills, screens and vaccinations now follow the nursery's own policies.
+- Retention sentence added to the privacy policy; PDF and DOCX regenerated (still "Pending sign-off", signer's name not given).
+- Guard test extended (frontend 42/42); browser-verified.
+- Open items: privacy contact, PIPA reviewer, signer name, deletion method, drill frequency.
+
 ## Remaining tasks
 
 See DEVELOPMENT_ROADMAP.md.

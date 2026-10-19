@@ -704,6 +704,10 @@ export const PARENT_POLICIES = [
           {
             "type": "paragraph",
             "text": "Physical records are kept in locked storage; electronic records on secure, password-protected systems with encryption, firewalls and access controls. Information is retained only as long as necessary for its purpose or as required by law, then securely disposed of."
+          },
+          {
+            "type": "paragraph",
+            "text": "Enquiries from families who do not enrol are deleted six months after they are received."
           }
         ]
       },

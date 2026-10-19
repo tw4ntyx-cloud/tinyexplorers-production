@@ -33,6 +33,14 @@ const RETIRED_CLAIMS = [
   ["unconfirmed 100% certified staff", /"100%"|100% certified/i],
   ["kitchen (families send food)", /Allergen-aware kitchen/],
   ["emergency phone line (no number published)", /Emergency phone/],
+  // Round 2 (2026-10-19)
+  ["unconfirmed continuously staffed front desk", /Front desk staffed/i],
+  ["unconfirmed every-staff checks/certification", /Every staff member background-checked/i],
+  ["drill frequency (owner unsure; policy says monthly)", /drills run termly|Quarterly fire/i],
+  ["multilingual educators (owner: no)", /Spanish, French, and Portuguese|multilingual educators/i],
+  ["no-screens claim (contradicts Media Viewing Policy)", /No screens during|don't use screens/i],
+  ["unconfirmed vaccination schedule/exemptions", /Department of Health|exemptions are reviewed/i],
+  ["unsupported regulatory comparison", /below Bermuda Ministry minimums/i],
 ];
 
 describe("owner-confirmed business information", () => {
@@ -51,6 +59,10 @@ describe("owner-confirmed business information", () => {
 
   it("describes the nurse by role, not by name", () => {
     expect(WELLNESS.trust_card.name).toBe("Registered Nurse");
+  });
+
+  it("states the owner-approved enquiry retention period in the privacy policy", () => {
+    expect(sources.some(({ text }) => /deleted six months after they are received/.test(text))).toBe(true);
   });
 
   it("states the confirmed nut-free policy", () => {

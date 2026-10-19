@@ -8,8 +8,18 @@
     "approvedBy": "Pending sign-off",
     "docxFile": "Privacy and Confidentiality Policy.docx",
     "revisions": [
-      { "version": "1.0", "date": "1 Sep 2026", "summary": "Initial publication", "author": "Board of Governors" },
-      { "version": "1.1", "date": "19 Oct 2026", "summary": "Added Newsletter Sign-Up section (text approved by the owner)", "author": "Tiny Explorers" }
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      },
+      {
+        "version": "1.1",
+        "date": "19 Oct 2026",
+        "summary": "Added Newsletter Sign-Up section and six-month retention for enquiries (approved by the owner)",
+        "author": "Tiny Explorers"
+      }
     ]
   }
 }

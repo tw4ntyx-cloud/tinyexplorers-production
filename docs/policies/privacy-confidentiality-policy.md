@@ -35,3 +35,9 @@ _Added 2026-10-19 (approved by the owner; source: docs/newsletter-privacy-update
 **Retention:** We retain newsletter subscription records for as long as you remain subscribed. If you unsubscribe, we retain a minimal record (email address and unsubscribed status) only as needed to ensure we do not re-add you in error; you may request full deletion of this record by contacting us.
 
 **No sale or public disclosure:** We do not sell, rent, or publicly disclose newsletter subscriber email addresses, and we do not provide any way for one subscriber to view another subscriber's information.
+
+### Enquiry Retention
+
+_Added 2026-10-19 (approved by the owner)._
+
+Enquiries from families who do not enrol are deleted six months after they are received.

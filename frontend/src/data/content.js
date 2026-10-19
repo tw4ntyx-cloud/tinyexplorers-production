@@ -530,7 +530,7 @@ export const PHILOSOPHY = {
     bullets: [
       "Acoustic-softened ceilings and warm-tone lighting.",
       "Materials in natural wood, cotton, glass and clay.",
-      "No screens during the program day — anywhere.",
+      "Limited, age-appropriate screen use, as set out in our Media Viewing Policy.",
       "A quiet room available all day for rest or solo time.",
     ],
   },
@@ -630,7 +630,7 @@ export const WELLNESS_PAGE = {
       "Two staff members trained in pediatric first aid in every classroom.",
       "Annual safeguarding training for every adult on campus.",
       "A fully nut-free nursery, with allergy-aware routines for every child.",
-      "Quarterly fire and shelter drills, practiced as games.",
+      "Regular fire, hurricane/shelter and lockdown drills, practiced calmly.",
     ],
   },
   rest: {
@@ -657,7 +657,7 @@ export const WELLNESS_PAGE = {
     items: [
       { q: "When should I keep my child home?", a: "Fever above 100.4°F, persistent vomiting or diarrhea within 24 hours, undiagnosed rash, or any symptom that prevents your child from comfortably participating in the day." },
       { q: "What's your medication policy?", a: "Medication, prescribed or over-the-counter, is given only by staff trained in medication administration, with a signed Medication Authorization Form and the original labelled packaging, as set out in our Medicine Policy." },
-      { q: "Do you require vaccinations?", a: "Yes — we follow the Bermuda Department of Health's immunization schedule and require up-to-date records on enrollment. Medical exemptions are reviewed case-by-case." },
+      { q: "Do you require vaccinations?", a: "Yes. Up-to-date health and immunization records must be submitted before your child's first day, as set out in our Enrollment Policy." },
       { q: "What happens if my child gets sick during the day?", a: "We'll call you within thirty minutes and care for your child in our quiet room until pickup. Our on-call nurse is available for guidance." },
     ],
   },
@@ -836,10 +836,10 @@ export const PARENTS = {
     title: "Questions parents most often have.",
     items: [
       { q: "How does drop-off work for new families?", a: "We use a phased start. The first week is short days with a parent staying nearby. By week two, most children are happily settling on their own. Our educators will guide you through the rhythm that fits your child." },
-      { q: "What's the language environment like?", a: "English is our primary language, with regular exposure to other languages from our multilingual educators. Spanish, French, and Portuguese all naturally appear in the room." },
+      { q: "What's the language environment like?", a: "English is the main language of the classroom." },
       { q: "Do you accept children with additional needs?", a: "We welcome inquiries from every family. Support from occupational and speech therapists can be arranged on request. Where we're not the right fit, we'll say so kindly." },
-      { q: "How do you handle screens and technology?", a: "We don't use screens with the children during the program day. Educators use tablets only for daily-note photo capture, away from the children's view." },
-      { q: "What is the educator-to-child ratio?", a: "1:3 in infant care, 1:4 in toddlers, 1:6 in preschool, and 1:8 in after-school care. All below Bermuda Ministry minimums." },
+      { q: "How do you handle screens and technology?", a: "Screen use is limited, age-appropriate and educational, and all content is reviewed by staff first, as set out in our Media Viewing Policy." },
+      { q: "What is the educator-to-child ratio?", a: "1:3 in infant care, 1:4 in toddlers, 1:6 in preschool, and 1:8 in after-school care." },
       { q: "Can I tour before applying?", a: "Yes, and we encourage it. Book a 30-minute nursery tour online through our Google Calendar appointment schedule." },
     ],
   },

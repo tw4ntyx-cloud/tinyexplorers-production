@@ -33,6 +33,30 @@ The changes are applied on the branch only. **Not merged, not deployed.** Guarde
 | 26–28 | Notifications to hello@ correct; 10–50/week; email enough | No dashboard before launch. The option-B safety net (daily digest and export) is still recommended given 10–50 enquiries a week. |
 | 20, 22, 25 | Not answered / "n/a yet" / PIPA not reviewed | Open (round 2) |
 
+## Round 2 answers received 2026-10-19, applied on branch (not merged, not deployed)
+
+| # | Owner answer | Applied as |
+|---|---|---|
+| 1 | Registered with the Bermuda Ministry | Kept "Bermuda Ministry registered". Programs text now reads "…led by certified educators, and Tiny Explorers is registered with the Bermuda Ministry of Education". **Removed** "All below Bermuda Ministry minimums" (registration does not confirm the comparison). |
+| 2 | "Est. 2026" correct | Unchanged |
+| 3 | Front desk: not sure | Removed. "Secure entry" now lists keycard access, visitor log and CCTV (all confirmed in round 1). |
+| 4 | Every-staff checks / certification / annual re-training: n/a | Removed. "Trained adults" now uses the round-1 confirmed facts: certified lead educators, 2 first-aiders per classroom, annual safeguarding training. |
+| 5–6 | Fire, hurricane/shelter and lockdown drills are true; frequency not sure | "practiced regularly" on Parents and Wellness. **Note:** the nursery's own Fire & Emergency Evacuation Plan says drills are **monthly**. Owner to confirm the policy is right; if so, the site can say "monthly". |
+| 7 | Languages: no / not sure | Multilingual claim removed. FAQ: "English is the main language of the classroom." |
+| 8 | All three parent updates true | Unchanged |
+| 9 | "No screens" is **not** correct | Philosophy bullet and FAQ now match the nursery's **Media Viewing Policy** (limited, age-appropriate, educational, content reviewed by staff) |
+| 10 | Vaccinations: not sure | FAQ now quotes the **Enrollment Policy** (health and immunization records before the first day). Department of Health schedule and exemptions wording removed. |
+| 11–12 | Privacy contact and PIPA reviewer: not sure yet | **Open, launch blocker** |
+| 13 | Retention sentence approved | Added to the privacy policy (website, PDF, DOCX, markdown). **See operational note below.** |
+| 14 | Sign-off by Owner or Director, on publication | **Name not provided.** The documents still say "Pending sign-off"; the name will be added when received. |
+| 15 | Booking page location set to 59 Victoria St | Done; owner action closed |
+
+**Operational note on retention (Q13):** the privacy policy now promises that non-enrolling enquiries are deleted after six months. Automatic deletion is **not** implemented (not approved). Before the policy is published, choose one:
+- **(a)** approve the automatic monthly deletion job; or
+- **(b)** adopt a documented manual monthly clean-up, run by someone with database access. This currently also depends on Atlas access.
+
+Either way, the database records nothing yet about whether a family enrolled. "Non-enrolling" needs a definition, e.g. "no enrollment record within six months", or a status set by staff.
+
 ## Round 2 — remaining questions found while applying the answers
 
 These claims are still on the site and were not covered by the questionnaire. They are unchanged until answered.
