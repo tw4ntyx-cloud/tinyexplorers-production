@@ -42,7 +42,15 @@ Tests at completion: frontend 20/20, backend unit 76/76, live API 22/22, product
 
 **Session 4 results:**
 - Privacy PDF and DOCX regenerated (v1.1).
-- All downloads checked: the 12 PDFs are accurate; the 11 DOCX are stubs (decision needed).
+- All downloads checked: the 12 PDFs are accurate. The 11 DOCX stubs were archived and complete copies regenerated (`docs/policies/docx/`); the site serves PDFs only.
+
+**End of day 2026-10-19:**
+- Retention job built in dry-run mode (deletion off, not scheduled).
+- Digest template built (not scheduled).
+- Noindex is set for every current build.
+- Owner Review Package prepared.
+- New launch blocker C6: retention wording.
+- Details in `docs/END_OF_DAY_HANDOVER.md`.
 - Round-2 owner questions written.
 - Digest/CSV proposal written.
 - Runbook corrected (separate secret).

@@ -57,7 +57,27 @@ The changes are applied on the branch only. **Not merged, not deployed.** Guarde
 
 Either way, the database records nothing yet about whether a family enrolled. "Non-enrolling" needs a definition, e.g. "no enrollment record within six months", or a status set by staff.
 
-## Round 2 — remaining questions found while applying the answers
+## Verification and open items (end of day 2026-10-19)
+
+**Verified on the branch** (browser and automated checks):
+- every round-1 and round-2 change renders on the pages;
+- no retired claim remains (`ownerConfirmations.test.js`);
+- the privacy policy is identical on the website, in the PDF and in the editable DOCX.
+
+| # | Open item | Why it matters | Status |
+|---|---|---|---|
+| O1 | **Signatory name and title** for the privacy policy | Policy says "Approved by: Pending sign-off" until given | Open, in final questionnaire |
+| O2 | **Privacy contact** (person or role, and address) | PIPA requires a named contact for privacy requests | **Launch blocker** |
+| O3 | **PIPA review**: who reviews, and by when | Policy should be reviewed before families rely on it | **Launch blocker** |
+| O4 | **Drill frequency**: the Fire & Emergency Evacuation Plan says **monthly** | Site says "practiced regularly" until confirmed | Open |
+| O5 | **Definition of "does not enrol"**, and who records it | The system cannot tell enrolled families apart yet (`docs/RETENTION_DESIGN.md` §2) | **Launch blocker** (with O6) |
+| O6 | **Retention wording**: "deleted six months after they are received" cannot yet be met (monthly job, mailbox copies, backups) | Promise to families must be accurate | **Launch blocker**. Replacement wording proposed in `RETENTION_DESIGN.md` §5 |
+| O7 | Authorisation to switch on automatic deletion, after two reviewed dry runs | Irreversible | Not requested yet |
+| O8 | Who holds the MongoDB Atlas login | Needed to rotate the leaked credential | **Critical security item** |
+
+All of the above are collected in one short form: `docs/OWNER_QUESTIONNAIRE_FINAL.md`, and in the privately delivered Owner Review Package (Documents 01 and 02).
+
+## Round 2 — questions as sent (historical; answered above)
 
 These claims are still on the site and were not covered by the questionnaire. They are unchanged until answered.
 

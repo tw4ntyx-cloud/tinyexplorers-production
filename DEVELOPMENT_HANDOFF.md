@@ -145,7 +145,8 @@ Test results at completion:
 See DEVELOPMENT_ROADMAP.md.
 - **Milestone 0:** owner actions, especially the C1 rotation and the content answers.
 - **Milestone 2:** rotation runbook (owner, gated); staging revision; then merge (auto-deploys!); content updates; admin safety net; hosting cutover later.
-- **Next owner step:** rotation runbook **Step 1** (read-only inspection), then report back.
+- **Next owner step:** recover Atlas sign-in (`docs/security/atlas-access-recovery.md`), then rotation runbook Step 1.
+- **End of day 2026-10-19:** see `docs/END_OF_DAY_HANDOVER.md` for the latest state, test results and pending approvals.
 
 ## Instructions for a future Claude session
 

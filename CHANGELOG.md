@@ -5,6 +5,15 @@ History before this file existed is summarised from `git log`.
 
 ## [Unreleased]
 
+### Added (end of day 2026-10-19)
+- `backend/retention.py`: six-month enquiry retention job, **dry-run by default**. Deletion is off (`RETENTION_DELETE_ENABLED=false`) and capped. It writes an audit log of ids and counts only. Admin endpoint `POST /api/admin/retention/run`. Not scheduled. 10 tests.
+- `backend/digest.py`: privacy-minimised daily enquiry summary template (first name and reference only). Not scheduled, not sent. 5 tests. Samples in `docs/digest/`.
+- Build-time robots meta (`REACT_APP_ROBOTS`, `noindex, nofollow` for every current build). CI and the Pages deploy fail on unfilled placeholders or a missing noindex.
+- Docs: `docs/RETENTION_DESIGN.md`, `docs/security/SECURITY_STATUS.md`, `docs/deployment/PREVIEW_NOINDEX_PLAN.md`, `docs/OWNER_QUESTIONNAIRE_FINAL.md`, `docs/END_OF_DAY_HANDOVER.md`.
+
+### Changed (end of day 2026-10-19)
+- Policy DOCX: the 11 incomplete stubs were archived; complete editable copies of all 12 policies are now in `docs/policies/docx/`. `public/policies-docs/` serves PDFs only.
+
 ### Security
 - 2026-10-19 — Replaced a realistic MongoDB Atlas connection string in
   `backend/tests/test_mongo_url_validation.py` with synthetic values; documented the
