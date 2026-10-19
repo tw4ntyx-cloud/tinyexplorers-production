@@ -12,7 +12,7 @@ from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
-from pymongo.errors import PyMongoError
+from pymongo.errors import DuplicateKeyError, PyMongoError
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
@@ -47,6 +47,13 @@ CORS_ALLOW_CREDENTIALS = os.environ.get("CORS_ALLOW_CREDENTIALS", "false").strip
     "true",
     "yes",
 )
+
+# Number of trusted reverse proxies in front of the app that append the caller's
+# address to X-Forwarded-For. 0 (default) ignores the header entirely, which is
+# correct when clients connect directly. On Google Cloud Run set this to 1: its
+# front end appends the real client IP as the last entry. Anything a client
+# puts earlier in the header is ignored, so it cannot be used to dodge limits.
+TRUSTED_PROXY_HOPS = max(0, int(os.environ.get("TRUSTED_PROXY_HOPS", "0") or 0))
 
 CORS_ORIGINS = [origin.strip() for origin in CORS_ORIGINS_RAW.split(",") if origin.strip()]
 if not CORS_ORIGINS:
@@ -100,8 +107,10 @@ class InMemoryCursor:
 
 
 class InMemoryCollection:
-    def __init__(self) -> None:
+    def __init__(self, unique_fields: tuple = ()) -> None:
         self._documents: List[Dict[str, Any]] = []
+        # Mirrors the unique indexes created in MongoDB (see ensure_indexes).
+        self._unique_fields = unique_fields
 
     async def find_one(self, query: Optional[Dict[str, Any]] = None, projection: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
         query = query or {}
@@ -114,6 +123,9 @@ class InMemoryCollection:
         return None
 
     async def insert_one(self, document: Dict[str, Any]) -> Any:
+        for field in self._unique_fields:
+            if any(existing.get(field) == document.get(field) for existing in self._documents):
+                raise DuplicateKeyError(f"duplicate key on {field}")
         doc = dict(document)
         _id = str(uuid.uuid4())
         doc["_id"] = _id
@@ -146,7 +158,7 @@ class InMemoryCollection:
 
 class MockDatabase:
     def __init__(self) -> None:
-        self.newsletter = InMemoryCollection()
+        self.newsletter = InMemoryCollection(unique_fields=("email",))
         self.enrollment = InMemoryCollection()
         self.inquiry = InMemoryCollection()
         self.admissions = InMemoryCollection()
@@ -211,7 +223,18 @@ def _is_placeholder_mongo_url(url: str) -> bool:
 app = FastAPI(title="Tiny Explorers API")
 api_router = APIRouter(prefix="/api")
 
-limiter = Limiter(key_func=get_remote_address)
+def client_ip_key(request: Request) -> str:
+    """Rate-limit key: the real client IP, honoring only trusted proxy hops."""
+    if TRUSTED_PROXY_HOPS > 0:
+        forwarded = [part.strip() for part in request.headers.get("x-forwarded-for", "").split(",") if part.strip()]
+        if len(forwarded) >= TRUSTED_PROXY_HOPS:
+            return forwarded[-TRUSTED_PROXY_HOPS]
+    return get_remote_address(request)
+
+
+# Limits are kept in memory per instance — adequate for this site's traffic
+# and Cloud Run instance counts; see PRODUCTION_READINESS.md (H3).
+limiter = Limiter(key_func=client_ip_key)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -239,6 +262,43 @@ async def handle_pymongo_error(request: Request, exc: PyMongoError) -> JSONRespo
         exc,
     )
     return JSONResponse(status_code=503, content={"detail": "Service temporarily unavailable. Please try again shortly."})
+
+
+# (collection, keys, options). The unique newsletter email index is what makes
+# duplicate signups impossible even when two requests race past the
+# find_one() check in subscribe_newsletter.
+INDEXES = [
+    ("newsletter", [("email", 1)], {"unique": True, "name": "email_unique"}),
+    ("newsletter", [("status", 1)], {"name": "status"}),
+    ("newsletter", [("created_at", -1)], {"name": "created_at_desc"}),
+    ("enrollment", [("created_at", -1)], {"name": "created_at_desc"}),
+    ("inquiry", [("created_at", -1)], {"name": "created_at_desc"}),
+    ("admissions", [("created_at", -1)], {"name": "created_at_desc"}),
+]
+
+
+async def ensure_indexes(database: Any) -> bool:
+    """Create indexes idempotently. Never prevents startup.
+
+    Returns False if any index could not be created (e.g. existing duplicate
+    newsletter emails block the unique index) — the API still serves
+    requests and the application-level duplicate check still applies.
+    """
+    ok = True
+    for collection, keys, options in INDEXES:
+        try:
+            await database[collection].create_index(keys, **options)
+        except Exception as exc:  # noqa: BLE001 - index setup must never block startup
+            ok = False
+            logger.error(
+                "Could not create index %s on %s (%s): %s. If this is the unique newsletter "
+                "email index, remove duplicate subscriber records and restart.",
+                options.get("name"),
+                collection,
+                type(exc).__name__,
+                exc,
+            )
+    return ok
 
 
 @app.on_event("startup")
@@ -270,6 +330,7 @@ async def startup_db() -> None:
         db = client[DB_NAME]
         mongo_status = "connected"
         logger.info("Connected to MongoDB database %s", DB_NAME)
+        await ensure_indexes(db)
     except PyMongoError as exc:
         # Never interpolate MONGO_URL itself here — only the exception, whose
         # message never includes credentials.
@@ -450,7 +511,15 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
     doc = entry.model_dump()
     doc["created_at"] = doc["created_at"].isoformat()
     doc["updated_at"] = doc["updated_at"].isoformat()
-    result = await db.newsletter.insert_one(doc)
+    try:
+        result = await db.newsletter.insert_one(doc)
+    except DuplicateKeyError:
+        # A concurrent request for the same address won the race.
+        return {
+            "success": True,
+            "message": "You're already on our list. See you soon!",
+            "already_subscribed": True,
+        }
     if not getattr(result, "inserted_id", None):
         raise HTTPException(status_code=500, detail="Could not save subscription")
 
