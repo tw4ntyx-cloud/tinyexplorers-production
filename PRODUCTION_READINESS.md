@@ -199,3 +199,32 @@ Pricing and limits change often. Re-check each provider's current plan page befo
 - GitHub Pages is acceptable as a preview, but not recommended for production because of the 404-status deep links and the lack of headers.
 
 Cutover is roadmap Milestone 2 and needs owner approval: DNS changes and connecting the domain.
+
+## 8. Blockers and items resolvable without the nursery owner (reviewed 2026-10-19)
+
+### Can be done by development now (no owner input needed; each still needs approval to merge or deploy)
+
+| Item | Finding | Effort | Notes |
+|---|---|---|---|
+| Make the base path, `robots.txt`, `sitemap.xml` and `404.html` strategy build-time configurable; prepare Cloudflare Pages `_headers` (CSP/HSTS) and `_redirects` | C3, M1 | M | Prepared but **not connected**; the domain stays untouched |
+| `noindex` on the GitHub Pages preview build, so the preview never competes with the real domain | L | XS | Meta tag driven by a build env var |
+| Admin "option B" safety net: daily digest of new submissions; CSV export script for records and privacy requests | H6 / admin | ~1 d | See `docs/ADMIN_DASHBOARD_EVALUATION.md` |
+| Public token-based newsletter unsubscribe and link in the welcome email | M9 | M | Mechanism only; the privacy wording stays with the owner |
+| Docker hardening (non-root user, `HEALTHCHECK`) | M5 | XS | |
+| Monitoring kit: uptime-check and alert-policy definitions and a runbook | H6 | S | Applying them in GCP needs owner clicks |
+| Tap targets ≥24px, duplicate quote glyph, tour link in a new tab | V6, V8, V9 | XS | Visual and usability, needs approval (see `docs/VISUAL_REVIEW_2026-10.md`) |
+| Dependabot or Renovate config for dependency update PRs | H4 | XS | |
+| Image pipeline (self-hosted, WebP/AVIF, responsive sizes), ready for whichever photos are chosen | C4 | S | Independent of the photo decision |
+| Per-page social previews (pre-rendered HTML per route) | M3 | M | Optional before launch |
+
+### Needs the owner (cannot be resolved by development)
+
+| Item | Finding | What is needed |
+|---|---|---|
+| Rotate the Atlas credential | C1 | Run the gated runbook in `docs/security/…` |
+| Business facts, photos, privacy policy | C2, C4, C5, H9 | Answers to `docs/OWNER_QUESTIONNAIRE.md` |
+| Approve the zero-traffic staging deploy, then the merge | H3, H8 | `docs/deployment/cloud-run-staging-plan.md` |
+| Decide the Cloud Build trigger policy (auto 100% vs `--no-traffic`) | — | `docs/deployment/DEPLOYMENT_BEHAVIOR.md` |
+| Atlas backup tier and alert recipients | H6 | Console access and billing decision |
+| Frontend host account and DNS for `tinyexplorersbda.com` | C3 | At cutover only (not now) |
+| Need for a staff dashboard before launch | — | Questionnaire Q27–28 |

@@ -24,63 +24,124 @@
 - The fixture now uses synthetic values: a fake host, a fake username, and a password that says it is synthetic. The same URI *shape* is kept so the test still checks what it was written to check. All 12 tests in that file pass.
 - Git history has **not** been rewritten and nothing has been force-pushed, as instructed. The old value stays reachable in commit `ba4f124`. Once the password is rotated it is useless, so a rewrite is not required.
 
-## Owner actions: rotate the credential
+## Owner runbook: rotate the credential (step by step)
 
-The zero-downtime approach is recommended: create a new user, switch Cloud Run over, then delete the old user.
+Each step says whether it **changes anything live**. Steps marked ⛔ **STOP** need confirmation in the development session before continuing.
+- Never paste a password or connection string into chat, a ticket or a commit.
+- Keep the new password only in a password manager and in Google Secret Manager.
 
-### A. MongoDB Atlas
+Names used below:
+- GCP project `tiny-explorers-staff-portal`, region `us-east1`, Cloud Run service `tinyexplorers-production`.
+- Database `tiny_explorers`.
 
-1. Sign in at https://cloud.mongodb.com → choose the Tiny Explorers project.
-2. **Check for misuse first.**
-   - Open **Security → Network Access**.
-     - If `0.0.0.0/0` (access from anywhere) is listed, the leaked credential was usable from the internet.
-     - In that case, open **Project → Activity Feed** and the cluster's **Monitoring → Connections** for anything unusual since 2026-08-28.
-   - Look at the collections `newsletter`, `enrollment`, `inquiry` and `admissions` for unexpected deletions or unknown records.
-3. **Create a replacement user.**
-   - Go to **Security → Database Access → Add New Database User**.
-   - Authentication: Password → **Autogenerate Secure Password** → copy it somewhere safe (a password manager).
-   - Privileges: **Specific privileges → `readWrite` on database `tiny_explorers` only**. Do not use "Atlas admin" or "read and write to any database".
-   - Give it a new username, e.g. `te-api-2026-10`.
-4. Build the new connection string:
-   `mongodb+srv://<new-user>:<new-password>@<cluster-host>/?retryWrites=true&w=majority&appName=<app-name>`.
-   Use the same cluster host as today.
-5. Optional hardening: restrict Network Access. Cloud Run has no fixed outbound IP unless you set up a VPC connector with Cloud NAT, so this is optional for now.
+### Step 1: Inspect (read-only, changes nothing)
 
-### B. Google Cloud Run (service `tinyexplorers-production`, region `us-east1`)
+**1a.** In Atlas (https://cloud.mongodb.com → Tiny Explorers project → **Security → Database & Network Access**):
+- Note the **username** of the user the website uses. It is the one shown in the leaked fixture. Usernames are not secret, so you may share it.
+- Note that user's **role**.
+- On **Network Access (IP Access List)**: note whether `0.0.0.0/0` ("allow access from anywhere") is listed.
 
-The recommended way stores the URI in Secret Manager instead of a plain environment variable.
+**1b.** Atlas → **Project → Activity Feed** and cluster **Metrics → Connections**, from 2026-08-28 to now. Look for:
+- connection spikes at odd times;
+- database users or API keys you don't recognise;
+- unexpected changes.
+
+Then Data Explorer → `tiny_explorers`: check whether record counts look plausible and nothing is missing.
+
+**1c.** In Google Cloud Console → **Cloud Run → `tinyexplorers-production` → Revisions** tab:
+- Note the revision serving 100% of traffic. This is the **rollback revision**.
+- Open **Variables & Secrets**: is `MONGO_URL` a plain environment variable or a Secret Manager reference? (Don't copy the value.)
+
+⛔ **STOP. Report back:** the username and role, whether `0.0.0.0/0` is listed, anything unusual in the activity feed, the rollback revision name, and whether `MONGO_URL` is an env var or a secret.
+
+### Step 2: Create the replacement database user (additive; live site unaffected)
+
+Atlas → **Database Access → Add New Database User**:
+- Authentication: **Password → Autogenerate Secure Password → Copy**. Save it straight into your password manager.
+- Username: e.g. `te-api-2026-10`.
+- **Database User Privileges → Add Specific Privilege → `readWrite` @ `tiny_explorers`**. Nothing broader.
+- Leave "Restrict access to specific clusters" on the website's cluster.
+
+Then build the new connection string, using the cluster host from Atlas → **Connect → Drivers**:
+`mongodb+srv://te-api-2026-10:<new-password>@<cluster-host>/?retryWrites=true&w=majority&appName=<app-name>`
+
+⛔ **STOP. Confirm** the user was created. Do not share the password.
+
+### Step 3: Store the new connection string in Secret Manager (additive; live site unaffected)
+
+Console → **Security → Secret Manager → Create secret**:
+- Name: `mongo-url`.
+- Value: paste the new connection string.
+- Replication: automatic.
+
+Then give the Cloud Run runtime service account access:
+- Find it under Cloud Run → service → **Security** tab → "Service account". If it says "Default compute service account", that is `<project-number>-compute@developer.gserviceaccount.com`.
+- Secret Manager → `mongo-url` → **Permissions → Grant access** → that account → role **Secret Manager Secret Accessor**.
+
+CLI equivalent:
 
 ```bash
-gcloud config set project <your-project-id>          # project number 784723417768
-printf '%s' 'mongodb+srv://…new…' | gcloud secrets create mongo-url --data-file=- --replication-policy=automatic
-#   (if the secret already exists: gcloud secrets versions add mongo-url --data-file=-)
-
-# Allow the Cloud Run runtime service account to read it
-gcloud run services describe tinyexplorers-production --region us-east1 \
-  --format='value(spec.template.spec.serviceAccountName)'
+gcloud config set project tiny-explorers-staff-portal
+gcloud secrets create mongo-url --replication-policy=automatic --data-file=-   # paste, then Ctrl-D
 gcloud secrets add-iam-policy-binding mongo-url \
-  --member='serviceAccount:<runtime-sa-email>' --role='roles/secretmanager.secretAccessor'
+  --member="serviceAccount:<runtime-service-account>" --role=roles/secretmanager.secretAccessor
+```
 
-# Point the service at the secret (replaces the plain env var)
+⛔ **STOP. Confirm** the secret exists and the access grant is in place.
+
+### Step 4: Verify the new credential on a zero-traffic revision (live traffic unaffected)
+
+This creates a new revision with the **same code that is live today**, but using the new secret. It receives **0% of traffic** and gets a private test URL.
+
+```bash
 gcloud run services update tinyexplorers-production --region us-east1 \
+  --no-traffic --tag rotate \
   --remove-env-vars=MONGO_URL --update-secrets=MONGO_URL=mongo-url:latest
 ```
 
-Console alternative: **Cloud Run → tinyexplorers-production → Edit & deploy new revision → Variables & Secrets** → replace `MONGO_URL` (or reference the secret) → **Deploy**.
+If `MONGO_URL` was already a secret in step 1c, drop `--remove-env-vars=MONGO_URL`.
 
-Safety notes:
-- With `ENVIRONMENT=production` the API refuses to start if `MONGO_URL` is missing or a placeholder. A bad value therefore fails the new revision, and traffic stays on the previous healthy revision.
-- Avoid typing the URI into a shell that saves history. Using `printf` from a password manager paste, or the console UI, is safest.
+Console alternative:
+- **Edit & deploy new revision** → Variables & Secrets → remove the `MONGO_URL` variable → **Reference a secret** → `mongo-url`, latest, exposed as env var `MONGO_URL`;
+- tick **"Serve this revision immediately" = OFF**;
+- add the revision tag `rotate`.
 
-### C. Verify, then retire the old user
+Verify on the tag URL, `https://rotate---tinyexplorers-production-<hash>.us-east1.run.app`:
+1. `/api/health` returns `"database": "connected"`. If it says `unavailable`, the new user or password or network access is wrong. Nothing live is affected; fix it and repeat.
+2. Optional: the revision's logs show `Connected to MongoDB database tiny_explorers`.
 
-1. Visit `https://tinyexplorers-production-784723417768.us-east1.run.app/api/health`. It should report `"database": "connected"`.
-2. Submit one test newsletter signup on the preview site. Confirm it appears in Atlas and that there are no errors in **Cloud Run → Logs**.
-3. In Atlas, **Database Access → delete the old user** (the one named in the leaked string). This invalidates the leaked password.
-4. Tell the development session the rotation is done. Item C1 in `PRODUCTION_READINESS.md` will then be closed.
+⛔ **STOP. Report** the `/api/health` result from the `rotate` URL.
 
-### D. Prevent recurrence (recommended)
+### Step 5: Move live traffic to the verified revision (⚠ live change, instantly reversible)
 
-- GitHub → repository **Settings → Code security**: enable **Secret scanning** and **Push protection**. Both are free for public repositories.
-- Rule for contributors and AI sessions: test fixtures must use synthetic hosts and credentials (see `DEVELOPMENT_HANDOFF.md`).
-- Consider making the repository **private**. GitHub Pages from a private repo requires a paid plan; a different static host does not (see the hosting evaluation in `PRODUCTION_READINESS.md`).
+```bash
+gcloud run services update-traffic tinyexplorers-production --region us-east1 --to-tags rotate=100
+```
+
+Then check:
+- `https://tinyexplorers-production-784723417768.us-east1.run.app/api/health` returns `connected`;
+- one newsletter signup from the preview site with a test address you own is stored and the welcome email arrives;
+- no errors in Cloud Run Logs for 15 minutes.
+
+**Rollback:** `gcloud run services update-traffic tinyexplorers-production --region us-east1 --to-revisions <rollback-revision>=100`. This works because the old user still exists.
+
+**Continuous deployment:** future `main` merges keep using the secret, because they only replace the image.
+
+⛔ **STOP. Confirm** the site has been healthy on the new credential. Recommended: wait at least 24 hours.
+
+### Step 6: Retire the leaked credential (⚠ irreversible for the old password)
+
+Atlas → **Database Access** → the old user → **Delete**. Alternatively, Edit → Edit Password → autogenerate a random one and discard it.
+
+From this moment the leaked password is useless.
+
+**Note:** Cloud Run revisions created *before* step 5 still contain the old password. Rolling back to them would now fail with 503. Only roll back to revisions from step 5 onward.
+
+⛔ **STOP. Confirm.** The development session then closes finding C1.
+
+### Step 7: Prevent recurrence (recommended, no impact on the site)
+
+- GitHub → repository **Settings → Code security**: enable **Secret scanning** and **Push protection** (free for public repositories).
+- Consider making the repository **private**. GitHub Pages from a private repo requires a paid plan; Cloudflare Pages does not (see `PRODUCTION_READINESS.md` §7).
+- Rule for contributors and AI sessions: test fixtures use synthetic hosts and credentials only (see `DEVELOPMENT_HANDOFF.md`).
+- Optional: restrict Atlas Network Access to Cloud Run egress. That requires a VPC connector with Cloud NAT and a static IP, so it is a later improvement.

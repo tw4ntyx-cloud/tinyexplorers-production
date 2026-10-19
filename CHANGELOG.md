@@ -14,6 +14,8 @@ History before this file existed is summarised from `git log`.
   anyio, python-dotenv); removed unused python-jose, passlib, PyJWT, bcrypt; axios 1.20.0.
 
 ### Fixed
+- 2026-10-19 — `npm start` rendered a blank page at http://localhost:3000/ (dev server used
+  the GitHub Pages subpath); `frontend/.env.development` sets `PUBLIC_URL=/` for dev only.
 - 2026-10-19 — Homepage "Our Environment" text clipped on phones (360–390px).
 - 2026-10-19 — Email delivery no longer blocks the API event loop; bounded wait
   (`EMAIL_SEND_TIMEOUT_SECONDS`); parent emails masked in logs.
@@ -34,6 +36,11 @@ History before this file existed is summarised from `git log`.
 - 2026-10-19 — Tracked `backend/__pycache__` files.
 
 ### Added
+- 2026-10-19 — One-click Codespaces safe preview (`.devcontainer/`, forces in-memory DB
+  and no email); dev-server `/api` proxy (`frontend/src/setupProxy.js`).
+- 2026-10-19 — Deployment docs: Cloud Build auto-deploy behaviour, zero-traffic staging
+  plan, `docs/deployment/smoke-test.sh`; gated credential-rotation runbook; owner
+  questionnaire; admin dashboard evaluation; visual/usability review.
 - 2026-10-19 — `docs/OWNER_CONFIRMATIONS.md` (business facts awaiting owner approval, with
   proposed neutral wording — not published); frontend hosting evaluation
   (PRODUCTION_READINESS §7).

@@ -38,9 +38,23 @@ Tests at completion: frontend 20/20, backend unit 76/76, live API 22/22, product
 
 ## Milestone 2 — Launch readiness (domain cutover)
 
+**Preparation status (2026-10-19, nothing deployed or merged):**
+- ✅ Credential-rotation runbook with confirmation gates: `docs/security/2026-10-mongodb-credential-exposure.md`. Owner to run Step 1.
+- ✅ Deployment behaviour documented: `docs/deployment/DEPLOYMENT_BEHAVIOR.md`. **Merging to `main` auto-deploys the backend at 100% traffic** via a Cloud Build trigger.
+- ✅ Zero-traffic staging plan, verification tests and rollback: `docs/deployment/cloud-run-staging-plan.md`, plus `docs/deployment/smoke-test.sh`.
+- ✅ Owner questionnaire: `docs/OWNER_QUESTIONNAIRE.md`.
+- ✅ Admin dashboard evaluation: `docs/ADMIN_DASHBOARD_EVALUATION.md`. Recommendation: not a launch blocker; add the option-B safety net before launch.
+- ✅ Visual and usability review: `docs/VISUAL_REVIEW_2026-10.md` (V1–V11, not applied).
+- ✅ Working local preview and one-click Codespaces safe preview (`.devcontainer/`).
+- ✅ Blockers split into "development can do now" and "needs the owner": `PRODUCTION_READINESS.md` §8.
+
+
 | # | Task | Finding | Effort | Depends on |
 |---|---|---|---|---|
 | 2.0 | Deploy Milestone 1 backend to a Cloud Run **revision with no traffic**, set `TRUSTED_PROXY_HOPS=1`, check duplicate newsletter emails, verify, then shift traffic | H3, H8 | S | Owner approval, C1 rotation |
+| 2.0a | Decide the Cloud Build trigger policy (keep auto-100% with staging-first discipline, or add `--no-traffic`) | — | XS | Owner |
+| 2.0c | Admin safety net (daily digest + CSV export) | admin | ~1 d | Approval |
+| 2.0d | Approved visual quick wins (V5, V6, V8, V9) | V-items | XS–S | Owner approval |
 | 2.0b | Apply approved content wording (A1–A4, B1–B15) and photography decision | C2, C4 | S–M | Owner answers |
 | 2.1 | Configure frontend host for `tinyexplorersbda.com` (recommended Cloudflare Pages; + `www` redirect, HTTPS) | C3, M1 | S | M0 host decision |
 | 2.2 | Make base path environment-driven: `homepage`/`PUBLIC_URL`, 404 strategy, robots/sitemap generated at build | C3 | M | 2.1 |

@@ -102,11 +102,25 @@ Test results at completion:
 
 **Nothing has been merged to `main` or deployed.**
 
+**Session 2 (Milestone 2 preparation):**
+- Fixed blank page on `npm start`: dev server now serves at `/` via `frontend/.env.development`.
+- Dev `/api` proxy (`frontend/src/setupProxy.js`).
+- Codespaces safe preview (`.devcontainer/`).
+- Found that a **Cloud Build trigger deploys `main` to Cloud Run automatically** (`docs/deployment/DEPLOYMENT_BEHAVIOR.md`).
+- Wrote the gated rotation runbook, the staging plan with smoke test, the owner questionnaire, the admin evaluation and the visual review.
+- Browser walkthrough at 1440/834/390: all pages render; all 4 forms submit (test data, in-memory); modals and the mobile menu work; reduced motion is respected.
+
+**How to preview the branch:**
+- **Codespaces:** https://codespaces.new/tw4ntyx-cloud/tinyexplorers-production?ref=claude/trusting-ramanujan-v9r2or. This starts safe preview mode automatically; port 3000 is private.
+- **Locally:** `./run_dev.sh`, or `.devcontainer/start-preview.sh` for forced safe mode.
+- The public preview (https://tw4ntyx-cloud.github.io/tinyexplorers-production/) shows `main` and is wired to the **production** API and email. **Do not submit forms there for testing.**
+
 ## Remaining tasks
 
 See DEVELOPMENT_ROADMAP.md.
 - **Milestone 0:** owner actions, especially the C1 rotation and the content answers.
-- **Milestone 2:** reviewed merge; no-traffic Cloud Run revision; content updates; hosting cutover.
+- **Milestone 2:** rotation runbook (owner, gated); staging revision; then merge (auto-deploys!); content updates; admin safety net; hosting cutover later.
+- **Next owner step:** rotation runbook **Step 1** (read-only inspection), then report back.
 
 ## Instructions for a future Claude session
 
