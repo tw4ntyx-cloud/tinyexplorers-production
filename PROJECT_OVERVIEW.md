@@ -26,7 +26,7 @@ see PRODUCTION_READINESS.md §Content):
 
 ```
  Browser ──► Static SPA (React, CRA) ──HTTPS/JSON──► FastAPI API ──► MongoDB Atlas
-              GitHub Pages (preview)                  Google Cloud Run     (cluster "tiny-explorers-newslett")
+              GitHub Pages (preview)                  Google Cloud Run     (Atlas cluster)  
                                                          │
                                                          ├─► Resend (transactional email)
                                                          └─► Google Workspace Admin SDK

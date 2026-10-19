@@ -40,14 +40,14 @@ class TestPlaceholderDetection:
         # Atlas's own "connect" dialog shows this literal text until the user
         # replaces it with the real password — must still be rejected.
         assert _is_placeholder_mongo_url(
-            "mongodb+srv://<db_username>:<db_password>@tiny-explorers-newslett.f4i5ynh.mongodb.net/"
-            "?appName=tiny-explorers-newsletter"
+            "mongodb+srv://<db_username>:<db_password>@example-cluster.a1b2c3d.mongodb.net/"
+            "?appName=example-app"
         ) is True
 
     def test_atlas_dashboard_template_with_only_password_left_unfilled_is_placeholder(self):
         assert _is_placeholder_mongo_url(
-            "mongodb+srv://tinyExplorersUser:<db_password>@tiny-explorers-newslett.f4i5ynh.mongodb.net/"
-            "?appName=tiny-explorers-newsletter"
+            "mongodb+srv://exampleAppUser:<db_password>@example-cluster.a1b2c3d.mongodb.net/"
+            "?appName=example-app"
         ) is True
 
 
@@ -69,11 +69,12 @@ class TestLegitimateUrlsAreNotPlaceholders:
         ) is False
 
     def test_real_production_atlas_hostname_format_is_valid(self):
-        # Same hostname/appName shape as the actual production connection
-        # string, with the <db_username>/<db_password> placeholders replaced.
+        # Same hostname/appName *shape* as a real Atlas SRV connection string,
+        # with the <db_username>/<db_password> placeholders replaced. All
+        # values here are synthetic — never put real credentials in tests.
         assert _is_placeholder_mongo_url(
-            "mongodb+srv://tinyExplorersUser:N8k2Qz7Lm3Vx9Rt5@tiny-explorers-newslett.f4i5ynh.mongodb.net/"
-            "?appName=tiny-explorers-newsletter"
+            "mongodb+srv://exampleAppUser:SynthTestOnly0000@example-cluster.a1b2c3d.mongodb.net/"
+            "?appName=example-app"
         ) is False
 
     def test_legitimate_mongodb_net_hostname_is_valid(self):
