@@ -142,6 +142,7 @@ The sandbox could not load any external images (Unsplash/Pexels), Google Fonts, 
 
 **Infrastructure and operations**
 - [ ] C3: domain cutover (DNS, HTTPS, base path, 404 strategy, robots/sitemap, env vars, CORS, deploy-workflow assertions).
+- [ ] Production build sets `REACT_APP_ROBOTS=index, follow` (every other build is `noindex, nofollow`; see `docs/deployment/PREVIEW_NOINDEX_PLAN.md`).
 - [ ] H6: confirm the Atlas backup tier and do one test restore; set up an uptime check on `/api/health` and the site; set up error alerting (Cloud Run log-based alert or Sentry).
 - [ ] Document rollback: Cloud Run revision rollback, plus re-running the Pages deploy for a previous commit.
 - [ ] Protect `main` with required CI checks.

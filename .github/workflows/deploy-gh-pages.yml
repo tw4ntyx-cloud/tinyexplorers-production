@@ -53,6 +53,8 @@ jobs:
           grep -R "https://calendar.app.google/PKmUZbas6Hyo397WA" build/static/js/*.js >/dev/null
           grep -R "https://tinyexplorers-production-784723417768.us-east1.run.app" build/static/js/*.js >/dev/null
           ! grep -RilE 'tinyexplorers\.bm|123-4567|555-0100|admin\.tinyexplorers|javascript:void\(0\)' build
+          grep -q '<meta name="robots" content="noindex, nofollow"' build/index.html
+          ! grep -q '%REACT_APP_' build/index.html
           touch build/.nojekyll
 
       - name: Publish to gh-pages

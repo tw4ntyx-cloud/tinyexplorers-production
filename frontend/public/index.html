@@ -3,6 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <!-- Search indexing is set per build via REACT_APP_ROBOTS (.env.production / .env.development).
+             Preview builds must stay "noindex, nofollow"; set "index, follow" only for the real domain at launch. -->
+        <meta name="robots" content="%REACT_APP_ROBOTS%" />
         <meta name="theme-color" content="#FFF7EE" />
 
         <!-- Primary SEO -->
