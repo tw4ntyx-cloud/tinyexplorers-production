@@ -133,7 +133,7 @@ export const TOUR_BOOKING = {
   url: process.env.REACT_APP_TOUR_BOOKING_URL || "https://calendar.app.google/PKmUZbas6Hyo397WA",
   name: "Tiny Explorers Nursery Tour",
   duration: "30 minutes",
-  location: "59 Victoria St, Hamilton, Bermuda",
+  location: "Hamilton, Bermuda (full address in your booking confirmation)",
 };
 
 export function getPublicAssetUrl(path) {
@@ -155,20 +155,21 @@ export const DEFAULT_META = {
 export const BRAND = {
   name: "Tiny Explorers Nursery & Preschool",
   slogan: "Where learning blossoms, and adventures begin.",
-  description: "A Bermuda-based early childhood center where curiosity meets care. Hamilton & Paget campuses.",
+  description: "A Bermuda-based early childhood center in Hamilton, where curiosity meets care.",
   established: "Est. 2026",
   location: "Hamilton · Bermuda",
-  // PRE-LAUNCH TODO: no verified phone number yet — email is the sole contact
-  // method until a real Tiny Explorers phone number is confirmed.
+  // Owner decision (2026-10-19): email only, no public phone number for now.
   email: "hello@tinyexplorersbda.com",
-  address: "12 Reid Street, Hamilton HM 11, Bermuda",
+  // Owner decision (2026-10-19): the street address is shared with families
+  // once they book a tour, so only the town is published.
+  address: "Hamilton, Bermuda",
 };
 
 export const HERO = {
   headline_lead: "Where little minds grow through",
   headline_emphasis: "play",
   headline_tail: ", care, and confidence.",
-  enrolling_label: "Now enrolling · Fall 2026",
+  enrolling_label: "Now enrolling",
   description:
     "A Bermuda-based early childhood center for curious children and discerning families. Calm spaces, thoughtful educators, and a day designed around how children actually thrive.",
   primary_cta: "Start Enrollment",
@@ -180,7 +181,7 @@ export const HERO = {
   rating: "4.9 / 5",
   rating_sub: "parent rating",
   /* Launch-stage trust message — replaces statistics during soft launch. */
-  launch_trust_message: "Thoughtfully designed. Now welcoming families Fall 2026.",
+  launch_trust_message: "Thoughtfully designed. Now enrolling our first families.",
 };
 
 export const PROGRAMS = [
@@ -297,7 +298,7 @@ export const TESTIMONIAL = {
   rating: "4.9 / 5",
   review_count: 87,
   /* Launch-stage trust message — replaces reviews during soft opening. */
-  launch_message: "We open our doors Fall 2026 to our first families. We're thoughtfully designed, deeply intentional, and ready to welcome curious children into a community that knows them.",
+  launch_message: "We're preparing to welcome our first families. We're thoughtfully designed, deeply intentional, and ready to welcome curious children into a community that knows them.",
 };
 
 /**
@@ -346,8 +347,9 @@ export const WELLNESS = {
   ],
   trust_card: {
     label: "On-call nurse",
-    name: "Lena Trott",
-    role: "Registered Nurse · Bermuda licensed",
+    // Owner decision (2026-10-19): real nurse, not to be named on the site.
+    name: "Registered Nurse",
+    role: "Bermuda licensed · available by appointment",
     cert: "Bermuda Ministry registered",
   },
 };
@@ -377,7 +379,7 @@ export const NAV = [
     label: "Experiences",
     items: [
       { label: "Adventures & Field Trips", to: "/adventures", desc: "Bermuda, beyond the classroom." },
-      { label: "Gallery", to: "/#gallery", desc: "A peek inside our week." },
+      { label: "Gallery", to: "/#gallery", desc: "What a week can look like." },
     ],
   },
   {
@@ -611,7 +613,7 @@ export const WELLNESS_PAGE = {
       },
       {
         title: "Allergy-aware practice",
-        desc: "We keep the classroom nut-aware, honour food sensitivities, and help children learn respect for different needs.",
+        desc: "Tiny Explorers is fully nut-free. We honour food sensitivities and help children learn respect for different needs.",
       },
       {
         title: "Hydration + routine",
@@ -624,10 +626,10 @@ export const WELLNESS_PAGE = {
     title: "Quiet vigilance, woven into every day.",
     bullets: [
       "Keycard entry, monitored visitor log, and CCTV at every entrance.",
-      "Daily deep-clean of high-touch surfaces; HEPA filtration in every room.",
+      "Daily deep-clean of high-touch surfaces.",
       "Two staff members trained in pediatric first aid in every classroom.",
       "Annual safeguarding training for every adult on campus.",
-      "Allergen-aware kitchen with a dedicated nut-free zone.",
+      "A fully nut-free nursery, with allergy-aware routines for every child.",
       "Quarterly fire and shelter drills, practiced as games.",
     ],
   },
@@ -654,7 +656,7 @@ export const WELLNESS_PAGE = {
     title: "Clear, kind, evidence-based.",
     items: [
       { q: "When should I keep my child home?", a: "Fever above 100.4°F, persistent vomiting or diarrhea within 24 hours, undiagnosed rash, or any symptom that prevents your child from comfortably participating in the day." },
-      { q: "What's your medication policy?", a: "Prescribed medications can be administered by our nurse with written parental authorization. We do not administer over-the-counter medications without a doctor's note." },
+      { q: "What's your medication policy?", a: "Medication, prescribed or over-the-counter, is given only by staff trained in medication administration, with a signed Medication Authorization Form and the original labelled packaging, as set out in our Medicine Policy." },
       { q: "Do you require vaccinations?", a: "Yes — we follow the Bermuda Department of Health's immunization schedule and require up-to-date records on enrollment. Medical exemptions are reviewed case-by-case." },
       { q: "What happens if my child gets sick during the day?", a: "We'll call you within thirty minutes and care for your child in our quiet room until pickup. Our on-call nurse is available for guidance." },
     ],
@@ -818,7 +820,7 @@ export const PARENTS = {
     eyebrow: "Meals & snacks",
     title: "Packed-from-home lunches and calm snack rhythms.",
     lede:
-      "Families send nourishing food in labelled containers. We support allergy-aware choices, shared routines, and gentle table habits so children can eat with ease.",
+      "Families send nourishing food in labelled containers. Tiny Explorers is fully nut-free, and we support allergy-aware choices, shared routines, and gentle table habits so children can eat with ease.",
   },
   communication: {
     eyebrow: "Parent communication",
@@ -827,7 +829,6 @@ export const PARENTS = {
       { title: "Daily note", desc: "A short end-of-day reflection from your child's lead educator." },
       { title: "Weekly photos", desc: "A small private gallery, never staged." },
       { title: "Monthly one-to-one", desc: "Twenty minutes with the lead educator." },
-      { title: "Emergency phone", desc: "Direct line, answered by a real adult, during all operating hours." },
     ],
   },
   faq: {
@@ -836,7 +837,7 @@ export const PARENTS = {
     items: [
       { q: "How does drop-off work for new families?", a: "We use a phased start. The first week is short days with a parent staying nearby. By week two, most children are happily settling on their own. Our educators will guide you through the rhythm that fits your child." },
       { q: "What's the language environment like?", a: "English is our primary language, with regular exposure to other languages from our multilingual educators. Spanish, French, and Portuguese all naturally appear in the room." },
-      { q: "Do you accept children with additional needs?", a: "We welcome inquiries from every family. We work closely with occupational therapists, speech therapists, and family pediatricians on individual plans. Where we're not the right fit, we'll say so kindly." },
+      { q: "Do you accept children with additional needs?", a: "We welcome inquiries from every family. Support from occupational and speech therapists can be arranged on request. Where we're not the right fit, we'll say so kindly." },
       { q: "How do you handle screens and technology?", a: "We don't use screens with the children during the program day. Educators use tablets only for daily-note photo capture, away from the children's view." },
       { q: "What is the educator-to-child ratio?", a: "1:3 in infant care, 1:4 in toddlers, 1:6 in preschool, and 1:8 in after-school care. All below Bermuda Ministry minimums." },
       { q: "Can I tour before applying?", a: "Yes, and we encourage it. Book a 30-minute nursery tour online through our Google Calendar appointment schedule." },
@@ -893,7 +894,7 @@ export const ADMISSIONS = {
     bullets: [
       "Explore the learning environment and programme rooms",
       "Learn about our approach to early childhood education",
-      "Ask questions during a 30-minute visit at 59 Victoria St, Hamilton",
+      "Ask questions during a 30-minute visit in Hamilton (the address is in your booking confirmation)",
     ],
   },
   tuition: {

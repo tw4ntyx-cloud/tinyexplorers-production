@@ -1,6 +1,6 @@
 # Newsletter privacy policy update
 
-**DRAFT — REQUIRES HUMAN APPROVAL**
+**APPROVED by the owner on 2026-10-19 and merged** into the website privacy policy (`frontend/src/data/policies.js`) and `docs/policies/privacy-confidentiality-policy.md`, with the contact address set to `hello@tinyexplorersbda.com`. The downloadable PDF/DOCX versions still need regenerating. Kept below for history.
 
 This is a proposed addition to `docs/policies/privacy-confidentiality-policy.md`
 covering the newsletter signup feature. It is **not** legal advice and has

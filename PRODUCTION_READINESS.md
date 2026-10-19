@@ -13,7 +13,8 @@ Evidence labels used below:
 | ID | Status | Notes |
 |---|---|---|
 | C1 | **Repo side done; rotation pending (owner)** | Fixture replaced with synthetic values. Exposure documented with exact Atlas/Cloud Run steps in `docs/security/2026-10-mongodb-credential-exposure.md`. History not rewritten. |
-| C2, C4, H9 | **Awaiting owner** | Consolidated with proposed neutral wording in `docs/OWNER_CONFIRMATIONS.md`. Nothing published. |
+| C2, C4, H9 | **Mostly resolved on branch (2026-10-19)** | Questionnaire answers applied (address, campus, dates, ratios, staff, nurse, facility, food, photo wording). Guard test added. Round-2 questions open: Ministry registration, "Est. 2026", drills, languages and more (`docs/OWNER_CONFIRMATIONS.md`). |
+| C5 | **Partly resolved** | Newsletter section approved and merged into the site privacy policy. Still open: privacy contact, PIPA review, 6-month retention wording and job, PDF/DOCX regeneration. |
 | H1 | **Fixed** | `grid-cols-1` on the Environment grid. Chromium shows no overflow at 360/390/768px on any page. |
 | H2 | **Fixed** | Email runs in a worker thread with a bounded wait (`EMAIL_SEND_TIMEOUT_SECONDS`, default 10). Parent emails are masked in logs. |
 | H3 | **Fixed in code; needs `TRUSTED_PROXY_HOPS=1` on Cloud Run** | The default (0) ignores `X-Forwarded-For`. Confirm on a Cloud Run revision before relying on it. |

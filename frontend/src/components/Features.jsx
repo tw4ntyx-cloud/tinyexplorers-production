@@ -27,7 +27,7 @@ const FEATURES = [
   {
     icon: HeartHandshake,
     title: "Caring Educators",
-    desc: "Certified early-years teachers who learn each child's rhythm and meet them with patience and warmth.",
+    desc: "Lead educators with early-years certification, who learn each child's rhythm and meet them with patience and warmth.",
     accent: "#22C55E",
     bg: "#DEF7E5",
     testId: "feature-educators",

@@ -121,10 +121,10 @@ export default function Wellness() {
                   On-call nurse
                 </div>
                 <div className="mt-2 font-poppins text-[1.05rem] font-semibold leading-snug text-brand-ink">
-                  Lena Trott
+                  Registered Nurse
                 </div>
                 <div className="mt-0.5 text-[13px] leading-snug text-brand-ink/70">
-                  Registered Nurse · Bermuda licensed
+                  Bermuda licensed · available by appointment
                 </div>
               </div>
             </div>
@@ -217,8 +217,8 @@ export default function Wellness() {
       <PullQuote
         quote="A well-fed, well-rested, well-loved child can do anything we ask of them."
         emphasis="well-loved"
-        author="Lena Trott"
-        context="On-call health support"
+        author="Tiny Explorers"
+        context="Our approach to wellbeing"
         size="md"
         align="center"
       />

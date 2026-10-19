@@ -26,6 +26,11 @@ History before this file existed is summarised from `git log`.
 - 2026-10-19 — `run_dev.sh` / `backend/run.sh` pointed at an old workspace and were not executable.
 
 ### Changed
+- 2026-10-19 — Site content updated to owner-confirmed facts: town-only address (street
+  shared after tour booking), Hamilton only, "Now enrolling"/"Opening soon" instead of
+  Fall 2026, per-programme ratios, confirmed staff/safety/facility claims only, unnamed
+  nurse, fully nut-free, medication FAQ aligned with the Medicine Policy, stock-photo
+  framing softened. Approved newsletter section added to the privacy policy.
 - 2026-10-19 — Inquiry form asks for a phone number when Phone/Text is the preferred
   contact method (validated client- and server-side; included in staff email).
 - 2026-10-19 — Backend startup/shutdown use FastAPI `lifespan` (Starlette 1.x).

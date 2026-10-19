@@ -226,7 +226,7 @@ export default function Parents() {
               </h2>
             </div>
           </div>
-          <div className="mt-14 grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-x-8 gap-y-10 md:grid-cols-3">
             {p.communication.items.map((item, i) => (
               <article key={item.title} className="flex flex-col">
                 <span className="font-poppins text-[2.25rem] font-bold leading-none text-brand-orange/30">

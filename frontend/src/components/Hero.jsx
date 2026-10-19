@@ -170,14 +170,14 @@ export default function Hero() {
               className="absolute bottom-6 right-2 hidden items-center gap-3 rounded-2xl bg-white px-4 py-3 ring-soft motion-safe:animate-float-slow md:flex"
             >
               <div className="font-poppins text-2xl font-bold leading-none text-brand-orange">
-                1:4
+                1:3
               </div>
               <div className="leading-tight">
                 <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-brand-ink/70">
-                  Teacher : Child
+                  Infant care ratio
                 </div>
                 <div className="text-sm font-semibold text-brand-ink">
-                  Industry-leading ratio
+                  Small groups by design
                 </div>
               </div>
             </div>

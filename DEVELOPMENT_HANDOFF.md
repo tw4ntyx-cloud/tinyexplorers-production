@@ -115,6 +115,14 @@ Test results at completion:
 - **Locally:** `./run_dev.sh`, or `.devcontainer/start-preview.sh` for forced safe mode.
 - The public preview (https://tw4ntyx-cloud.github.io/tinyexplorers-production/) shows `main` and is wired to the **production** API and email. **Do not submit forms there for testing.**
 
+**Session 3 (owner answers):**
+- Applied the questionnaire answers to site content. Decisions table in `docs/OWNER_CONFIRMATIONS.md`.
+- Merged the approved newsletter privacy section.
+- Aligned the medication FAQ with the Medicine Policy.
+- Added `frontend/src/data/ownerConfirmations.test.js` so retired claims cannot return.
+- Frontend 34/34 tests pass; build passes; browser check shows no retired claim on any page.
+- Still waiting on the owner: rotation runbook Step 1 report, and round-2 content questions.
+
 ## Remaining tasks
 
 See DEVELOPMENT_ROADMAP.md.

@@ -32,7 +32,7 @@ Effort scale: **XS** < 1 h · **S** ≤ ½ day · **M** 1–2 days · **L** 3–
 | 1.8 | Trusted-proxy-aware rate-limit key (`TRUSTED_PROXY_HOPS`) | H3 | ✅ Code done — needs env var + verification on Cloud Run (M2) |
 | 1.9 | Inquiry phone field (client + server validation) | H7 | ✅ Done |
 | 1.10 | Dev scripts, CI runs all backend tests, untrack `__pycache__` | M6, L | ✅ Done |
-| 1.11 | Owner-approved content corrections | C2, C4, H9 | ⏳ Blocked on `docs/OWNER_CONFIRMATIONS.md` answers |
+| 1.11 | Owner-approved content corrections | C2, C4, H9 | ✅ Applied 2026-10-19 from questionnaire answers; round-2 questions pending |
 
 Tests at completion: frontend 20/20, backend unit 76/76, live API 22/22, production build + Pages artifact checks pass.
 

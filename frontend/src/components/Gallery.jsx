@@ -74,8 +74,8 @@ export default function Gallery() {
     <Section id="gallery" testId="gallery-section" surface="white" size="lg">
       <Container>
         <SectionHeader
-          eyebrow="A peek inside"
-          title="Moments from our week."
+          eyebrow="A week at Tiny Explorers"
+          title="What a week can look like."
           lede="An everyday glimpse — gardens, studios, snack tables and the quiet corners in between."
         >
           <button

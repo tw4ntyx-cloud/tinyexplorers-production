@@ -55,7 +55,7 @@ const dayMoments = [
     time: "12:30 PM",
     title: "Lunch & Connection",
     subtitle: "Nourishment and togetherness",
-    copy: "We sit together for family-style meals. Children serve themselves, try new things, and talk. Food is simple, seasonal, nourishing. Eating is a social act, not a task.",
+    copy: "We sit together for lunch. Children open the lunches packed from home, try new things, and talk. Eating is a social act, not a task.",
     color: "#60A5FA", // blue
     accent: "bg-blue-50",
   },

@@ -6,6 +6,46 @@ Every statement below is currently live on the GitHub Pages preview and will go 
 
 How to respond: for each row, reply **Confirm**, **Correct → "…"**, or **Use proposed**.
 
+## Owner decisions received 2026-10-19 (questionnaire), applied on branch `claude/trusting-ramanujan-v9r2or`
+
+The changes are applied on the branch only. **Not merged, not deployed.** Guarded by `frontend/src/data/ownerConfirmations.test.js`.
+
+| Q | Owner answer | Applied as |
+|---|---|---|
+| 1, 3 | Address is **59 Victoria St, Hamilton**; show it **only after a tour is booked** | Site shows "Hamilton, Bermuda" (footer, hero, admissions). Tour details say the full address is in the booking confirmation. Street and postcode removed from the JSON-LD. "12 Reid Street" removed. **Owner action:** make sure the Google Calendar appointment schedule's *location* field contains 59 Victoria St, so confirmations include it. |
+| 2 | Hamilton only | "Hamilton & Paget campuses" removed |
+| 4 | Email only | Unchanged. The "Emergency phone" promise is removed (Parents page grid now 3 columns). |
+| 5, 6 | Not open yet, no date; enrolling, no start date | "Now enrolling" (hero pill, CTA), "Now enrolling our first families", "We're preparing to welcome our first families", "Opening soon". All "Fall 2026" wording removed. |
+| 7, 8 | Hours, programmes and ages correct | Unchanged |
+| 9 | Per-programme ratios correct | "1:4 industry-leading ratio" badge → "1:3 · Infant care ratio · Small groups by design". Environment stat "1 : 4" → "From 1 : 3 · Educator to child" |
+| 10 | Lead educators certified; 2 first-aiders per classroom; annual safeguarding — but **not** "100% certified staff" | "100% Certified staff" stat → "2 · First-aiders per room". "Certified early-years teachers" → "Lead educators with early-years certification" |
+| 11 | Nurse is real but must not be named | Name removed from the home card, Wellness card and pull-quote. Card shows "Registered Nurse · Bermuda licensed · available by appointment". Pull-quote attributed to "Tiny Explorers". |
+| 12 | Medication only per the Medicine Policy | FAQ rewritten to match the policy: trained staff, signed Medication Authorization Form, original labelled packaging, for prescribed and over-the-counter medication. The old FAQ ("our nurse"; "doctor's note") contradicted the policy. |
+| 13 | Therapists can be arranged on request | FAQ updated. The "family pediatricians on individual plans" claim is removed. |
+| 14 | All security features true | Unchanged |
+| 15 | 4,200 sq ft and south-facing rooms/lighting true; HEPA and paediatric architect **not** | "HEPA filtration" and "co-designed with … a pediatric architect" removed. Copy now mentions bright, south-facing rooms. |
+| 16 | 30-minute sick-child call accurate | Unchanged |
+| 17, 18 | Families send food; **fully nut-free** | "Allergen-aware kitchen with a nut-free zone" → "A fully nut-free nursery…". Nut-aware → nut-free. Homepage lunch card no longer implies the nursery serves "family-style", "seasonal" food. |
+| 19 | Stock photos, without "our campus" wording | "Hamilton Campus" photo caption → "Room to explore". Gallery "Moments from our week" → "What a week can look like". Stock images otherwise unchanged. |
+| 21 | Legal name "Tiny Explorers Bermuda Ltd." correct | Unchanged |
+| 23 | Keep non-enrolling enquiries 6 months | Recorded. **Not yet implemented** (needs a deletion job and a privacy-policy sentence; see round 2). |
+| 24 | Newsletter privacy text approved | Merged into the website's Privacy & Confidentiality Policy page and `docs/policies/privacy-confidentiality-policy.md`, contact `hello@tinyexplorersbda.com`. **The downloadable PDF/DOCX still need regenerating.** |
+| 26–28 | Notifications to hello@ correct; 10–50/week; email enough | No dashboard before launch. The option-B safety net (daily digest and export) is still recommended given 10–50 enquiries a week. |
+| 20, 22, 25 | Not answered / "n/a yet" / PIPA not reviewed | Open (round 2) |
+
+## Round 2 — remaining questions found while applying the answers
+
+These claims are still on the site and were not covered by the questionnaire. They are unchanged until answered.
+
+1. **"Bermuda Ministry registered"**: hero marquee and nurse card. Also "Every classroom is led by certified educators **with Bermuda Ministry of Education registration**" (Programs) and "All **below Bermuda Ministry minimums**" (ratio FAQ). Is the nursery registered or licensed with the Ministry yet, given it hasn't opened?
+2. **"Est. 2026"** (hero): correct?
+3. **Parents page safety list**: "Front desk staffed continuously"; "**Every** staff member background-checked, first-aid certified, re-trained annually" (you confirmed 2 first-aiders per classroom; is every staff member certified?); "Fire, hurricane, and lockdown drills run **termly**", while the Wellness page says "**Quarterly** fire and shelter drills". Which is right?
+4. **Languages**: "Spanish, French, and Portuguese … from our multilingual educators". Accurate?
+5. **Parent communication**: daily notes, weekly private photos, monthly one-to-ones. Accurate commitments?
+6. **Other policies stated in FAQs**: no screens during the day; vaccinations required per the Bermuda Department of Health schedule. Accurate?
+7. **Privacy contact** (Q22) and **PIPA review** (Q25). Needed before launch.
+8. **6-month retention** (Q23). Approve adding this sentence to the privacy policy: *"Enquiries from families who do not enrol are deleted six months after they are received."* Also approve an automatic monthly clean-up job that deletes those records. That is irreversible, so it needs explicit approval.
+
 ## A. Contradictions found in the site itself (must resolve)
 
 | # | Topic | What the site says now | Where | Why it needs attention | Proposed neutral wording |

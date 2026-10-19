@@ -18,7 +18,7 @@ export default function Testimonial() {
 
           {/* Launch-stage messaging */}
           <div className="lg:sticky lg:top-32">
-            <Eyebrow>Opening Fall 2026</Eyebrow>
+            <Eyebrow>Opening soon</Eyebrow>
             <h2 className="mt-5 font-poppins text-3xl font-bold leading-[1.05] tracking-tight text-brand-ink sm:text-4xl">
               Built with intention.
             </h2>

@@ -42,7 +42,7 @@ export default function CtaSection() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-orange shadow-soft ring-1 ring-brand-ink/5">
                 <Calendar size={12} strokeWidth={2.5} />
-                Fall 2026 enrollment
+                Now enrolling
               </div>
 
               <h2 className="mt-6 font-poppins text-4xl font-bold leading-[1.04] tracking-tight text-brand-ink sm:text-5xl md:text-[3.4rem]">
