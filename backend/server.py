@@ -20,6 +20,7 @@ from slowapi.util import get_remote_address
 from starlette.middleware.cors import CORSMiddleware
 
 import google_workspace
+import retention
 from email_service import (
     send_enrollment_admin_notification,
     send_enrollment_confirmation,
@@ -72,7 +73,10 @@ def _matches(document: Dict[str, Any], query: Optional[Dict[str, Any]] = None) -
     if not query:
         return True
     for key, value in query.items():
-        if document.get(key) != value:
+        if isinstance(value, dict) and "$in" in value:
+            if document.get(key) not in value["$in"]:
+                return False
+        elif document.get(key) != value:
             return False
     return True
 
@@ -153,6 +157,16 @@ class InMemoryCollection:
 
         return UpdateResult(matched_count=matched)
 
+    async def delete_many(self, query: Dict[str, Any]) -> Any:
+        before = len(self._documents)
+        self._documents = [doc for doc in self._documents if not _matches(doc, query)]
+
+        class DeleteResult:
+            def __init__(self, deleted_count: int) -> None:
+                self.deleted_count = deleted_count
+
+        return DeleteResult(deleted_count=before - len(self._documents))
+
     def find(self, query: Optional[Dict[str, Any]] = None, projection: Optional[Dict[str, Any]] = None) -> InMemoryCursor:
         return InMemoryCursor(list(self._documents), query=query, projection=projection)
 
@@ -163,6 +177,7 @@ class MockDatabase:
         self.enrollment = InMemoryCollection()
         self.inquiry = InMemoryCollection()
         self.admissions = InMemoryCollection()
+        self.retention_runs = InMemoryCollection()
 
 
 class DatabaseUnavailableError(RuntimeError):
@@ -184,6 +199,9 @@ class _UnavailableCollection:
     def find(self, *args: Any, **kwargs: Any) -> Any:
         raise DatabaseUnavailableError("MongoDB is not available")
 
+    async def delete_many(self, *args: Any, **kwargs: Any) -> Any:
+        raise DatabaseUnavailableError("MongoDB is not available")
+
 
 class UnavailableDatabase:
     """Sentinel used in production when MongoDB is configured but unreachable.
@@ -197,6 +215,7 @@ class UnavailableDatabase:
         self.enrollment = _UnavailableCollection()
         self.inquiry = _UnavailableCollection()
         self.admissions = _UnavailableCollection()
+        self.retention_runs = _UnavailableCollection()
 
 
 def _is_placeholder_mongo_url(url: str) -> bool:
@@ -757,6 +776,21 @@ async def list_admissions() -> List[AdmissionsEntry]:
         if isinstance(row.get("created_at"), str):
             row["created_at"] = datetime.fromisoformat(row["created_at"])
     return rows
+
+
+class RetentionRunRequest(BaseModel):
+    dry_run: bool = True
+
+
+@api_router.post("/admin/retention/run", dependencies=[Depends(require_admin)])
+async def run_retention(payload: RetentionRunRequest) -> Dict[str, Any]:
+    """Report (and, only when explicitly enabled, apply) the six-month enquiry retention rule.
+
+    Dry run by default. A real run still deletes nothing unless
+    RETENTION_DELETE_ENABLED=true and records are explicitly marked as
+    non-enrolling. Not scheduled anywhere; see docs/RETENTION_DESIGN.md.
+    """
+    return await retention.run(db, dry_run=payload.dry_run)
 
 
 app.include_router(api_router)
