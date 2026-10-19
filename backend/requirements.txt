@@ -1,11 +1,11 @@
 # Core FastAPI framework
-fastapi==0.110.1
+fastapi==0.146.0
 uvicorn==0.25.0
-starlette==0.37.2
+starlette==1.9.0
 
 # Database
-motor==3.3.1
-pymongo==4.5.0
+motor==3.7.1
+pymongo==4.19.0
 dnspython==2.7.0
 
 # Data validation
@@ -15,7 +15,7 @@ email-validator==2.3.0
 annotated-types==0.7.0
 
 # Environment configuration
-python-dotenv==1.2.1
+python-dotenv==1.2.2
 
 # Email service
 resend==2.10.0
@@ -27,32 +27,26 @@ slowapi==0.1.10
 google-api-python-client==2.154.0
 google-auth==2.36.0
 
-# Authentication (for Phase 2)
-python-jose==3.5.0
-passlib==1.7.4
-PyJWT==2.12.1
-
 # HTTP utilities
 httpx==0.28.1
 httpcore==1.0.9
-requests==2.32.5
-urllib3==2.6.3
-charset-normalizer==3.4.8
+requests==2.33.1
+urllib3==2.8.0
+charset-normalizer==3.4.9
 idna==3.18
 
 # Async utilities
-anyio==4.12.1
+anyio==4.14.2
 sniffio==1.3.1
 
 # Form handling
-python-multipart==0.0.20
+python-multipart==0.0.32
 
 # Type hints
 typing_extensions==4.15.0
 
-# Crypto (for secure passwords)
-cryptography==48.0.0
-bcrypt==4.1.3
+# Crypto (used by google-auth for service-account signing)
+cryptography==50.0.2
 cffi==2.0.0
 pycparser==2.23
 

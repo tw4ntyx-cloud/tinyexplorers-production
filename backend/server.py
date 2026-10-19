@@ -1,6 +1,7 @@
 import logging
 import os
 import uuid
+from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -220,7 +221,18 @@ def _is_placeholder_mongo_url(url: str) -> bool:
     return False
 
 
-app = FastAPI(title="Tiny Explorers API")
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    # startup_db / shutdown_db_client are defined below; they are looked up
+    # when the app starts, not at import time.
+    await startup_db()
+    try:
+        yield
+    finally:
+        await shutdown_db_client()
+
+
+app = FastAPI(title="Tiny Explorers API", lifespan=lifespan)
 api_router = APIRouter(prefix="/api")
 
 def client_ip_key(request: Request) -> str:
@@ -301,7 +313,6 @@ async def ensure_indexes(database: Any) -> bool:
     return ok
 
 
-@app.on_event("startup")
 async def startup_db() -> None:
     global client, db, mongo_status
 
@@ -770,7 +781,6 @@ async def add_security_headers(request: Request, call_next):
     return response
 
 
-@app.on_event("shutdown")
 async def shutdown_db_client() -> None:
     if client is not None:
         client.close()
