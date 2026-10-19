@@ -18,9 +18,14 @@ const CONTACT_METHODS = [
   "Open to your suggestion",
 ];
 
+// Contact methods that are only actionable if the family gives us a number.
+export const PHONE_CONTACT_METHODS = ["Phone", "Text message"];
+const PHONE_PATTERN = /^[+()\d\s.-]{7,25}$/;
+
 const initial = {
   parent_name: "",
   email: "",
+  phone: "",
   child_age: "",
   message: "",
   contact_method: CONTACT_METHODS[0],
@@ -33,6 +38,8 @@ export default function InquiryModal({ open, onOpenChange }) {
   const [success, setSuccess] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const needsPhone = PHONE_CONTACT_METHODS.includes(form.contact_method);
+
   const update = (key) => (e) => {
     setForm({ ...form, [key]: e.target.value });
     if (errors[key]) setErrors((current) => ({ ...current, [key]: undefined }));
@@ -44,6 +51,10 @@ export default function InquiryModal({ open, onOpenChange }) {
     if (!form.email.trim()) next.email = "Please enter your email.";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = "Please enter a valid email address.";
     if (!form.child_age.trim()) next.child_age = "Please enter your child's age.";
+    if (needsPhone) {
+      if (!form.phone.trim()) next.phone = "Please enter a phone number so we can reach you.";
+      else if (!PHONE_PATTERN.test(form.phone.trim())) next.phone = "Please enter a valid phone number.";
+    }
     setErrors(next);
     return Object.keys(next).length === 0;
   };
@@ -59,7 +70,10 @@ export default function InquiryModal({ open, onOpenChange }) {
     setLoading(true);
 
     try {
-      const { data } = await api.post("/inquiry", form);
+      // Only send a phone number when the chosen contact method uses it.
+      const { phone, ...rest } = form;
+      const payload = needsPhone ? { ...rest, phone: phone.trim() } : rest;
+      const { data } = await api.post("/inquiry", payload);
       toast.success(data.message || "Inquiry submitted!");
       setSuccess(true);
     } catch (err) {
@@ -208,6 +222,27 @@ export default function InquiryModal({ open, onOpenChange }) {
                   ))}
                 </select>
               </label>
+
+              {needsPhone && (
+                <label className="space-y-2">
+                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-ink/70">
+                    Phone number
+                  </span>
+                  <input
+                    type="tel"
+                    autoComplete="tel"
+                    value={form.phone}
+                    onChange={update("phone")}
+                    placeholder="+1 441 000 0000"
+                    data-testid="inquiry-phone"
+                    className={inputCls}
+                    required
+                    aria-invalid={!!errors.phone}
+                    aria-describedby={errors.phone ? "inquiry-phone-error" : undefined}
+                  />
+                  <FieldError id="inquiry-phone-error" message={errors.phone} />
+                </label>
+              )}
 
               <label className="space-y-2">
                 <span className="text-xs font-semibold uppercase tracking-[0.22em] text-brand-ink/70">

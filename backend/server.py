@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from fastapi import APIRouter, Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 from motor.motor_asyncio import AsyncIOMotorClient
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
 from pymongo.errors import PyMongoError
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
@@ -333,12 +333,25 @@ class EnrollmentEntry(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
+# Inquiry contact methods that staff can only act on with a phone number.
+PHONE_CONTACT_METHODS = {"phone", "text message"}
+
+
 class InquiryCreate(BaseModel):
     parent_name: str = Field(min_length=1, max_length=120)
     email: EmailStr
+    phone: Optional[str] = Field(default=None, max_length=40)
     child_age: str = Field(min_length=1, max_length=40)
     contact_method: Optional[str] = Field(default=None, max_length=60)
     message: Optional[str] = Field(default=None, max_length=2000)
+
+    @model_validator(mode="after")
+    def require_phone_for_phone_contact(self) -> "InquiryCreate":
+        if self.phone is not None:
+            self.phone = self.phone.strip() or None
+        if (self.contact_method or "").strip().lower() in PHONE_CONTACT_METHODS and not self.phone:
+            raise ValueError("A phone number is required when the preferred contact method is phone or text message.")
+        return self
 
 
 class InquiryEntry(BaseModel):
@@ -346,6 +359,7 @@ class InquiryEntry(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     parent_name: str
     email: EmailStr
+    phone: Optional[str] = None
     child_age: str
     contact_method: Optional[str] = None
     message: Optional[str] = None
@@ -588,6 +602,7 @@ async def submit_inquiry(request: Request, payload: InquiryCreate) -> Dict[str, 
         fields={
             "Parent Name": payload.parent_name,
             "Email": payload.email,
+            "Phone": payload.phone,
             "Child Age": payload.child_age,
             "Preferred Contact": payload.contact_method,
             "Message": payload.message,
