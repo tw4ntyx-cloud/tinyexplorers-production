@@ -39,6 +39,8 @@ jobs:
           python-version: "3.11"
       - run: pip install -r requirements.txt
       - run: pip install pytest requests
+      - name: Unit tests (in-process; no server or network needed)
+        run: pytest tests -v --ignore=tests/test_api.py
       - name: Start API server
         run: |
           nohup uvicorn server:app --host 127.0.0.1 --port 8000 > server.log 2>&1 &
