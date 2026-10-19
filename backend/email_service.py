@@ -7,10 +7,11 @@ Supports:
 - Newsletter welcome emails
 """
 
+import asyncio
 import html
 import os
 import logging
-from typing import Optional
+from typing import Any, Callable, Optional
 import resend
 
 logger = logging.getLogger(__name__)
@@ -25,6 +26,18 @@ FROM_EMAIL = os.environ.get("FROM_EMAIL", "hello@tinyexplorersbda.com")
 # https://tinyexplorersbda.com in production once that domain is live.
 WEBSITE_URL = os.environ.get("WEBSITE_URL", "https://tw4ntyx-cloud.github.io/tinyexplorers-production").rstrip("/")
 
+# The Resend SDK makes blocking HTTP calls with no timeout. Each send runs in a
+# worker thread (so it never blocks the event loop) and the request stops
+# waiting after this many seconds; the submission is already persisted by then.
+EMAIL_SEND_TIMEOUT_SECONDS = float(os.environ.get("EMAIL_SEND_TIMEOUT_SECONDS", "10"))
+
+
+def _mask_email(address: str) -> str:
+    """Keep logs useful for support without writing full addresses (PII)."""
+    local, _, domain = (address or "").partition("@")
+    return f"{local[:1]}***@{domain}" if domain else "***"
+
+
 if RESEND_API_KEY:
     resend.api_key = RESEND_API_KEY
 else:
@@ -38,7 +51,7 @@ class EmailService:
     def send_enrollment_confirmation(parent_email: str, parent_name: str, inquiry_id: str, program: str):
         """Send enrollment confirmation email to parent."""
         if not RESEND_API_KEY:
-            logger.warning(f"Email disabled: RESEND_API_KEY not set. Would send to {parent_email}")
+            logger.warning(f"Email disabled: RESEND_API_KEY not set. Would send to {_mask_email(parent_email)}")
             return
 
         safe_parent_name = html.escape(parent_name)
@@ -101,10 +114,10 @@ class EmailService:
                     "html": html_body,
                 }
             )
-            logger.info(f"Enrollment confirmation email sent to {parent_email} (ID: {inquiry_id})")
+            logger.info(f"Enrollment confirmation email sent to {_mask_email(parent_email)} (ID: {inquiry_id})")
             return email
         except Exception as e:
-            logger.error(f"Failed to send enrollment confirmation to {parent_email}: {str(e)}")
+            logger.error(f"Failed to send enrollment confirmation to {_mask_email(parent_email)}: {str(e)}")
             return None
 
     @staticmethod
@@ -227,7 +240,7 @@ class EmailService:
     def send_generic_confirmation(parent_email: str, parent_name: str, reference_id: str, context_label: str):
         """Send a parent confirmation for any form submission (inquiry, admissions, etc.)."""
         if not RESEND_API_KEY:
-            logger.warning(f"Email disabled: RESEND_API_KEY not set. Would send to {parent_email}")
+            logger.warning(f"Email disabled: RESEND_API_KEY not set. Would send to {_mask_email(parent_email)}")
             return
 
         safe_parent_name = html.escape(parent_name)
@@ -266,10 +279,10 @@ class EmailService:
                     "html": html_body,
                 }
             )
-            logger.info(f"Confirmation email sent to {parent_email} (ref: {reference_id})")
+            logger.info(f"Confirmation email sent to {_mask_email(parent_email)} (ref: {reference_id})")
             return email
         except Exception as e:
-            logger.error(f"Failed to send confirmation to {parent_email}: {str(e)}")
+            logger.error(f"Failed to send confirmation to {_mask_email(parent_email)}: {str(e)}")
             return None
 
     @staticmethod
@@ -314,8 +327,25 @@ class EmailService:
             return None
 
 
+async def _send_off_event_loop(send: Callable[..., Any], **kwargs: Any) -> Any:
+    """Run a blocking EmailService call in a worker thread, bounded by a timeout.
+
+    Never raises: email is best-effort and must not fail or stall a request
+    whose submission has already been saved.
+    """
+    name = getattr(send, "__name__", "email send")
+    try:
+        return await asyncio.wait_for(asyncio.to_thread(send, **kwargs), timeout=EMAIL_SEND_TIMEOUT_SECONDS)
+    except asyncio.TimeoutError:
+        logger.error(f"Email send timed out after {EMAIL_SEND_TIMEOUT_SECONDS}s ({name}); continuing without waiting")
+    except Exception as e:  # noqa: BLE001 - EmailService already logs; this is a last-resort guard
+        logger.error(f"Unexpected email error in {name}: {e}")
+    return None
+
+
 async def send_enrollment_confirmation(parent_email: str, parent_name: str, inquiry_id: str, program: str):
-    return EmailService.send_enrollment_confirmation(
+    return await _send_off_event_loop(
+        EmailService.send_enrollment_confirmation,
         parent_email=parent_email,
         parent_name=parent_name,
         inquiry_id=inquiry_id,
@@ -332,23 +362,25 @@ async def send_enrollment_admin_notification(
     inquiry_id: str,
     submitted_at: str,
 ):
-  return EmailService.send_enrollment_admin_notification(
-    parent_name=parent_name,
-    parent_email=parent_email,
-    phone=phone,
-    child_age=child_age,
-    program=program,
-    inquiry_id=inquiry_id,
-    submitted_at=submitted_at,
-  )
+    return await _send_off_event_loop(
+        EmailService.send_enrollment_admin_notification,
+        parent_name=parent_name,
+        parent_email=parent_email,
+        phone=phone,
+        child_age=child_age,
+        program=program,
+        inquiry_id=inquiry_id,
+        submitted_at=submitted_at,
+    )
 
 
 async def send_newsletter_welcome(email: str):
-  return EmailService.send_newsletter_welcome(email)
+    return await _send_off_event_loop(EmailService.send_newsletter_welcome, email=email)
 
 
 async def send_generic_confirmation(parent_email: str, parent_name: str, reference_id: str, context_label: str):
-    return EmailService.send_generic_confirmation(
+    return await _send_off_event_loop(
+        EmailService.send_generic_confirmation,
         parent_email=parent_email,
         parent_name=parent_name,
         reference_id=reference_id,
@@ -357,7 +389,8 @@ async def send_generic_confirmation(parent_email: str, parent_name: str, referen
 
 
 async def send_generic_admin_notification(subject_line: str, heading: str, fields: dict, reference_id: str):
-    return EmailService.send_generic_admin_notification(
+    return await _send_off_event_loop(
+        EmailService.send_generic_admin_notification,
         subject_line=subject_line,
         heading=heading,
         fields=fields,
