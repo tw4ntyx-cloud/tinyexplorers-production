@@ -4,7 +4,7 @@ Run build.mjs first (it writes scripts/policy-docs/out/<slug>.json), then from f
 
     python3 scripts/policy-docs/build_docx.py [slug ...]
 
-Requires python-docx. Writes to public/policies-docs/<docxFile from metadata.json>.
+Requires python-docx. Writes to docs/policies/docx/<docxFile from metadata.json>.
 """
 import json
 import re
@@ -19,7 +19,8 @@ from docx.shared import Pt, RGBColor
 
 HERE = Path(__file__).resolve().parent
 FRONTEND = HERE.parent.parent
-OUT = FRONTEND / "public" / "policies-docs"
+# Editable copies live with the policy sources, not on the public website.
+OUT = FRONTEND.parent / "docs" / "policies" / "docx"
 
 INK = RGBColor(0x1F, 0x1F, 0x1F)
 MUTED = RGBColor(0x5B, 0x57, 0x53)
@@ -79,7 +80,8 @@ def build(slug):
         run(table.cell(0, i).paragraphs[0], label.upper(), 7, color=MUTED)
         run(table.cell(1, i).paragraphs[0], value, 9)
 
-    run(para(doc, 2), "POLICY DOCUMENT", 8, color=ORANGE)
+    label = "POLICY DOCUMENT" if meta.get("pdf", True) else "POLICY DOCUMENT · EDITABLE COPY OF THE PUBLISHED PDF"
+    run(para(doc, 2), label, 8, color=ORANGE)
     title = para(doc, 4)
     run(title, policy["title"], 24, font=SERIF)
     summary = para(doc, 10)
@@ -142,6 +144,7 @@ def build(slug):
     doc.core_properties.title = policy["title"]
     doc.core_properties.author = "Tiny Explorers Nursery & Preschool"
     doc.core_properties.subject = f"{meta['docId']} v{meta['version']}"
+    OUT.mkdir(parents=True, exist_ok=True)
     target = OUT / meta["docxFile"]
     doc.save(target)
     print(f"DOCX {target.name} ({target.stat().st_size} bytes)")

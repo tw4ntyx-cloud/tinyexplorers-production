@@ -5,8 +5,9 @@
 //
 // Requires Playwright with Chromium (`npm i -g playwright` or NODE_PATH to an
 // install; cloud sessions have it under /opt/node-tools). Writes the PDF to
-// public/policies-docs/ and ../docs/policies/, plus a JSON copy of the policy
-// for build_docx.py. Only slugs listed in metadata.json are generated.
+// public/policies-docs/ and ../docs/policies/ (unless metadata says pdf: false),
+// plus a JSON copy of the policy for build_docx.py. Only slugs listed in
+// metadata.json are processed.
 import fs from "fs";
 import path from "path";
 import { createRequire } from "module";
@@ -152,6 +153,13 @@ try {
     const policy = PARENT_POLICIES.find((p) => p.slug === slug);
     if (!policy) throw new Error(`Unknown policy slug: ${slug}`);
     const meta = metadata[slug];
+    const jsonOut = path.join(here, "out");
+    fs.mkdirSync(jsonOut, { recursive: true });
+    fs.writeFileSync(path.join(jsonOut, `${slug}.json`), JSON.stringify({ policy, meta }, null, 2));
+    if (meta.pdf === false) {
+      console.log(`DATA ${slug} (original approved PDF kept; DOCX only)`);
+      continue;
+    }
     const page = await browser.newPage();
     await page.setContent(bodyHtml(policy, meta), { waitUntil: "load" });
     await page.evaluate(() => document.fonts.ready);
@@ -167,9 +175,6 @@ try {
     for (const dir of [path.join(frontend, "public/policies-docs"), path.resolve(frontend, "../docs/policies")]) {
       fs.writeFileSync(path.join(dir, policy.downloadFile), pdf);
     }
-    const jsonOut = path.join(here, "out");
-    fs.mkdirSync(jsonOut, { recursive: true });
-    fs.writeFileSync(path.join(jsonOut, `${slug}.json`), JSON.stringify({ policy, meta }, null, 2));
     console.log(`PDF  ${policy.downloadFile} (${pdf.length} bytes)`);
   }
 } finally {

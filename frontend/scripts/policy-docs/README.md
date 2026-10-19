@@ -5,7 +5,7 @@ Builds the downloadable PDF and Word versions of a parent policy from **the same
 ```bash
 cd frontend
 node scripts/policy-docs/build.mjs privacy-confidentiality-policy        # PDF → public/policies-docs/ and ../docs/policies/
-python3 scripts/policy-docs/build_docx.py privacy-confidentiality-policy # DOCX → public/policies-docs/
+python3 scripts/policy-docs/build_docx.py                               # DOCX → ../docs/policies/docx/ (all listed policies)
 ```
 
 ## Requirements
@@ -23,4 +23,4 @@ python3 scripts/policy-docs/build_docx.py privacy-confidentiality-policy # DOCX 
 | Layout | `build.mjs` (PDF) / `build_docx.py` (DOCX) |
 | Header logo | `logo.png` (extracted from the original PDFs) |
 
-Only policies listed in `metadata.json` are generated. As of 2026-10-19 that is just the privacy policy; the other eleven PDFs are the original designed files and match the website text.
+All twelve policies are listed in `metadata.json`. Only the privacy policy has a generated PDF; the other eleven have `"pdf": false`, which keeps their original approved PDFs (they match the website text word for word) and generates only the editable DOCX copies. DOCX files are deliberately **not** placed in `public/`, so they are not downloadable from the website.

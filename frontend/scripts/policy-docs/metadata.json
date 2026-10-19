@@ -1,5 +1,158 @@
 {
-  "_comment": "Document-control fields for generated policy PDFs/DOCX. Policy text comes from src/data/policies.js (the website source). Only policies listed here are generated.",
+  "_comment": "Document-control fields for generated policy documents. Policy text comes from src/data/policies.js (the website source). 'pdf': false keeps the original approved PDF and generates only the editable DOCX copy. Values for v1.0 policies are copied from the headers and revision tables of the published PDFs.",
+  "complaint-policy": {
+    "docId": "POL-001",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Complaint Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "discipline-policy": {
+    "docId": "POL-002",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Discipline Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "enrollment-policy": {
+    "docId": "POL-003",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Enrollment Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "fire-emergency-evacuation-policy": {
+    "docId": "POL-004",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Fire and Emergency Evacuation Plan.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "mandatory-reporter-policy": {
+    "docId": "POL-005",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Mandatory Reporter Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "media-viewing-policy": {
+    "docId": "POL-006",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Media Viewing Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "media-photography-consent-policy": {
+    "docId": "POL-007",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Media and Photography Consent Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "medicine-policy": {
+    "docId": "POL-008",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Medicine Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "open-door-policy": {
+    "docId": "POL-009",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Open-Door Policy for Parents and Guardians.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
   "privacy-confidentiality-policy": {
     "docId": "POL-010",
     "version": "1.1",
@@ -19,6 +172,40 @@
         "date": "19 Oct 2026",
         "summary": "Added Newsletter Sign-Up section and six-month retention for enquiries (approved by the owner)",
         "author": "Tiny Explorers"
+      }
+    ]
+  },
+  "safe-sleep-policy": {
+    "docId": "POL-011",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Safe Sleep Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
+      }
+    ]
+  },
+  "transport-field-trip-policy": {
+    "docId": "POL-012",
+    "version": "1.0",
+    "effective": "1 Sep 2026",
+    "review": "1 Sep 2027",
+    "approvedBy": "Board of Governors",
+    "pdf": false,
+    "docxFile": "Transport and Field Trip Policy.docx",
+    "revisions": [
+      {
+        "version": "1.0",
+        "date": "1 Sep 2026",
+        "summary": "Initial publication",
+        "author": "Board of Governors"
       }
     ]
   }

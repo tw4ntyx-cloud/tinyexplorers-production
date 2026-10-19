@@ -65,6 +65,11 @@ describe("owner-confirmed business information", () => {
     expect(sources.some(({ text }) => /deleted six months after they are received/.test(text))).toBe(true);
   });
 
+  it("serves no Word documents from the public website (only the approved PDFs)", () => {
+    const publicDocs = fs.readdirSync(path.join(ROOT, "public/policies-docs"));
+    expect(publicDocs.filter((name) => /\.docx$/i.test(name))).toEqual([]);
+  });
+
   it("states the confirmed nut-free policy", () => {
     expect(sources.some(({ text }) => /fully nut-free/.test(text))).toBe(true);
   });
