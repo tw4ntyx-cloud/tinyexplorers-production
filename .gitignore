@@ -36,3 +36,6 @@ coverage/
 # ESLint / build caches
 .eslintcache
 frontend/.eslintcache
+
+# Local venv may be a symlink (no trailing slash match)
+backend/.venv
