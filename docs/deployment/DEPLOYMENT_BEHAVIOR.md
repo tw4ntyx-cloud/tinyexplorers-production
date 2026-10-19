@@ -24,6 +24,14 @@ _Determined 2026-10-19 from GitHub check-run data on public commits. No access t
 - By default that feature deploys with **100% of traffic** going to the new revision.
 - Trigger ID: `72528701-17a7-48a3-8943-7f3cc67c90be`. Build logs are linked from each check run in the GitHub UI.
 
+## Confirmed by the owner in the Cloud Console (2026-10-19)
+
+- Project **tiny-explorers-staff-portal**, service **tinyexplorers-production**, region **us-east1**.
+- Serving revision **tinyexplorers-production-00021-9s9** at **100%** traffic.
+- Source repository `tw4ntyx-cloud/tinyexplorers-production`; Cloud Build trigger branch regex **`^main$`**.
+- **Pushing to `main` deploys to production automatically.**
+- `MONGO_URL` is the Secret Manager secret `mongo_url`, version `latest`.
+
 ## Still to confirm in the Cloud Console (owner, read-only)
 
 1. **Cloud Build → Triggers** → open the trigger (project `tiny-explorers-staff-portal`, region global). Note:

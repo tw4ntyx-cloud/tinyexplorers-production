@@ -18,6 +18,11 @@ BRANCH=claude/trusting-ramanujan-v9r2or
 
 ## 0. Record the current state (read-only; needed for rollback)
 
+**Recorded by the owner on 2026-10-19:** `$STABLE_REVISION` = `tinyexplorers-production-00021-9s9` (100% traffic). `MONGO_URL` = secret `mongo_url`, version `latest`. Cloud Build trigger branch filter `^main$`.
+
+**Atlas access is currently unavailable** (see `docs/security/atlas-access-recovery.md`). Step 1 below (duplicate check and snapshot) cannot be done yet, so this plan is blocked until access is recovered.
+
+
 ```bash
 gcloud config set project $PROJECT
 gcloud run services describe $SERVICE --region $REGION --format='value(status.traffic)'
@@ -59,7 +64,7 @@ Also take an **on-demand snapshot or export** before step 3:
 | Variable | Value | Change? |
 |---|---|---|
 | `ENVIRONMENT` | `production` | unchanged |
-| `MONGO_URL` | new rotated URI (preferably the Secret Manager reference `mongo-url:latest`) | from C1 |
+| `MONGO_URL` | Secret Manager reference. Today: `mongo_url:latest`. After C1 rotation: `mongo_url_2026_10:1` | unchanged until C1 |
 | `DB_NAME` | `tiny_explorers` | unchanged |
 | `CORS_ORIGINS` | current preview origin (`https://tw4ntyx-cloud.github.io`) | unchanged |
 | `CORS_ALLOW_CREDENTIALS` | `false` | unchanged |

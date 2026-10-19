@@ -34,6 +34,18 @@ Names used below:
 - GCP project `tiny-explorers-staff-portal`, region `us-east1`, Cloud Run service `tinyexplorers-production`.
 - Database `tiny_explorers`.
 
+### Progress (updated 2026-10-19)
+
+| Step | Status |
+|---|---|
+| 1c Cloud Run | ✅ Done by the owner: project `tiny-explorers-staff-portal`, service `tinyexplorers-production` (us-east1). Serving revision **`tinyexplorers-production-00021-9s9`** at 100% (rollback point). `MONGO_URL` comes from Secret Manager secret **`mongo_url`**, version **`latest`**. |
+| 1a/1b Atlas | ⛔ **Blocked: the owner cannot sign in to Atlas** (GitHub sign-in fails). See `docs/security/atlas-access-recovery.md`. |
+| 2–6 | Not started. They require Atlas access. |
+
+> ⚠️ **Do not add a new version to the existing `mongo_url` secret.**
+> The live service reads `mongo_url:latest`, and Cloud Run resolves `latest` each time a new instance starts. A new version would therefore be picked up by live instances at the next cold start, **before** it has been verified.
+> This runbook uses a **separate** secret, `mongo_url_2026_10`, pinned to version `1`. `mongo_url` stays untouched until it is retired after Step 6.
+
 ### Step 1: Inspect (read-only, changes nothing)
 
 **1a.** In Atlas (https://cloud.mongodb.com → Tiny Explorers project → **Security → Database & Network Access**):
@@ -70,20 +82,20 @@ Then build the new connection string, using the cluster host from Atlas → **Co
 ### Step 3: Store the new connection string in Secret Manager (additive; live site unaffected)
 
 Console → **Security → Secret Manager → Create secret**:
-- Name: `mongo-url`.
+- Name: `mongo_url_2026_10`.
 - Value: paste the new connection string.
 - Replication: automatic.
 
 Then give the Cloud Run runtime service account access:
 - Find it under Cloud Run → service → **Security** tab → "Service account". If it says "Default compute service account", that is `<project-number>-compute@developer.gserviceaccount.com`.
-- Secret Manager → `mongo-url` → **Permissions → Grant access** → that account → role **Secret Manager Secret Accessor**.
+- Secret Manager → `mongo_url_2026_10` → **Permissions → Grant access** → that account → role **Secret Manager Secret Accessor**.
 
 CLI equivalent:
 
 ```bash
 gcloud config set project tiny-explorers-staff-portal
-gcloud secrets create mongo-url --replication-policy=automatic --data-file=-   # paste, then Ctrl-D
-gcloud secrets add-iam-policy-binding mongo-url \
+gcloud secrets create mongo_url_2026_10 --replication-policy=automatic --data-file=-   # paste, then Ctrl-D
+gcloud secrets add-iam-policy-binding mongo_url_2026_10 \
   --member="serviceAccount:<runtime-service-account>" --role=roles/secretmanager.secretAccessor
 ```
 
@@ -96,13 +108,13 @@ This creates a new revision with the **same code that is live today**, but using
 ```bash
 gcloud run services update tinyexplorers-production --region us-east1 \
   --no-traffic --tag rotate \
-  --remove-env-vars=MONGO_URL --update-secrets=MONGO_URL=mongo-url:latest
+  --update-secrets=MONGO_URL=mongo_url_2026_10:1
 ```
 
-If `MONGO_URL` was already a secret in step 1c, drop `--remove-env-vars=MONGO_URL`.
+`MONGO_URL` is already a secret reference (step 1c), so `--update-secrets` simply points it at the new secret for this revision only.
 
 Console alternative:
-- **Edit & deploy new revision** → Variables & Secrets → remove the `MONGO_URL` variable → **Reference a secret** → `mongo-url`, latest, exposed as env var `MONGO_URL`;
+- **Edit & deploy new revision** → Variables & Secrets → edit the `MONGO_URL` secret reference → secret `mongo_url_2026_10`, version **1** (not latest);
 - tick **"Serve this revision immediately" = OFF**;
 - add the revision tag `rotate`.
 

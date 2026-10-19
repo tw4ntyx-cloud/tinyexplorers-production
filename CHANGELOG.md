@@ -41,6 +41,10 @@ History before this file existed is summarised from `git log`.
 - 2026-10-19 — Tracked `backend/__pycache__` files.
 
 ### Added
+- 2026-10-19 — Policy document generator (`frontend/scripts/policy-docs/`): PDF and DOCX built from the
+  website's policy text. Privacy & Confidentiality Policy regenerated as v1.1 with the approved
+  Newsletter Sign-Up section (sign-off pending).
+- 2026-10-19 — Atlas access-recovery guide, round-2 owner questions, enquiry digest/CSV proposal.
 - 2026-10-19 — One-click Codespaces safe preview (`.devcontainer/`, forces in-memory DB
   and no email); dev-server `/api` proxy (`frontend/src/setupProxy.js`).
 - 2026-10-19 — Deployment docs: Cloud Build auto-deploy behaviour, zero-traffic staging

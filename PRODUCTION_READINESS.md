@@ -12,9 +12,10 @@ Evidence labels used below:
 
 | ID | Status | Notes |
 |---|---|---|
-| C1 | **Repo side done; rotation pending (owner)** | Fixture replaced with synthetic values. Exposure documented with exact Atlas/Cloud Run steps in `docs/security/2026-10-mongodb-credential-exposure.md`. History not rewritten. |
+| C1 | **CRITICAL, OUTSTANDING: blocked on Atlas access** | Fixture replaced with synthetic values (repo side done). Cloud Run checks done by the owner (rollback revision `…-00021-9s9`, `MONGO_URL` = secret `mongo_url:latest`). **The owner cannot sign in to Atlas**, so the credential cannot be rotated yet. Recovery steps: `docs/security/atlas-access-recovery.md`. Runbook updated to use a separate secret `mongo_url_2026_10:1`; **never add versions to `mongo_url`**, because live instances read `latest`. |
 | C2, C4, H9 | **Mostly resolved on branch (2026-10-19)** | Questionnaire answers applied (address, campus, dates, ratios, staff, nurse, facility, food, photo wording). Guard test added. Round-2 questions open: Ministry registration, "Est. 2026", drills, languages and more (`docs/OWNER_CONFIRMATIONS.md`). |
-| C5 | **Partly resolved** | Newsletter section approved and merged into the site privacy policy. Still open: privacy contact, PIPA review, 6-month retention wording and job, PDF/DOCX regeneration. |
+| C5 | **Partly resolved** | Newsletter section merged into the site policy. **Privacy PDF and DOCX regenerated (v1.1)** from the website text with `frontend/scripts/policy-docs/` (24/24 blocks verified). Still open: v1.1 sign-off and effective date, privacy contact, PIPA review, 6-month retention wording (job not to be built yet). Questions in `docs/OWNER_QUESTIONNAIRE_ROUND2.md`. |
+| M12 (new) | **Open: decision** | The 11 other `.docx` files in `public/policies-docs/` are **incomplete stubs** (0–4 of 8–23 text blocks each). They are not linked from the site but are publicly downloadable by URL. All 12 **PDFs match the website text** (differences are layout only). Options: regenerate them from the website text with the generator, or remove them from `public/`. |
 | H1 | **Fixed** | `grid-cols-1` on the Environment grid. Chromium shows no overflow at 360/390/768px on any page. |
 | H2 | **Fixed** | Email runs in a worker thread with a bounded wait (`EMAIL_SEND_TIMEOUT_SECONDS`, default 10). Parent emails are masked in logs. |
 | H3 | **Fixed in code; needs `TRUSTED_PROXY_HOPS=1` on Cloud Run** | The default (0) ignores `X-Forwarded-For`. Confirm on a Cloud Run revision before relying on it. |
@@ -217,6 +218,17 @@ Cutover is roadmap Milestone 2 and needs owner approval: DNS changes and connect
 | Dependabot or Renovate config for dependency update PRs | H4 | XS | |
 | Image pipeline (self-hosted, WebP/AVIF, responsive sizes), ready for whichever photos are chosen | C4 | S | Independent of the photo decision |
 | Per-page social previews (pre-rendered HTML per route) | M3 | M | Optional before launch |
+
+### Additional non-destructive preparations identified (2026-10-19)
+
+| Item | Effort | Notes |
+|---|---|---|
+| Regenerate the 11 stub DOCX files from the website text (or remove them) | XS | Generator ready; needs a metadata entry (doc ID, version) per policy |
+| Hide the GitHub Pages preview from search engines (`noindex` build flag) | XS | The preview shows old content and real forms |
+| Prepare Cloudflare Pages `_headers`/`_redirects` (not connected) | S | Lets cutover happen in hours, not days |
+| Dependabot/Renovate config | XS | Dependency update PRs land on branches, never directly on `main` |
+| Docker non-root user + `HEALTHCHECK` | XS | Ships with the next backend deploy |
+| Enquiry digest + CSV export | ~1.5 d | Proposal: `docs/ENQUIRY_DIGEST_PROPOSAL.md` (awaiting decisions) |
 
 ### Needs the owner (cannot be resolved by development)
 

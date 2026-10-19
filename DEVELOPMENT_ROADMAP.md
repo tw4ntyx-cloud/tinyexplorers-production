@@ -38,6 +38,16 @@ Tests at completion: frontend 20/20, backend unit 76/76, live API 22/22, product
 
 ## Milestone 2 — Launch readiness (domain cutover)
 
+**Blocker (2026-10-19): Atlas access lost.** C1 rotation, the staging duplicate check and snapshot, and therefore the backend deploy (2.0) are blocked until the owner regains Atlas access (`docs/security/atlas-access-recovery.md`). Frontend and content work can continue on the branch.
+
+**Session 4 results:**
+- Privacy PDF and DOCX regenerated (v1.1).
+- All downloads checked: the 12 PDFs are accurate; the 11 DOCX are stubs (decision needed).
+- Round-2 owner questions written.
+- Digest/CSV proposal written.
+- Runbook corrected (separate secret).
+- Cloud Run facts recorded.
+
 **Preparation status (2026-10-19, nothing deployed or merged):**
 - ✅ Credential-rotation runbook with confirmation gates: `docs/security/2026-10-mongodb-credential-exposure.md`. Owner to run Step 1.
 - ✅ Deployment behaviour documented: `docs/deployment/DEPLOYMENT_BEHAVIOR.md`. **Merging to `main` auto-deploys the backend at 100% traffic** via a Cloud Build trigger.

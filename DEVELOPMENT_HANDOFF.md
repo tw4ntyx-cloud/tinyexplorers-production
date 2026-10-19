@@ -123,6 +123,16 @@ Test results at completion:
 - Frontend 34/34 tests pass; build passes; browser check shows no retired claim on any page.
 - Still waiting on the owner: rotation runbook Step 1 report, and round-2 content questions.
 
+**Session 4 (while the owner reviews the Codespaces preview):**
+- **Cloud Run verified by the owner:** revision `tinyexplorers-production-00021-9s9` at 100%; `MONGO_URL` = `mongo_url:latest`; trigger `^main$` auto-deploys `main`.
+- **Atlas sign-in fails for the owner.** C1 is recorded as critical and outstanding. Wrote `docs/security/atlas-access-recovery.md`.
+- **Runbook corrected** to use a new secret `mongo_url_2026_10:1`. Adding versions to `mongo_url` would leak into live instances on cold start.
+- **Privacy PDF and DOCX regenerated (v1.1, "Pending sign-off")** with the new generator `frontend/scripts/policy-docs/` (fonts from `@fontsource` dev dependencies). Both verified 24/24 against the site. Served correctly by the dev server.
+- **Downloads audit:** the 12 PDFs match the site; the 11 other DOCX files are unlinked stubs (decision M12).
+- **Round-2 owner questions:** `docs/OWNER_QUESTIONNAIRE_ROUND2.md` (fillable page shared privately with the owner).
+- **Digest/CSV proposal:** `docs/ENQUIRY_DIGEST_PROPOSAL.md`.
+- **Sandbox note:** the dev servers here stop when the session is idle. Restart with `.devcontainer/start-preview.sh`.
+
 ## Remaining tasks
 
 See DEVELOPMENT_ROADMAP.md.
