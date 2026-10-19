@@ -39,3 +39,6 @@ frontend/.eslintcache
 
 # Local venv may be a symlink (no trailing slash match)
 backend/.venv
+
+# Policy document generator scratch output
+frontend/scripts/policy-docs/out/
