@@ -1,0 +1,26 @@
+Tiny Explorers: 3 new enquiries (Tue 20 Oct 2026)
+
+NEW SINCE YESTERDAY'S SUMMARY
+  Admissions requests     1
+  Program enquiries       1
+  General enquiries       1
+  Newsletter sign-ups     2 (count only)
+
+TOUR BOOKINGS
+  Tours are booked in Google Calendar; check the calendar for today's visits.
+
+NEW ENQUIRIES (first name only; open the full record by reference)
+  Mon 19 Oct 23:00  Program enquiries  ref 8b7d2c10  Example  program: Preschool Program  child: 4  prefers: email  message: no
+  Tue 20 Oct 03:00  Admissions requests  ref 3f9c1a2e  Sample  program: Toddler Program  child: 2 years  prefers: Email  message: yes
+  Tue 20 Oct 06:00  General enquiries  ref 5e6f7a8b  Test  program: —  child: 5  prefers: Phone  message: yes
+
+OUTSTANDING FOLLOW-UPS (received over 24 hours ago, still 'new'): 1
+  Sat 17 Oct 10:00  Program enquiries  ref 1a2b3c4d  Older
+UNANSWERED MESSAGES (outstanding enquiries that include a message): 1
+
+ALERTS
+  • 1 newsletter sign-up(s) are waiting to be added to the Google Group.
+  • Follow-up tracking is not switched on yet: every enquiry still shows as 'new', so the outstanding list below includes enquiries you may already have answered.
+
+This summary deliberately leaves out email addresses, phone numbers, child names and messages.
+Find full details in the individual notification emails, matched by reference.

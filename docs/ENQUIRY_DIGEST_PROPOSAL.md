@@ -6,6 +6,37 @@ _Status: **proposal only, not implemented.** Implementation needs owner approval
 
 The owner expects **10–50 enquiries a week** and is happy with email for launch (questionnaire Q27–28). Today every admissions, enrollment or inquiry submission sends one staff email. If that email fails to send (Resend outage, 10-second timeout) or is missed (spam, busy inbox), the enquiry still sits safely in the database, but **nobody at the nursery can see it** without a developer. A once-a-day summary closes that gap. A CSV gives staff a spreadsheet they can sort, filter and keep for follow-ups, without a dashboard.
 
+## Update 2026-10-19: privacy-minimised format (supersedes the CSV-attachment idea below)
+
+Following the request to minimise personal information in email, the prepared template (`backend/digest.py`, sample in `docs/digest/`) contains:
+- counts per category, and newsletter sign-ups as a **count only**;
+- each new enquiry's **received time, type, short reference, parent first name, program, child age, preferred contact method**, and whether it includes a message.
+- **No email addresses, phone numbers, child names or message text.** Staff open the full record from the individual notification email (same reference) or a developer export.
+
+Sections:
+1. New enquiries
+2. Enquiry categories
+3. **Outstanding follow-ups:** still "new" more than 24 hours after receipt.
+4. **Booking requests:** tours are booked in Google Calendar, which the website cannot see, so the summary points to the calendar.
+5. **Unanswered messages:** outstanding enquiries that include a message.
+6. **Operational alerts:** newsletter sign-ups waiting for Google Group sync, and the warning that follow-up tracking isn't switched on yet.
+
+Planned additions once available: notification-email failures, database health.
+
+**No CSV attachment by default.** A CSV export stays available on request through the developer/admin route.
+
+**Proposed schedule and recipients (approval needed):**
+- daily at 07:00 `Atlantic/Bermuda`, including "no new enquiries" days;
+- to `hello@tinyexplorersbda.com` only;
+- triggered by Cloud Scheduler with a Google-signed identity token.
+
+**Status:** template and tests (`backend/tests/test_digest.py`, 5 tests) on the development branch. **Not wired to any endpoint or scheduler, nothing sent.**
+
+**Before activation:**
+- owner approval of the content, recipients and time;
+- approved backend deploy (staging plan);
+- a decision on follow-up tracking (R2 in `docs/RETENTION_DESIGN.md`). Without it, the "outstanding" list includes enquiries already answered.
+
 ## What staff would get
 
 **1. Daily summary email**, sent to `hello@tinyexplorersbda.com` at 7:00 AM Bermuda time:
