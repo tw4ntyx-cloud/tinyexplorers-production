@@ -1,0 +1,149 @@
+# Tiny Explorers — Production Readiness
+
+_Audit date: 2026-10-19 · Audited commit: `main` @ `ac777b1` · Auditor: Claude Code session_
+
+Evidence labels used below:
+
+- **Confirmed**: reproduced in a browser or test, or plainly visible in code.
+- **Suspected**: plausible from the code or config, but not reproduced.
+- **Unverified**: depends on systems this audit could not reach.
+
+## 1. What was actually verified
+
+| Check | Result |
+|---|---|
+| Frontend unit tests (`craco test`) | **16/16 pass** (3 suites) |
+| Frontend production build | **Succeeds**; 173.6 kB JS + 15.4 kB CSS (gzip) |
+| Backend unit tests (mongo, email, workspace, URL validation) | **56/56 pass** |
+| Backend API tests against a running server (`tests/test_api.py`) | **22/22 pass** |
+| Browser: all 9 routes + 2 policy pages + 404, at 1440px and 390px | Load. Each page has one `<h1>`, a per-page title and a canonical URL. No unnamed buttons or links, no missing `alt`, no `href="#"` |
+| Browser: in-page anchors (`#programs`, `#gallery`, `#careers`, `#faq`, …) | All targets exist |
+| Browser: newsletter, admissions and inquiry forms submitted to a local API | **201 responses**; success states render; modals close on Esc |
+| Browser: 404 page | Renders with `noindex` |
+| Policy PDF download | 200, `application/pdf` |
+| Live sites (GitHub Pages, Cloud Run, final domain) | **Not reachable from the audit sandbox** (egress blocked). Status comes from GitHub only: the Pages deploy succeeded on 2026-08-29 and CI is green |
+
+The sandbox could not load any external images (Unsplash/Pexels), Google Fonts, Resend, Atlas or Google Workspace. Visual review of imagery and real email and database behaviour therefore remains **unverified**.
+
+## 2. Findings
+
+### Critical: must resolve before production
+
+| ID | Finding | Evidence | Label |
+|---|---|---|---|
+| C1 | **Possible database credential in a public repo.** The repository is **public**. `backend/tests/test_mongo_url_validation.py:75` (added in `ba4f124`) contains a full `mongodb+srv://` URI. It uses the real production Atlas hostname, a realistic username and a 16-character non-placeholder password. It may be an invented example, but that can't be confirmed from here. Treat it as exposed: **rotate that Atlas DB user's password**, then replace the literal with an obviously fake value. Rewriting history is optional and needs your approval. | Code + repo visibility | Suspected exposure |
+| C2 | **Two different street addresses are shown to families.** The hero shows "59 Victoria St, Hamilton". The footer and JSON-LD show "12 Reid Street, Hamilton HM 11". | `content.js:136,164`, `Hero.jsx:52`, `Footer.jsx:139`, `index.html` | Confirmed |
+| C3 | **Production domain cutover is not done, and parts of it are not config-only.** All of the following still target the GitHub Pages subpath: `package.json` `homepage`, `public/404.html` (`segmentCount = 1`), the inline redirect script in `index.html`, `robots.txt`, `sitemap.xml`, `.env.production` `REACT_APP_WEBSITE_URL`, and backend `WEBSITE_URL` / `CORS_ORIGINS`. `deploy-gh-pages.yml` asserts the `/tinyexplorers-production/` paths and the Cloud Run URL, so it will fail after the change. | Code | Confirmed |
+| C4 | **Factual claims need owner sign-off.** For a childcare provider these are trust and regulatory statements: "Keycard entry", "Certified early-years teachers", "1:4 industry-leading ratio", "4,200 square feet", "Hamilton & Paget campuses", "Our Hamilton campus was co-designed with … a pediatric architect", opening hours, and ages and ratios per program. All photography is hotlinked **stock** (15 Unsplash/Pexels URLs) presented as the school's own spaces. | `content.js` | Unverified |
+| C5 | **The privacy policy does not yet cover the newsletter or online form data** (family names, emails, child names and ages, free-text needs). The draft is unmerged and has 4 open questions. | `docs/newsletter-privacy-update.md` | Confirmed (docs) |
+
+### High: important operational or functional problems
+
+| ID | Finding | Evidence | Label |
+|---|---|---|---|
+| H1 | **Homepage "Our Environment" text is clipped on phones.** At 360px and 390px the heading, paragraph and list extend to x≈504px and are cut off by `main { overflow:hidden }`. The likely cause is an implicit grid track in `Environment.jsx:40` (`grid` with no `grid-cols-1` / `min-w-0`). | Browser measurement + screenshot | Confirmed |
+| H2 | **Email sending blocks the server.** The `async` wrappers in `email_service.py:317+` call the synchronous Resend SDK directly. Each submission blocks the event loop for up to 2 network round-trips, so every concurrent request stalls. | Code | Confirmed (code) |
+| H3 | **Rate limiting probably applies one shared limit to all users on Cloud Run.** `slowapi` keys on `request.client.host`. Uvicorn only honours `X-Forwarded-For` from `127.0.0.1` by default, so behind Cloud Run's front end every visitor may share one bucket (5 enrollments/min site-wide). The limit is also in-memory per instance. | Code | Suspected |
+| H4 | **Vulnerable dependencies.** Backend: `python-multipart 0.0.20` (6 advisories), `cryptography 48.0.0` (4), `ecdsa 0.19.2` (via the unused `python-jose`). Frontend runtime: `axios` (high), `react-router` (moderate). The 96 other npm advisories are CRA build/dev-server tooling and are not shipped to browsers. | `pip-audit`, `npm audit` | Confirmed |
+| H5 | **The build depends on a third-party tarball.** `@emergentbase/visual-edits` is fetched from `assets.emergent.sh`, a leftover from the original Emergent build. It returned **403** in the audit environment, so `npm ci` fails there. CI and Pages deploys break if that URL disappears. It is optional at runtime (`craco.config.js` already tolerates its absence). | Install log | Confirmed |
+| H6 | **No backup, monitoring or alerting is documented.** The Atlas tier, backup schedule, point-in-time recovery, uptime checks, error tracking and log retention are unknown. Submissions (family PII) live only in Atlas plus notification emails. | Repo | Unverified |
+| H7 | **Inquiry form offers "Phone" as a contact method but has no phone field.** Staff cannot call a family who selects it. | `InquiryModal.jsx`; payload observed in browser | Confirmed |
+| H8 | **No unique index on `newsletter.email`.** No indexes are created anywhere. Concurrent duplicate signups can create duplicate records. Admin list endpoints are hard-capped at 500 rows with no pagination. | `server.py` | Confirmed (code) |
+| H9 | **Opening and enrollment copy may be stale.** "Now enrolling · Fall 2026", "Opening Fall 2026" and "We open our doors Fall 2026" were written before the date of this audit (Oct 2026). | `content.js`, `CtaSection.jsx`, `Testimonial.jsx` | Needs owner input |
+
+### Medium: quality and usability
+
+| ID | Finding | Label |
+|---|---|---|
+| M1 | Several deploy targets coexist: GitHub Pages (active), `frontend/vercel.json`, `render.yaml`, and Cloud Run (documented, no IaC in repo). Pick one per tier and archive the rest. Note that `vercel.json`'s CSP (`script-src 'self'`) would block the inline Pages redirect script in `index.html`. | Confirmed |
+| M2 | Create React App is deprecated and `react-scripts 5` is frozen. Long-term maintenance and security fixes will get harder. Migrating to Vite is the low-risk path; Next.js gives SSR/SEO but is a larger change. | Confirmed |
+| M3 | The SPA renders metadata client-side. Google renders JS, but social link previews (Facebook, WhatsApp, iMessage) see only the static `index.html` "Home" title and the stock OG image for every page. | Confirmed (code) |
+| M4 | Scroll-triggered fade-in hides sections until scrolled into view. This is fine for users, but full-page captures and some crawlers see blank space. Reduced-motion is respected. | Confirmed |
+| M5 | FastAPI `@app.on_event` is deprecated; switch to `lifespan`. `Dockerfile` runs as root with a single worker and no `HEALTHCHECK`. | Confirmed |
+| M6 | `run_dev.sh` and `backend/run.sh` hard-code `/workspaces/tinyexplorersv3/...` and do not work in this repo. `backend/__pycache__/*.pyc` is committed. | Confirmed |
+| M7 | Production source maps are published (`main.*.js.map`). These are low risk because the code is public anyway. | Confirmed |
+| M8 | Editable `.docx` originals and PDFs of all policies are published under `/policies-docs/` (~15 MB) and duplicated in `docs/policies/`. Confirm the DOCX files are meant to be public. | Confirmed |
+| M9 | There is no public newsletter unsubscribe; only an admin endpoint exists. Welcome emails should carry an unsubscribe route before regular sends begin. | Confirmed |
+| M10 | Root docs from June 2026 contradict the code (hosting, auth, domains `tinyexplorers.bm`). They are now labelled historical in PROJECT_OVERVIEW.md. | Confirmed |
+| M11 | No Lighthouse/axe run was possible (fonts and images were blocked). Colour contrast of `text-brand-ink/65` body copy and the orange-on-cream accents should be checked. | Unverified |
+
+### Low: optional
+
+- Remove unused backend deps (`python-jose`, `passlib`, `PyJWT`, `bcrypt`), which shrinks the attack surface and resolves the `ecdsa` advisory.
+- Remove ~40 unused shadcn/ui components and unused npm deps (`recharts`, `cmdk`, `input-otp`, `react-day-picker`, `vaul`, `next-themes`, …) to cut install size.
+- Add `X-Robots-Tag: noindex` to the GitHub Pages preview so it does not compete with the real domain once live.
+- Newsletter returns "already subscribed", which lets someone check whether an email is subscribed. Acceptable for a newsletter; note it in the privacy review.
+- Add a backend test job for the non-`test_api` suites to CI. CI currently runs only `tests/test_api.py`; the other 56 tests run only locally.
+
+## 3. Security summary
+
+| Area | State |
+|---|---|
+| Secrets in code/history | No API keys or private keys found by pattern scan. **One possible Atlas password (C1).** `.env` files are git-ignored; `.env.example` files are safe. |
+| Secrets in frontend bundle | None. Only `REACT_APP_*` public values (API URL, calendar URL, site URL) are present. |
+| AuthN/AuthZ | No user accounts. Admin endpoints use a shared `X-Admin-Key` with constant-time compare. They fail closed when unset. The key is a single static secret with no rotation or audit trail. |
+| Input validation | Pydantic models with length limits on all public POSTs. User content is HTML-escaped in emails. |
+| CORS | Explicit allow-list from env; credentials off. Must include both the apex and `www` origins at cutover. |
+| Rate limiting | Present (5–10/min) but see H3. |
+| Security headers | API: nosniff, X-Frame-Options DENY, Referrer-Policy, HSTS in production. GitHub Pages cannot set headers, so the site has **no CSP/HSTS** until it moves to a host that can. |
+| Logging | MONGO_URL is never logged. Email addresses *are* logged when email is disabled (`Would send to …`), which is PII in logs. |
+
+## 4. Deployment requirements
+
+**Frontend build-time variables:** `REACT_APP_BACKEND_URL`, `REACT_APP_WEBSITE_URL`, `REACT_APP_TOUR_BOOKING_URL`; also `PUBLIC_URL`/`homepage` for the base path.
+
+**Backend runtime variables:** `ENVIRONMENT=production`, `MONGO_URL`, `DB_NAME`, `CORS_ORIGINS`, `CORS_ALLOW_CREDENTIALS=false`, `ADMIN_API_KEY`, `RESEND_API_KEY`, `ADMIN_EMAIL`, `FROM_EMAIL`, `WEBSITE_URL`, `LOG_LEVEL`. Optional, for Google Workspace: `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `GOOGLE_WORKSPACE_ADMIN_EMAIL`, `GOOGLE_NEWSLETTER_GROUP_EMAIL`. See `backend/.env.example` and `docs/google-workspace-newsletter.md`.
+
+**External accounts:** GitHub, Google Cloud (Cloud Run project), MongoDB Atlas, Resend (domain `tinyexplorersbda.com` reported as verified), Google Workspace, and the DNS registrar for `tinyexplorersbda.com`.
+
+## 5. Production launch checklist
+
+**Content and legal**
+- [ ] C2: owner confirms the single correct street address (or addresses for two campuses).
+- [ ] C4: owner verifies every factual claim (ratios, square footage, certifications, security, campuses, hours, ages, opening date).
+- [ ] C4: replace stock imagery with real, consented photography (or explicitly approve stock usage and remove "our campus" framing).
+- [ ] C5: approve and merge the privacy-policy update; add a data-retention statement for form submissions.
+- [ ] H9: update the opening and enrollment season copy.
+- [ ] Confirm a phone number, or confirm email-only contact, for launch.
+
+**Security**
+- [ ] C1: rotate the Atlas DB user password; replace the test literal; restrict Atlas network access to Cloud Run egress if feasible.
+- [ ] H4: upgrade `python-multipart`, `cryptography`, `axios`, `react-router-dom`; drop unused auth libs.
+- [ ] H5: remove the `@emergentbase/visual-edits` dependency.
+- [ ] Generate a fresh `ADMIN_API_KEY` for launch and store it only in Secret Manager.
+- [ ] Choose a frontend host that supports security headers (CSP, HSTS), or accept GitHub Pages' limits.
+
+**Functionality**
+- [ ] H1: fix the mobile clipping in the Environment section.
+- [ ] H7: add a phone field when "Phone" is chosen, or remove the option.
+- [ ] H2: move Resend calls off the event loop.
+- [ ] H3: configure trusted proxy headers on Cloud Run and verify per-client limiting.
+- [ ] H8: create a unique index on `newsletter.email` and indexes on `created_at`.
+- [ ] End-to-end test on the **deployed** stack: each form produces one DB record, a staff email to `hello@` and a parent confirmation. Check spam placement and SPF/DKIM/DMARC.
+
+**Infrastructure and operations**
+- [ ] C3: domain cutover (DNS, HTTPS, base path, 404 strategy, robots/sitemap, env vars, CORS, deploy-workflow assertions).
+- [ ] H6: confirm the Atlas backup tier and do one test restore; set up an uptime check on `/api/health` and the site; set up error alerting (Cloud Run log-based alert or Sentry).
+- [ ] Document rollback: Cloud Run revision rollback, plus re-running the Pages deploy for a previous commit.
+- [ ] Protect `main` with required CI checks.
+
+**Quality**
+- [ ] Lighthouse and axe pass on the real domain (performance, accessibility, SEO).
+- [ ] Cross-browser smoke test: Safari iOS, Chrome Android, desktop Safari/Chrome/Firefox/Edge.
+- [ ] Submit the sitemap to Google Search Console; set up a Google Business Profile with the confirmed address.
+
+## 6. Recommended production architecture
+
+Keep the current architecture. It suits a small marketing and admissions site, and migrating would add risk without clear benefit.
+
+| Concern | Recommendation | Why |
+|---|---|---|
+| API hosting | **Keep Google Cloud Run** (min instances 0–1, max ~3). | Already deployed. It is the only host that supports keyless Google Workspace auth without extra setup (README, `docs/google-workspace-newsletter.md`). Near-zero cost at this traffic. Revision-based rollback. Railway would work for the API itself but loses keyless Workspace auth, so it brings no benefit here. Render (`render.yaml`) has the same issue. |
+| Frontend hosting | Short term: GitHub Pages with a custom domain is acceptable. **Recommended:** Cloudflare Pages, Netlify or Vercel for the apex domain. | Root-path hosting removes the `404.html` redirect hack; real HTTP security headers (CSP/HSTS); preview deploys per PR. All have free tiers. Firebase Hosting is an option to keep everything in Google Cloud. |
+| Database | Keep MongoDB Atlas. Confirm the tier has backups (M10+ for continuous backup; on M0/Flex, schedule `mongodump` exports). | Low volume; the data model is simple. |
+| Email | Keep Resend with the verified domain; add DMARC. | Already integrated and tested. |
+| Monitoring | Cloud Run built-in logs and metrics, an uptime check and an alert policy; optional Sentry for frontend JS errors. | Little to set up, low cost. |
+| Secrets | Google Secret Manager mounted into Cloud Run. | Avoids plain env values in the console. |
+| Framework | No migration before launch. After launch, consider CRA → Vite (days of work, low risk). Next.js only if SEO or social previews become a business priority. | Stability first. |
+
+Estimated running cost: Cloud Run ~$0–5/mo, Atlas $0 (M0) to ~$57/mo (M10 with backups), Resend free–$20/mo, static hosting $0, plus the domain.

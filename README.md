@@ -5,6 +5,13 @@ Marketing site — modern, warm, editorial, Scandinavian/Montessori-inspired.
 
 > **Apple meets a luxury Montessori preschool.**
 
+> **Current project status, launch blockers, and roadmap:** see
+> [PROJECT_OVERVIEW.md](PROJECT_OVERVIEW.md), [PRODUCTION_READINESS.md](PRODUCTION_READINESS.md),
+> [DEVELOPMENT_ROADMAP.md](DEVELOPMENT_ROADMAP.md), and
+> [DEVELOPMENT_HANDOFF.md](DEVELOPMENT_HANDOFF.md). The June 2026 root documents
+> (`ARCHITECTURE_AUDIT.md`, `IMPLEMENTATION_*.md`, `PROGRESS_DASHBOARD.md`) are
+> historical and partly out of date.
+
 ---
 
 ## Stack
