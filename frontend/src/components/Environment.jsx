@@ -37,7 +37,9 @@ export default function Environment() {
   return (
     <Section id="environment" testId="environment-section" size="lg">
       <Container>
-        <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
+        {/* grid-cols-1 (minmax(0,1fr)) keeps the single mobile column from
+            growing to its content's min-content width and clipping off-screen. */}
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-24">
           {/* Image side */}
           <div className="relative">
             <div
