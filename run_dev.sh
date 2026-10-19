@@ -3,8 +3,8 @@ set -euo pipefail
 
 # Start the backend (background) and the frontend dev server together.
 # Backend: http://127.0.0.1:8000/api  ·  Frontend: http://localhost:3000
-# Open the site at http://localhost:3000 (not 127.0.0.1) — the API's default
-# CORS_ORIGINS only allows http://localhost:3000.
+# The frontend dev server proxies /api to the backend (frontend/src/setupProxy.js),
+# so open the site on port 3000; no CORS setup is needed.
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 "$REPO_DIR/backend/run.sh" &
