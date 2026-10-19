@@ -90,7 +90,7 @@ New backend settings: `TRUSTED_PROXY_HOPS` (0 locally; **1 on Cloud Run**) and `
 | `e2178e2` | H3 trusted-proxy rate-limit key; H8 indexes and newsletter race handling |
 | `6fa1f32` | H4 backend dependency upgrades; FastAPI lifespan |
 | `ed64963` | H4 axios 1.20.0 |
-| `de0157b` | Dev scripts repaired; CI runs all backend tests |
+| `49e1827` | Dev scripts repaired; CI runs all backend tests |
 
 Test results at completion:
 - Frontend: 20/20.
