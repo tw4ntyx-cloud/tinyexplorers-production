@@ -77,6 +77,17 @@ Either way, the database records nothing yet about whether a family enrolled. "N
 
 All of the above are collected in one short form: `docs/OWNER_QUESTIONNAIRE_FINAL.md`, and in the privately delivered Owner Review Package (Documents 01 and 02).
 
+**Added 2026-10-22 (policy audit; asked in Owner Review Package v2.0):**
+
+| # | Open item | Status |
+|---|---|---|
+| O9 | Licensing body and licence number: the website's "Ministry of Education" claim may be wrong | **Launch blocker** |
+| O10 | Were the 11 v1.0 policies actually approved, and by whom? (A "Board of Governors" is printed; the sign-off blocks are blank.) | **Launch blocker** |
+| O11 | Enrollment Policy age groups conflict with the website | **Launch blocker** |
+| O12 | Roles named in the policies (Director, Complaints Officer, Child Protection Officer) | Open |
+| O13 | Transport and water activities (mangrove paddles) advertised; no water-safety rules | Open |
+| O14 | CCTV retention and access, for the privacy notice | Open |
+
 ## Round 2 — questions as sent (historical; answered above)
 
 These claims are still on the site and were not covered by the questionnaire. They are unchanged until answered.

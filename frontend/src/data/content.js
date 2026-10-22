@@ -136,6 +136,16 @@ export const TOUR_BOOKING = {
   location: "Hamilton, Bermuda (full address in your booking confirmation)",
 };
 
+// Collection notices shown under each form (PROPOSED wording: needs owner
+// approval before launch; see the Owner Review Package, Document 03).
+export const PRIVACY_NOTICE = {
+  policyPath: "/policies/privacy-confidentiality-policy",
+  enquiry:
+    "We use these details to reply to your enquiry and, if you go ahead, to manage your application. They are sent to our team by email and stored in our enquiry database. How we handle your information:",
+  newsletter:
+    "We use your email address only to send Tiny Explorers updates. You can unsubscribe at any time. Details in our",
+};
+
 export function getPublicAssetUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${PUBLIC_URL}${normalizedPath}`;

@@ -6,6 +6,7 @@ import Button from "../components/ui/Button";
 import { getPublicAssetUrl, PARENT_POLICIES } from "../data/content";
 import NotFound from "./NotFound";
 import PageMeta from "../components/PageMeta";
+import { POLICY_STATUS } from "../data/policyStatus";
 
 export default function PolicyPage() {
   const { policySlug } = useParams();
@@ -14,6 +15,9 @@ export default function PolicyPage() {
   if (!policy) {
     return <NotFound />;
   }
+
+  const docControl = POLICY_STATUS[policy.slug];
+  const isDraft = docControl?.status === "draft";
 
   return (
     <>
@@ -57,10 +61,16 @@ export default function PolicyPage() {
           <div className="rounded-[2rem] border border-brand-ink/10 bg-white p-8 shadow-soft sm:p-10 lg:p-12">
             <div className="flex flex-wrap items-center justify-between gap-4 border-b border-brand-ink/10 pb-6">
               <div>
-                <Eyebrow color="orange">Official Policy</Eyebrow>
+                <Eyebrow color="orange">{isDraft ? "Draft policy" : "Official Policy"}</Eyebrow>
                 <h2 className="mt-3 font-poppins text-2xl font-semibold leading-tight text-brand-ink sm:text-3xl">
                   {policy.title}
                 </h2>
+                {docControl && (
+                  <p className="mt-2 text-sm text-brand-ink/70" data-testid="policy-doc-control">
+                    {docControl.docId} · Version {docControl.version} ·{" "}
+                    {isDraft ? "Not yet in effect" : `Effective ${docControl.effective}`}
+                  </p>
+                )}
               </div>
               <a
                 href={getPublicAssetUrl(`/policies-docs/${encodeURIComponent(policy.downloadFile)}`)}
@@ -68,9 +78,20 @@ export default function PolicyPage() {
                 className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-brand-cream px-4 py-2 text-sm font-semibold text-brand-ink transition hover:bg-white"
               >
                 <Download size={16} />
-                Download Original Policy
+                {isDraft ? "Download draft (PDF)" : "Download Original Policy"}
               </a>
             </div>
+
+            {isDraft && (
+              <p
+                role="note"
+                data-testid="policy-draft-notice"
+                className="mt-6 rounded-2xl border border-brand-ink/15 bg-brand-cream px-5 py-4 text-sm leading-relaxed text-brand-ink"
+              >
+                <strong>Draft, pending sign-off.</strong> This version has not yet been approved by Tiny Explorers and
+                may change before it takes effect.
+              </p>
+            )}
 
             <div className="prose prose-slate mt-8 max-w-none prose-headings:font-poppins prose-headings:text-brand-ink prose-p:text-brand-ink/75 prose-strong:text-brand-ink prose-li:text-brand-ink/75">
               {policy.content.map((section, index) => (

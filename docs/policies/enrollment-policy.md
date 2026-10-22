@@ -1,3 +1,5 @@
+> **Superseded (2026-10-22).** This is an older, shorter draft. The current text is in `frontend/src/data/policies.js` (website) and the PDFs in `frontend/public/policies-docs/`. Do not edit or publish this file.
+
         # Enrollment Policy
 
         ## Summary

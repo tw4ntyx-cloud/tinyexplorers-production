@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import Button from "./ui/Button";
 import api from "../lib/api";
 import FieldError from "./ui/FieldError";
+import PrivacyNote from "./ui/PrivacyNote";
 import { PROGRAMS } from "../data/content";
 
 const inputCls =
@@ -386,6 +387,7 @@ export default function AdmissionsModal({ open, onOpenChange }) {
               )}
             </div>
           </DialogFooter>
+          {step === steps.length - 1 && <PrivacyNote className="mt-4" />}
         </div>
         )}
       </DialogContent>

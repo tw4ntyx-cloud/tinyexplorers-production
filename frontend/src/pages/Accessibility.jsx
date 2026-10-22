@@ -35,7 +35,7 @@ export default function Accessibility() {
         <ul className="mt-4 list-disc space-y-2 pl-6 text-[1.02rem] leading-[1.8] text-brand-ink/75">
           <li>Keyboard-navigable menus, forms, and dialogs with visible focus states.</li>
           <li>Descriptive alt text for meaningful images, and empty alt text for decorative ones.</li>
-          <li>Text and background color combinations checked against WCAG AA contrast requirements.</li>
+          <li>Text and background colour combinations are being reviewed against WCAG AA contrast requirements. Some small orange text does not yet meet them, and we are working on it.</li>
           <li>Semantic headings and landmarks so screen readers can navigate the page structure.</li>
         </ul>
 

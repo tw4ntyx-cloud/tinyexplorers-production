@@ -5,6 +5,17 @@ History before this file existed is summarised from `git log`.
 
 ## [Unreleased]
 
+### Added (2026-10-22: policy audit and website legal preparation)
+- A short privacy notice under every form (admissions, programme enquiry, general enquiry, newsletter), linking to the Privacy Policy in a new tab. The wording is **proposed** and needs owner approval.
+- Policy pages show the document ID, version and effective date. A draft policy (currently the Privacy Policy v1.1) is labelled "Draft policy", says "Not yet in effect", shows a "Draft, pending sign-off" note, and its download is labelled as a draft. `policyStatus.test.js` keeps this in sync with the document generator metadata.
+- The newsletter welcome email explains how to unsubscribe.
+
+### Changed / Fixed (2026-10-22)
+- Removed the inaccurate claim "Your information stays with us" from two forms: enquiries are also handled by email and cloud providers.
+- The accessibility statement no longer claims the colours were checked against WCAG AA contrast. They fail for the brand orange, so it now says this is being worked on.
+- Security: `certifi` 2026.4.22 → 2026.10.19 (PYSEC-2026-4320: revoked eMudhra intermediates).
+- `docs/policies/*.md`: marked as superseded or partly superseded; the website text is the source.
+
 ### Added (end of day 2026-10-19)
 - `backend/retention.py`: six-month enquiry retention job, **dry-run by default**. Deletion is off (`RETENTION_DELETE_ENABLED=false`) and capped. It writes an audit log of ids and counts only. Admin endpoint `POST /api/admin/retention/run`. Not scheduled. 10 tests.
 - `backend/digest.py`: privacy-minimised daily enquiry summary template (first name and reference only). Not scheduled, not sent. 5 tests. Samples in `docs/digest/`.

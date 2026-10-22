@@ -211,6 +211,10 @@ class EmailService:
               <p style="font-size: 16px; margin-bottom: 40px;">
                 We're thrilled to stay connected with you.
               </p>
+              <p style="font-size: 14px; margin-bottom: 40px; color: #555;">
+                You can unsubscribe at any time: reply to this email or write to
+                hello@tinyexplorersbda.com and we will remove your address.
+              </p>
               
               <p style="border-top: 1px solid #e5e5e5; padding-top: 20px; color: #888; font-size: 12px;">
                 Tiny Explorers Bermuda Ltd.<br>

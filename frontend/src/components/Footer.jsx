@@ -6,6 +6,7 @@ import Button from "./ui/Button";
 import { toast } from "sonner";
 import api from "../lib/api";
 import FieldError from "./ui/FieldError";
+import PrivacyNote from "./ui/PrivacyNote";
 import { BRAND, FOOTER } from "../data/content";
 import { useTour } from "./layout/SiteLayout";
 
@@ -245,6 +246,7 @@ export default function Footer({ onEnroll }) {
               </form>
             )}
             <FieldError id="newsletter-email-error" message={error} />
+            {!isSubscribed && <PrivacyNote kind="newsletter" className="mt-3" />}
             {status === "error" && (
               <p role="alert" className="mt-1.5 text-xs font-medium text-red-600">
                 {statusMessage}

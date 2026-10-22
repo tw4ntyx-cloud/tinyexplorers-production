@@ -1,3 +1,5 @@
+> **Partly superseded (2026-10-22).** The newsletter and retention text here matches the website, but the other sections are an older, shorter draft. The current text is in `frontend/src/data/policies.js` (v1.1 draft, pending sign-off). Do not publish this file.
+
         # Privacy and Confidentiality Policy
 
         ## Summary

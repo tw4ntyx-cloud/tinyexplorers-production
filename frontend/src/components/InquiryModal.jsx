@@ -10,6 +10,7 @@ import { Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import api from "../lib/api";
 import FieldError from "./ui/FieldError";
+import PrivacyNote from "./ui/PrivacyNote";
 
 const CONTACT_METHODS = [
   "Email",
@@ -274,8 +275,9 @@ export default function InquiryModal({ open, onOpenChange }) {
                 )}
               </button>
               <p className="text-center text-xs text-brand-ink/70">
-                We’ll reply within one business day. Your information stays with us.
+                We’ll reply within one business day.
               </p>
+              <PrivacyNote className="text-center" />
             </form>
           </div>
         )}
