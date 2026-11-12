@@ -64,6 +64,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
+    "postbuild": "node scripts/site-files.js",
     "test": "craco test"
   },
   "browserslist": {

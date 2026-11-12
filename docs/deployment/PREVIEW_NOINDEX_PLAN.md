@@ -15,7 +15,7 @@ _Prepared 2026-10-19. **Nothing deployed has been changed.** The live GitHub Pag
 | `.github/workflows/deploy-gh-pages.yml` | The preview deploy **fails** unless the built page carries `noindex, nofollow` and no unfilled `%REACT_APP_…%` placeholder. |
 | `.github/workflows/ci.yml` | CI fails on any unfilled `%REACT_APP_…%` placeholder. |
 
-`robots.txt` stays `Allow`. A crawler must be able to fetch a page to see its `noindex`; blocking it in robots.txt would leave already-known URLs listed without a description.
+`robots.txt` (generated at build time by `frontend/scripts/site-files.js`) stays `Allow`, and lists the sitemap only on indexable builds. A crawler must be able to fetch a page to see its `noindex`; blocking it in robots.txt would leave already-known URLs listed without a description.
 
 ## When it takes effect
 

@@ -5,6 +5,17 @@ History before this file existed is summarised from `git log`.
 
 ## [Unreleased]
 
+### Added (2026-11-12: staging and pre-launch work not waiting on owners or legal review)
+- **Private staging copy** (`.devcontainer/start-staging.sh`, port 4000): the production build of this branch, served like a static host, with the API in safe mode (no database, no email, no Workspace). A small "Private staging" label shows only on builds that set `REACT_APP_ENV_LABEL`.
+- **Self-hosted fonts** (Poppins, DM Sans via `@fontsource`). Pages no longer contact Google Fonts; the prepared CSP is tightened to match.
+- **Newsletter unsubscribe link.** Each subscriber gets a random token, stored only as a hash, linked from the welcome email. The `/unsubscribe` page asks for a confirming click. `POST /api/newsletter/unsubscribe` looks up by token only and gives the same reply either way. Re-subscribing reactivates the record.
+- **Enquiry outcome workflow (backend).** Admin-only `POST /api/admin/enquiries/{kind}/{id}/status` records new / contacted / toured / enrolled / not_proceeding / keep / legal_hold, with dated history. Only `not_proceeding` can become eligible for retention. No staff screen yet; awaiting owner decision (Doc 02 Q15).
+- **Domain cutover by settings** (`frontend/scripts/site-files.js`, run as `postbuild`). `robots.txt`, `sitemap.xml` and the GitHub Pages `404.html` are generated from `PUBLIC_URL`, `REACT_APP_WEBSITE_URL` and `REACT_APP_ROBOTS`. See `docs/deployment/LAUNCH_SETTINGS.md`.
+- Optional `noindex` on `PageMeta` (used by `/unsubscribe`).
+
+### Security (2026-11-12)
+- `dnspython` 2.7.0 → 2.9.0 (CVE-2026-114605).
+
 ### Added (2026-10-22: policy audit and website legal preparation)
 - A short privacy notice under every form (admissions, programme enquiry, general enquiry, newsletter), linking to the Privacy Policy in a new tab. The wording is **proposed** and needs owner approval.
 - Policy pages show the document ID, version and effective date. A draft policy (currently the Privacy Policy v1.1) is labelled "Draft policy", says "Not yet in effect", shows a "Draft, pending sign-off" note, and its download is labelled as a draft. `policyStatus.test.js` keeps this in sync with the document generator metadata.

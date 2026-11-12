@@ -47,6 +47,9 @@ jobs:
         run: |
           test -f build/index.html
           test -f build/404.html
+          grep -q 'var segmentCount = 1;' build/404.html
+          grep -q '<loc>https://tw4ntyx-cloud.github.io/tinyexplorers-production/</loc>' build/sitemap.xml
+          test -f build/robots.txt
           test -d build/static
           grep -q 'src="/tinyexplorers-production/static/js/' build/index.html
           grep -q 'href="/tinyexplorers-production/static/css/' build/index.html
