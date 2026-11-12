@@ -10,7 +10,7 @@ import { DEFAULT_META, getCanonicalUrl } from "../data/content";
  * Falls back to the site-wide defaults (matching index.html) when a page
  * doesn't pass its own title/description.
  */
-export default function PageMeta({ title, description }) {
+export default function PageMeta({ title, description, noindex = false }) {
   const inRouter = useInRouterContext();
   const location = useLocation();
   const pathname = inRouter ? location.pathname : "/";
@@ -29,6 +29,7 @@ export default function PageMeta({ title, description }) {
       <meta property="og:url" content={url} />
       <meta name="twitter:title" content={resolvedTitle} />
       <meta name="twitter:description" content={resolvedDescription} />
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
     </Helmet>
   );
 }

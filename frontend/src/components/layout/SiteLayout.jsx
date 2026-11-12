@@ -6,6 +6,7 @@ import EnrollmentModal from "../EnrollmentModal";
 import AdmissionsModal from "../AdmissionsModal";
 import InquiryModal from "../InquiryModal";
 import TourModal from "../TourModal";
+import EnvironmentBanner from "./EnvironmentBanner";
 
 /**
  * <SiteLayout> — the consistent page shell.
@@ -108,6 +109,7 @@ export default function SiteLayout() {
         >
           Skip to content
         </a>
+        <EnvironmentBanner />
         <Navbar />
         <main id="main-content" tabIndex="-1" className="relative overflow-hidden">
           <div

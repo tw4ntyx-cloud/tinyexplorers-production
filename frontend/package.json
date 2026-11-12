@@ -4,6 +4,8 @@
   "homepage": "https://tw4ntyx-cloud.github.io/tinyexplorers-production",
   "private": true,
   "dependencies": {
+    "@fontsource/dm-sans": "5.3.0",
+    "@fontsource/poppins": "5.3.0",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-accordion": "^1.2.8",
     "@radix-ui/react-alert-dialog": "^1.1.11",

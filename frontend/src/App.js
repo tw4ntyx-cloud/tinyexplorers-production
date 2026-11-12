@@ -14,6 +14,7 @@ import Parents from "@/pages/Parents";
 import Admissions from "@/pages/Admissions";
 import PolicyPage from "@/pages/PolicyPage";
 import Accessibility from "@/pages/Accessibility";
+import Unsubscribe from "@/pages/Unsubscribe";
 import NotFound from "@/pages/NotFound";
 
 /**
@@ -54,6 +55,7 @@ export default function App() {
               <Route path="/admissions" element={<Admissions />} />
               <Route path="/policies/:policySlug" element={<PolicyPage />} />
               <Route path="/accessibility" element={<Accessibility />} />
+              <Route path="/unsubscribe" element={<Unsubscribe />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

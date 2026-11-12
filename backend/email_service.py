@@ -180,13 +180,18 @@ class EmailService:
 
 
     @staticmethod
-    def send_newsletter_welcome(email: str):
+    def send_newsletter_welcome(email: str, unsubscribe_token: Optional[str] = None):
         """Send welcome email to new newsletter subscriber."""
         if not RESEND_API_KEY:
             logger.warning("Email disabled: would send newsletter welcome email (RESEND_API_KEY not set)")
             return
 
         subject = "Welcome to Tiny Explorers Updates"
+        unsubscribe_html = (
+            f'<a href="{WEBSITE_URL}/unsubscribe?token={html.escape(unsubscribe_token)}" '
+            f'style="color: #555;">use this unsubscribe link</a>, or '
+            if unsubscribe_token else ""
+        )
         html_body = f"""
         <html>
           <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1F1F1F; line-height: 1.6;">
@@ -212,7 +217,7 @@ class EmailService:
                 We're thrilled to stay connected with you.
               </p>
               <p style="font-size: 14px; margin-bottom: 40px; color: #555;">
-                You can unsubscribe at any time: reply to this email or write to
+                You can unsubscribe at any time: {unsubscribe_html}reply to this email or write to
                 hello@tinyexplorersbda.com and we will remove your address.
               </p>
               
@@ -378,8 +383,10 @@ async def send_enrollment_admin_notification(
     )
 
 
-async def send_newsletter_welcome(email: str):
-    return await _send_off_event_loop(EmailService.send_newsletter_welcome, email=email)
+async def send_newsletter_welcome(email: str, unsubscribe_token: Optional[str] = None):
+    return await _send_off_event_loop(
+        EmailService.send_newsletter_welcome, email=email, unsubscribe_token=unsubscribe_token
+    )
 
 
 async def send_generic_confirmation(parent_email: str, parent_name: str, reference_id: str, context_label: str):

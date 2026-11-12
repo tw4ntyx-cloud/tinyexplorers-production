@@ -6,7 +6,7 @@ starlette==1.9.0
 # Database
 motor==3.7.1
 pymongo==4.19.0
-dnspython==2.7.0
+dnspython==2.9.0
 
 # Data validation
 pydantic==2.13.4

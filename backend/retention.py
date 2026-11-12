@@ -7,7 +7,7 @@ SAFE BY DEFAULT — nothing here deletes anything unless ALL of these hold:
   * the caller asks for a real run (dry_run=False),
   * RETENTION_DELETE_ENABLED=true is set in the environment,
   * the record's status is in RETENTION_ELIGIBLE_STATUSES (default: only an
-    explicit "not_enrolling"/"closed" marking — today every record is "new",
+    explicit "not_proceeding" (or legacy "not_enrolling"/"closed") marking — today every record is "new",
     so nothing qualifies until the owner decides how non-enrolment is recorded),
   * the run would delete no more than RETENTION_MAX_DELETE records.
 
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 ENQUIRY_COLLECTIONS = ("admissions", "enrollment", "inquiry")
 
 # Statuses that are never deleted, whatever the configuration.
-PROTECTED_STATUSES = frozenset({"enrolled", "retain", "legal_hold"})
+PROTECTED_STATUSES = frozenset({"enrolled", "keep", "retain", "legal_hold"})
 
 # The approved wording starts the clock when an enquiry is "received". The
 # owner has not yet confirmed this (see docs/OWNER_CONFIRMATIONS.md), so the
@@ -40,7 +40,7 @@ def _env_flag(name: str, default: bool = False) -> bool:
 
 
 def settings() -> Dict[str, Any]:
-    eligible = os.environ.get("RETENTION_ELIGIBLE_STATUSES", "not_enrolling,closed")
+    eligible = os.environ.get("RETENTION_ELIGIBLE_STATUSES", "not_proceeding,not_enrolling,closed")
     return {
         "months": int(os.environ.get("RETENTION_MONTHS", "6")),
         "clock_field": os.environ.get("RETENTION_CLOCK_FIELD", "created_at"),

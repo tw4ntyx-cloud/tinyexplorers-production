@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import hashlib
 import secrets
 
 from dotenv import load_dotenv
@@ -302,6 +303,7 @@ INDEXES = [
     ("newsletter", [("email", 1)], {"unique": True, "name": "email_unique"}),
     ("newsletter", [("status", 1)], {"name": "status"}),
     ("newsletter", [("created_at", -1)], {"name": "created_at_desc"}),
+    ("newsletter", [("unsubscribe_token_hash", 1)], {"name": "unsubscribe_token_hash", "sparse": True}),
     ("enrollment", [("created_at", -1)], {"name": "created_at_desc"}),
     ("inquiry", [("created_at", -1)], {"name": "created_at_desc"}),
     ("admissions", [("created_at", -1)], {"name": "created_at_desc"}),
@@ -389,6 +391,15 @@ class NewsletterCreate(BaseModel):
 
 class NewsletterUnsubscribe(BaseModel):
     email: EmailStr
+
+
+class NewsletterSelfUnsubscribe(BaseModel):
+    token: str = Field(min_length=20, max_length=200)
+
+
+def _token_hash(token: str) -> str:
+    """Unsubscribe tokens are stored only as a SHA-256 hash, never in plain text."""
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
 
 
 class NewsletterEntry(BaseModel):
@@ -521,12 +532,29 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
     normalized_email = payload.email.strip().lower()
 
     existing = await db.newsletter.find_one({"email": normalized_email}, {"_id": 0})
-    if existing:
+    if existing and existing.get("status") != "unsubscribed":
         return {
             "success": True,
             "message": "You're already on our list. See you soon!",
             "already_subscribed": True,
         }
+
+    unsubscribe_token = secrets.token_urlsafe(32)
+
+    if existing:
+        # Someone who unsubscribed is signing up again: reactivate the record.
+        membership_result = await google_workspace.add_subscriber_to_group(normalized_email)
+        status = "subscribed" if membership_result in ("added", "already_member") else "pending"
+        await db.newsletter.update_one(
+            {"email": normalized_email},
+            {"$set": {
+                "status": status,
+                "unsubscribe_token_hash": _token_hash(unsubscribe_token),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }},
+        )
+        await send_newsletter_welcome(normalized_email, unsubscribe_token)
+        return {"success": True, "message": "Thanks for subscribing!", "id": existing.get("id")}
 
     entry = NewsletterEntry(email=normalized_email)
 
@@ -541,6 +569,7 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
     doc = entry.model_dump()
     doc["created_at"] = doc["created_at"].isoformat()
     doc["updated_at"] = doc["updated_at"].isoformat()
+    doc["unsubscribe_token_hash"] = _token_hash(unsubscribe_token)
     try:
         result = await db.newsletter.insert_one(doc)
     except DuplicateKeyError:
@@ -553,9 +582,34 @@ async def subscribe_newsletter(request: Request, payload: NewsletterCreate) -> D
     if not getattr(result, "inserted_id", None):
         raise HTTPException(status_code=500, detail="Could not save subscription")
 
-    await send_newsletter_welcome(normalized_email)
+    await send_newsletter_welcome(normalized_email, unsubscribe_token)
 
     return {"success": True, "message": "Thanks for subscribing!", "id": entry.id}
+
+
+UNSUBSCRIBE_REPLY = {
+    "success": True,
+    "message": "If this link belonged to a subscription, it has been cancelled. You will not receive further newsletter emails.",
+}
+
+
+@api_router.post("/newsletter/unsubscribe")
+@limiter.limit("10/minute")
+async def self_unsubscribe(request: Request, payload: NewsletterSelfUnsubscribe) -> Dict[str, Any]:
+    """Self-service unsubscribe from the link in the welcome email.
+
+    Looks the subscriber up by token only, and gives the same reply whether or
+    not the token matched, so it cannot be used to discover subscribers.
+    """
+    token_hash = _token_hash(payload.token)
+    existing = await db.newsletter.find_one({"unsubscribe_token_hash": token_hash}, {"_id": 0})
+    if existing and existing.get("status") != "unsubscribed":
+        await google_workspace.remove_subscriber_from_group(existing["email"])
+        await db.newsletter.update_one(
+            {"unsubscribe_token_hash": token_hash},
+            {"$set": {"status": "unsubscribed", "updated_at": datetime.now(timezone.utc).isoformat()}},
+        )
+    return UNSUBSCRIBE_REPLY
 
 
 @api_router.get("/newsletter", response_model=List[NewsletterEntry], dependencies=[Depends(require_admin)])
@@ -776,6 +830,42 @@ async def list_admissions() -> List[AdmissionsEntry]:
         if isinstance(row.get("created_at"), str):
             row["created_at"] = datetime.fromisoformat(row["created_at"])
     return rows
+
+
+# Enquiry outcome workflow (docs/RETENTION_DESIGN.md; Owner Review Package Doc 02).
+# Staff record what happened to each enquiry. Only "not_proceeding" can ever
+# make a record eligible for the retention clean-up; a record left at "new"
+# is never treated as a decision.
+ENQUIRY_STATUSES = ("new", "contacted", "toured", "enrolled", "not_proceeding", "keep", "legal_hold")
+
+
+class EnquiryStatusUpdate(BaseModel):
+    status: str
+
+    @model_validator(mode="after")
+    def _known_status(self) -> "EnquiryStatusUpdate":
+        if self.status not in ENQUIRY_STATUSES:
+            raise ValueError(f"status must be one of: {', '.join(ENQUIRY_STATUSES)}")
+        return self
+
+
+@api_router.post("/admin/enquiries/{kind}/{enquiry_id}/status", dependencies=[Depends(require_admin)])
+async def set_enquiry_status(kind: str, enquiry_id: str, payload: EnquiryStatusUpdate) -> Dict[str, Any]:
+    """Record an enquiry's outcome. Keeps a dated history of statuses (no personal data)."""
+    if kind not in retention.ENQUIRY_COLLECTIONS:
+        raise HTTPException(status_code=404, detail="Unknown enquiry type")
+    collection = getattr(db, kind)
+    existing = await collection.find_one({"id": enquiry_id}, {"_id": 0})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Enquiry not found")
+    now = datetime.now(timezone.utc).isoformat()
+    history = list(existing.get("status_history") or [])
+    history.append({"status": payload.status, "at": now})
+    await collection.update_one(
+        {"id": enquiry_id},
+        {"$set": {"status": payload.status, "status_updated_at": now, "status_history": history}},
+    )
+    return {"success": True, "id": enquiry_id, "status": payload.status, "status_updated_at": now}
 
 
 class RetentionRunRequest(BaseModel):
