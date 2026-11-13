@@ -127,7 +127,7 @@ export default function Footer({ onEnroll }) {
             </Link>
             <p
               data-testid="footer-tagline"
-              className="mt-5 font-poppins text-[16px] italic font-medium leading-snug text-brand-orange"
+              className="mt-5 font-poppins text-[16px] italic font-medium leading-snug text-brand-orange-ink"
             >
               {FOOTER.tagline}
             </p>
@@ -136,11 +136,11 @@ export default function Footer({ onEnroll }) {
             </p>
             <div className="mt-6 space-y-3 text-sm text-brand-ink/75">
               <div className="flex items-start gap-2.5">
-                <MapPin size={16} strokeWidth={2.5} className="mt-0.5 flex-none text-brand-orange" />
+                <MapPin size={16} strokeWidth={2.5} className="mt-0.5 flex-none text-brand-orange-ink" />
                 <span>{BRAND.address}</span>
               </div>
               <a href={`mailto:${BRAND.email}`} className="flex items-center gap-2.5 transition hover:text-brand-ink">
-                <Mail size={16} strokeWidth={2.5} className="text-brand-orange" />
+                <Mail size={16} strokeWidth={2.5} className="text-brand-orange-ink" />
                 {BRAND.email}
               </a>
             </div>
@@ -179,7 +179,7 @@ export default function Footer({ onEnroll }) {
                 data-testid="newsletter-success"
                 className="mt-5 flex items-start gap-3 rounded-2xl bg-white p-4 shadow-soft ring-1 ring-black/5"
               >
-                <CheckCircle2 size={20} className="mt-0.5 flex-none text-brand-orange" aria-hidden="true" />
+                <CheckCircle2 size={20} className="mt-0.5 flex-none text-brand-orange-ink" aria-hidden="true" />
                 <div>
                   <p className="font-poppins text-[14px] font-bold text-brand-ink">You're on the list!</p>
                   <p className="mt-0.5 text-[13px] leading-snug text-brand-ink/70">
@@ -232,7 +232,7 @@ export default function Footer({ onEnroll }) {
                   type="submit"
                   disabled={isLoading}
                   data-testid="newsletter-submit"
-                  className="inline-flex items-center justify-center rounded-full bg-brand-orange px-5 py-2 text-sm font-semibold text-white transition-all duration-300 ease-soft hover:scale-[1.02] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                  className="inline-flex items-center justify-center rounded-full bg-brand-orange px-5 py-2 text-sm font-semibold text-brand-ink transition-all duration-300 ease-soft hover:scale-[1.02] disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
                 >
                   {isLoading ? (
                     <>

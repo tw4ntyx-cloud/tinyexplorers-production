@@ -96,7 +96,7 @@ export default function Philosophy() {
                 data-testid={`manifesto-item-${i + 1}`}
                 className="group flex gap-5"
               >
-                <span className="font-poppins text-[1.75rem] font-bold leading-none text-brand-orange/80 transition-colors group-hover:text-brand-orange">
+                <span className="font-poppins text-[1.75rem] font-bold leading-none text-brand-orange-ink/80 transition-colors group-hover:text-brand-orange-ink">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <p className="text-[1.05rem] leading-[1.65] text-brand-ink/85">
@@ -155,7 +155,7 @@ export default function Philosophy() {
               <ul className="mt-10 space-y-7">
                 {p.child_led.pillars.map((pillar, i) => (
                   <li key={pillar.title} className="flex gap-5">
-                    <span className="mt-1 inline-flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-orange/10 font-poppins text-[12px] font-bold text-brand-orange">
+                    <span className="mt-1 inline-flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-orange/10 font-poppins text-[12px] font-bold text-brand-orange-ink">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
@@ -219,7 +219,7 @@ export default function Philosophy() {
               <div className="pointer-events-none absolute -top-3 left-4 opacity-50">
                 <svg
                   viewBox="0 0 36 28"
-                  className="h-4 w-6 text-brand-orange"
+                  className="h-4 w-6 text-brand-orange-ink"
                   aria-hidden
                   fill="currentColor"
                 >
@@ -296,9 +296,7 @@ export default function Philosophy() {
           <div className="mt-14 grid gap-x-8 gap-y-12 md:grid-cols-3">
             {p.partnership.pillars.map((pillar, i) => (
               <article key={pillar.title} className="group flex flex-col">
-                <span className="font-poppins text-[2.5rem] font-bold leading-none text-brand-orange/30 transition-colors group-hover:text-brand-orange">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                <span className="font-poppins text-[2.5rem] font-bold leading-none text-brand-orange-ink/30 transition-colors group-hover:text-brand-orange-ink before:content-[attr(data-numeral)]" data-numeral={String(i + 1).padStart(2, "0")} aria-hidden="true" />
                 <h3 className="mt-5 font-poppins text-[1.25rem] font-semibold leading-tight text-brand-ink">
                   {pillar.title}
                 </h3>

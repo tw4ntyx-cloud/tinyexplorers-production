@@ -12,6 +12,12 @@ module.exports = {
       colors: {
         brand: {
           orange: '#FF6B2C',
+          // Deeper shades for TEXT only (WCAG AA 4.5:1 on white and cream). The bright
+          // brand colours above stay for shapes, backgrounds and decoration.
+          'orange-ink': '#C2410C',
+          'green-ink': '#15803D',
+          'blue-ink': '#2563EB',
+          'yellow-ink': '#B45309',
           green: '#22C55E',
           blue: '#60A5FA',
           yellow: '#FBC247',

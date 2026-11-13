@@ -9,7 +9,7 @@ import {
 } from "./ui/dialog";
 import { Section, Container, SectionHeader } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
-import { IMAGES, PROGRAMS } from "../data/content";
+import { IMAGES, PROGRAMS, textShade } from "../data/content";
 
 /**
  * Programs — simplified, content-driven, with SmartImage.
@@ -64,7 +64,7 @@ export default function Programs({ onEnroll }) {
           <button
             onClick={onEnroll}
             data-testid="programs-cta"
-            className="group inline-flex items-center gap-2 rounded-full bg-brand-ink px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange"
+            className="group inline-flex items-center gap-2 rounded-full bg-brand-ink px-6 py-3 text-sm font-semibold text-white transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange-ink"
           >
             Inquire about a program
             <ArrowRight
@@ -88,7 +88,7 @@ export default function Programs({ onEnroll }) {
                 {/* Single age pill — the only overlay on the image */}
                 <span
                   className="absolute left-4 top-4 inline-flex items-center rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] backdrop-blur"
-                  style={{ color: p.accent }}
+                  style={{ color: textShade(p.accent) }}
                 >
                   {p.age}
                 </span>
@@ -105,7 +105,7 @@ export default function Programs({ onEnroll }) {
               <button
                 onClick={() => openProgramInfo(p)}
                 data-testid={`${p.testId}-cta`}
-                className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-brand-ink/80 transition group-hover:text-brand-orange"
+                className="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-brand-ink/80 transition group-hover:text-brand-orange-ink"
               >
                 Learn more
                 <ArrowUpRight
@@ -197,7 +197,7 @@ export default function Programs({ onEnroll }) {
                   <button
                     onClick={handleProgramInquiry}
                     data-testid="program-info-inquire"
-                    className="inline-flex items-center rounded-full bg-brand-orange px-6 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02]"
+                    className="inline-flex items-center rounded-full bg-brand-orange px-6 py-3 text-sm font-semibold text-brand-ink shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02]"
                   >
                     Inquire About This Program
                   </button>

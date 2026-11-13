@@ -25,7 +25,7 @@ export const Logo = ({ className = "", showTagline = false }) => (
       {showTagline && (
         <span
           data-testid="brand-tagline"
-          className="font-poppins text-[10px] italic font-medium leading-tight text-brand-orange"
+          className="font-poppins text-[10px] italic font-medium leading-tight text-brand-orange-ink"
         >
           Where Learning Blossoms, and Adventures Begin
         </span>

@@ -95,9 +95,9 @@ export function Container({
  *   <Eyebrow color="green">Programs</Eyebrow>
  */
 const EYEBROW_COLORS = {
-  orange: { text: "text-brand-orange", bar: "bg-brand-orange" },
-  green: { text: "text-brand-green", bar: "bg-brand-green" },
-  blue: { text: "text-brand-blue", bar: "bg-brand-blue" },
+  orange: { text: "text-brand-orange-ink", bar: "bg-brand-orange" },
+  green: { text: "text-brand-green-ink", bar: "bg-brand-green" },
+  blue: { text: "text-brand-blue-ink", bar: "bg-brand-blue" },
   ink: { text: "text-brand-ink/70", bar: "bg-brand-ink/40" },
 };
 

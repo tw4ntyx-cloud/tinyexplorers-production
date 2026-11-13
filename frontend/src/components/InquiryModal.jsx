@@ -120,7 +120,7 @@ export default function InquiryModal({ open, onOpenChange }) {
       >
         {success ? (
           <div className="p-10 text-center" data-testid="inquiry-success">
-            <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/15 text-brand-green">
+            <div className="mx-auto inline-flex h-16 w-16 items-center justify-center rounded-full bg-brand-green/15 text-brand-green-ink">
               <Check size={32} strokeWidth={2.5} />
             </div>
             <h3 id="inquiry-success-title" className="mt-6 font-poppins text-3xl font-bold text-brand-ink">
@@ -133,7 +133,7 @@ export default function InquiryModal({ open, onOpenChange }) {
               type="button"
               onClick={() => close(false)}
               data-testid="inquiry-success-close"
-              className="mt-8 inline-flex items-center justify-center rounded-full bg-brand-orange px-6 py-3 text-sm font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02]"
+              className="mt-8 inline-flex items-center justify-center rounded-full bg-brand-orange px-6 py-3 text-sm font-semibold text-brand-ink shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02]"
             >
               Close
             </button>
@@ -263,7 +263,7 @@ export default function InquiryModal({ open, onOpenChange }) {
                 type="submit"
                 disabled={loading}
                 data-testid="inquiry-submit"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:shadow-soft-lg disabled:opacity-60"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-orange px-6 py-4 text-base font-semibold text-brand-ink shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:shadow-soft-lg disabled:opacity-60"
               >
                 {loading ? (
                   <>

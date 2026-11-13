@@ -146,6 +146,13 @@ export const PRIVACY_NOTICE = {
     "We use your email address only to send Tiny Explorers updates. You can unsubscribe at any time. Details in our",
 };
 
+// Bright brand colours are kept for shapes and backgrounds; text and icons
+// drawn in a brand colour use these deeper shades (WCAG AA contrast).
+const TEXT_SHADES = { "#FF6B2C": "#C2410C", "#22C55E": "#15803D", "#60A5FA": "#2563EB", "#E5A82E": "#B45309", "#FBC247": "#B45309" };
+export function textShade(color) {
+  return TEXT_SHADES[String(color).toUpperCase()] || color;
+}
+
 export function getPublicAssetUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${PUBLIC_URL}${normalizedPath}`;

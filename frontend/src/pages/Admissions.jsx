@@ -52,9 +52,7 @@ function ProcessSteps({ steps }) {
               className="relative"
             >
               {/* Display numeral — editorial, not a circle-badge */}
-              <div className="display-numeral text-[5rem] leading-none">
-                {String(i + 1).padStart(2, "0")}
-              </div>
+              <div className="display-numeral text-[5rem] leading-none before:content-[attr(data-numeral)]" data-numeral={String(i + 1).padStart(2, "0")} aria-hidden="true" />
               <h3 className="mt-4 font-poppins text-[1.25rem] font-semibold leading-tight text-brand-ink">
                 {step.title}
               </h3>
@@ -93,7 +91,7 @@ function VisitBlock({ visit, onTour }) {
                   <Calendar
                     size={17}
                     strokeWidth={2.4}
-                    className="mt-0.5 flex-none text-brand-orange"
+                    className="mt-0.5 flex-none text-brand-orange-ink"
                   />
                   <span>{b}</span>
                 </li>
@@ -114,7 +112,7 @@ function VisitBlock({ visit, onTour }) {
                 href={`mailto:${BRAND.email}`}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-brand-ink/75 hover:text-brand-ink"
               >
-                <Mail size={15} strokeWidth={2.5} className="text-brand-orange" />
+                <Mail size={15} strokeWidth={2.5} className="text-brand-orange-ink" />
                 or email {BRAND.email}
               </a>
             </div>
@@ -150,7 +148,7 @@ function VisitBlock({ visit, onTour }) {
               data-testid="admissions-address-card"
               className="absolute -bottom-3 left-3 hidden max-w-[260px] rounded-2xl bg-white px-5 py-4 ring-soft motion-safe:animate-float-slower sm:block"
             >
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-orange">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-orange-ink">
                 <MapPin size={13} strokeWidth={2.5} />
                 Visit us
               </div>

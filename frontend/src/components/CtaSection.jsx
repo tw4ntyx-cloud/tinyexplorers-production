@@ -40,7 +40,7 @@ export default function CtaSection() {
           <div className="relative grid items-center gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
             {/* ─── Left: invitation copy ─── */}
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-orange shadow-soft ring-1 ring-brand-ink/5">
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-orange-ink shadow-soft ring-1 ring-brand-ink/5">
                 <Calendar size={12} strokeWidth={2.5} />
                 Now enrolling
               </div>
@@ -52,7 +52,7 @@ export default function CtaSection() {
 
               <p
                 data-testid="cta-slogan"
-                className="mt-4 font-poppins text-base italic font-medium text-brand-orange"
+                className="mt-4 font-poppins text-base italic font-medium text-brand-orange-ink"
               >
                 Where learning blossoms, and adventures begin.
               </p>
@@ -67,7 +67,7 @@ export default function CtaSection() {
                   type="button"
                   onClick={openTour}
                   data-testid="cta-primary-button"
-                  className="group inline-flex items-center gap-2 rounded-full bg-brand-orange px-8 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:shadow-soft-lg"
+                  className="group inline-flex items-center gap-2 rounded-full bg-brand-orange px-8 py-4 text-base font-semibold text-brand-ink shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:shadow-soft-lg"
                   aria-label="Open tour information"
                 >
                   Schedule a Tour
@@ -82,16 +82,16 @@ export default function CtaSection() {
                   data-testid="cta-email-button"
                   className="inline-flex items-center gap-2 rounded-full border border-brand-ink/15 bg-white px-7 py-4 text-base font-semibold text-brand-ink transition-colors duration-300 ease-soft hover:border-brand-ink/30"
                 >
-                  <Mail size={16} strokeWidth={2.5} className="text-brand-orange" />
+                  <Mail size={16} strokeWidth={2.5} className="text-brand-orange-ink" />
                   {BRAND.email}
                 </a>
               </div>
 
               <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-ink/70">
                 <span>{TOUR_BOOKING.duration} visits</span>
-                <span className="text-brand-orange">●</span>
+                <span className="text-brand-orange-ink">●</span>
                 <span>Google Calendar scheduling</span>
-                <span className="text-brand-orange">●</span>
+                <span className="text-brand-orange-ink">●</span>
                 <span>No commitment</span>
               </div>
             </div>

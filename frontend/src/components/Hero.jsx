@@ -48,7 +48,7 @@ export default function Hero() {
               data-testid="hero-locator"
               className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-ink/70"
             >
-              <MapPin size={13} strokeWidth={2.5} className="text-brand-orange" />
+              <MapPin size={13} strokeWidth={2.5} className="text-brand-orange-ink" />
               {BRAND.location}
               <span className="mx-1 h-1 w-1 rounded-full bg-brand-ink/25" />
               {BRAND.established}
@@ -68,7 +68,7 @@ export default function Hero() {
 
             {/* Smile doodle — single curated accent, placed near the headline. */}
             <DoodleSmile
-              className="mt-7 h-7 w-14 text-brand-green"
+              className="mt-7 h-7 w-14 text-brand-green-ink"
               color="#22C55E"
             />
 
@@ -95,7 +95,7 @@ export default function Hero() {
               <button
                 onClick={openAdmissions}
                 data-testid="hero-cta-primary"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand-ink px-6 py-3.5 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange hover:shadow-soft-lg sm:px-7 sm:py-4"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-brand-ink px-6 py-3.5 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange-ink hover:shadow-soft-lg sm:px-7 sm:py-4"
               >
                 {HERO.primary_cta}
                 <ArrowRight
@@ -169,7 +169,7 @@ export default function Hero() {
               data-testid="hero-ratio-card"
               className="absolute bottom-6 right-2 hidden items-center gap-3 rounded-2xl bg-white px-4 py-3 ring-soft motion-safe:animate-float-slow md:flex"
             >
-              <div className="font-poppins text-2xl font-bold leading-none text-brand-orange">
+              <div className="font-poppins text-2xl font-bold leading-none text-brand-orange-ink">
                 1:3
               </div>
               <div className="leading-tight">
@@ -203,19 +203,19 @@ export default function Hero() {
             {[0, 1].map((dup) => (
               <React.Fragment key={dup}>
                 <span>Certified educators</span>
-                <span className="text-brand-orange">●</span>
+                <span className="text-brand-orange-ink">●</span>
                 <span>Montessori-inspired</span>
-                <span className="text-brand-green">●</span>
+                <span className="text-brand-green-ink">●</span>
                 <span>Outdoor learning</span>
-                <span className="text-brand-yellow">●</span>
+                <span className="text-brand-yellow-ink">●</span>
                 <span>Allergy-aware snacks</span>
-                <span className="text-brand-blue">●</span>
+                <span className="text-brand-blue-ink">●</span>
                 <span>Reggio Emilia studio</span>
-                <span className="text-brand-orange">●</span>
+                <span className="text-brand-orange-ink">●</span>
                 <span>Bermuda Ministry registered</span>
-                <span className="text-brand-green">●</span>
+                <span className="text-brand-green-ink">●</span>
                 <span>Open-door parent studio</span>
-                <span className="text-brand-yellow">●</span>
+                <span className="text-brand-yellow-ink">●</span>
               </React.Fragment>
             ))}
           </div>

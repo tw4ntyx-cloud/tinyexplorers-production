@@ -2,7 +2,7 @@ import React from "react";
 import { Leaf, Sun, Heart } from "lucide-react";
 import { Section, Container, Eyebrow } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
-import { IMAGES } from "../data/content";
+import { IMAGES, textShade } from "../data/content";
 
 const HIGHLIGHTS = [
   {
@@ -99,7 +99,7 @@ export default function Environment() {
                 <li key={h.title} className="flex gap-5">
                   <span
                     className="mt-0.5 inline-flex h-11 w-11 flex-none items-center justify-center rounded-2xl"
-                    style={{ backgroundColor: `${h.color}1A`, color: h.color }}
+                    style={{ backgroundColor: `${h.color}1A`, color: textShade(h.color) }}
                   >
                     <h.icon size={20} strokeWidth={2.5} />
                   </span>

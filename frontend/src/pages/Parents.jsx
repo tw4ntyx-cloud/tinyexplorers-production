@@ -6,7 +6,7 @@ import FAQ from "../components/page/FAQ";
 import Button from "../components/ui/Button";
 import AdmissionsModal from "../components/AdmissionsModal";
 import PageMeta from "../components/PageMeta";
-import { PARENTS, IMAGES, PARENT_POLICIES, BRAND } from "../data/content";
+import { PARENTS, IMAGES, PARENT_POLICIES, BRAND, textShade } from "../data/content";
 import { useTour } from "../components/layout/SiteLayout";
 
 /**
@@ -33,7 +33,7 @@ function IconBadge({ Icon, color = "#FF6B2C" }) {
   return (
     <span
       className="mt-1 inline-flex h-11 w-11 flex-none items-center justify-center rounded-full"
-      style={{ backgroundColor: `${color}1A`, color }}
+      style={{ backgroundColor: `${color}1A`, color: textShade(color) }}
       aria-hidden
     >
       <Icon size={19} strokeWidth={2.4} />
@@ -139,7 +139,7 @@ export default function Parents() {
                 key={g.name}
                 className="rounded-3xl bg-white p-6 ring-1 ring-brand-ink/5"
               >
-                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-orange">
+                <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-orange-ink">
                   {g.age}
                 </div>
                 <h3 className="mt-2 font-poppins text-[1.2rem] font-semibold leading-tight text-brand-ink">
@@ -171,7 +171,7 @@ export default function Parents() {
           <ol className="mt-14 grid gap-x-8 gap-y-10 md:grid-cols-2">
             {p.schedule.items.map((item, i) => (
               <li key={i} className="flex gap-5">
-                <span className="font-poppins text-[1.3rem] font-bold leading-tight text-brand-orange/80 whitespace-nowrap">
+                <span className="font-poppins text-[1.3rem] font-bold leading-tight text-brand-orange-ink/80 whitespace-nowrap">
                   {item.time}
                 </span>
                 <div>
@@ -229,9 +229,7 @@ export default function Parents() {
           <div className="mt-14 grid gap-x-8 gap-y-10 md:grid-cols-3">
             {p.communication.items.map((item, i) => (
               <article key={item.title} className="flex flex-col">
-                <span className="font-poppins text-[2.25rem] font-bold leading-none text-brand-orange/30">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                <span className="font-poppins text-[2.25rem] font-bold leading-none text-brand-orange-ink/30 before:content-[attr(data-numeral)]" data-numeral={String(i + 1).padStart(2, "0")} aria-hidden="true" />
                 <h3 className="mt-4 font-poppins text-[1.1rem] font-semibold leading-tight text-brand-ink">
                   {item.title}
                 </h3>
@@ -302,7 +300,7 @@ export default function Parents() {
                 key={policy.slug}
                 className="flex h-full flex-col rounded-3xl border border-brand-ink/10 bg-white p-6 shadow-soft"
               >
-                <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-orange">
+                <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-orange-ink">
                   {policy.category}
                 </div>
                 <h3 className="mt-3 font-poppins text-[1.2rem] font-semibold leading-tight text-brand-ink">

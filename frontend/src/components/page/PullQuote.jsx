@@ -32,7 +32,7 @@ export default function PullQuote({
         i < arr.length - 1 ? (
           <React.Fragment key={i}>
             {chunk}
-            <span className="text-brand-orange">{emphasis}</span>
+            <span className="text-brand-orange-ink">{emphasis}</span>
           </React.Fragment>
         ) : (
           <React.Fragment key={i}>{chunk}</React.Fragment>
@@ -47,7 +47,7 @@ export default function PullQuote({
           {/* Leading quote mark */}
           <svg
             viewBox="0 0 36 28"
-            className={`mb-6 h-7 w-9 text-brand-orange ${align === "center" ? "mx-auto" : ""}`}
+            className={`mb-6 h-7 w-9 text-brand-orange-ink ${align === "center" ? "mx-auto" : ""}`}
             aria-hidden
             fill="currentColor"
           >

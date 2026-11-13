@@ -1,6 +1,7 @@
 import React from "react";
 import { Shield, HeartHandshake, Blocks, Sprout } from "lucide-react";
 import { Section, Container, SectionHeader } from "./ui/Section";
+import { textShade } from "../data/content";
 
 /**
  * Features — moodboard-aligned editorial blocks.
@@ -70,7 +71,7 @@ export default function Features() {
               {/* Icon disc — circular, generous, single accent per card */}
               <div
                 className="relative inline-flex h-[72px] w-[72px] items-center justify-center rounded-full transition-transform duration-500 ease-soft group-hover:-translate-y-1"
-                style={{ backgroundColor: f.bg, color: f.accent }}
+                style={{ backgroundColor: f.bg, color: textShade(f.accent) }}
               >
                 <f.icon size={30} strokeWidth={2.4} />
               </div>

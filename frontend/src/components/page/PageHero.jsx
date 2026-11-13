@@ -3,6 +3,7 @@ import { Container } from "../ui/Section";
 import { Eyebrow } from "../ui/Section";
 import SmartImage from "../ui/SmartImage";
 import { EditorialFrame, SplatFrame } from "../decor/Splat";
+import { textShade } from "../../data/content";
 
 /**
  * <PageHero> — the small editorial hero each subpage opens with.
@@ -84,7 +85,7 @@ export default function PageHero({
                       {" "}
                       <span
                         className="relative inline-block"
-                        style={{ color: emphasisColor }}
+                        style={{ color: textShade(emphasisColor) }}
                       >
                         {trimmedTitleEmphasis}
                       </span>

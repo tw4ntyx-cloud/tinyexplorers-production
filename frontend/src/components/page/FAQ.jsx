@@ -50,7 +50,7 @@ export default function FAQ({
               data-testid={`faq-item-${i}`}
             >
               <AccordionTrigger
-                className="!flex w-full items-center justify-between gap-6 py-6 text-left font-poppins text-[1.05rem] font-semibold tracking-tight text-brand-ink !no-underline transition hover:!no-underline data-[state=open]:text-brand-orange"
+                className="!flex w-full items-center justify-between gap-6 py-6 text-left font-poppins text-[1.05rem] font-semibold tracking-tight text-brand-ink !no-underline transition hover:!no-underline data-[state=open]:text-brand-orange-ink"
               >
                 {item.q}
               </AccordionTrigger>

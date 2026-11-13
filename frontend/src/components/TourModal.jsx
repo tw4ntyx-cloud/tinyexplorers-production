@@ -46,7 +46,7 @@ export default function TourModal({ open, onOpenChange }) {
           />
 
           <div className="relative">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-orange shadow-soft ring-1 ring-black/5">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-orange-ink shadow-soft ring-1 ring-black/5">
               <Sparkles size={13} strokeWidth={2.5} aria-hidden="true" />
               Visit Tiny Explorers
             </div>
@@ -66,7 +66,7 @@ export default function TourModal({ open, onOpenChange }) {
               {VISIT_DETAILS.map(({ label, value, Icon }) => (
                 <div key={label} className="rounded-2xl bg-white/90 p-4 ring-1 ring-black/5">
                   <dt className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-ink/65">
-                    <Icon size={14} strokeWidth={2.4} className="text-brand-orange" aria-hidden="true" />
+                    <Icon size={14} strokeWidth={2.4} className="text-brand-orange-ink" aria-hidden="true" />
                     {label}
                   </dt>
                   <dd className="mt-2 font-poppins text-sm font-semibold leading-snug text-brand-ink">

@@ -116,7 +116,7 @@ export default function Wellness() {
                 data-testid="pediatrician-card"
                 className="absolute -bottom-6 right-2 hidden max-w-[270px] rounded-2xl bg-white px-5 py-4 ring-soft motion-safe:animate-float-slower sm:block"
               >
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-green">
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-green-ink">
                   <Stethoscope size={14} strokeWidth={2.4} />
                   On-call nurse
                 </div>
@@ -184,7 +184,7 @@ export default function Wellness() {
       <Section id="nutrition" testId="wellness-nutrition" surface="white" size="lg">
         <Container>
           <div className="flex items-start gap-4">
-            <span className="mt-1 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange" aria-hidden>
+            <span className="mt-1 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange-ink" aria-hidden>
               <Salad size={20} strokeWidth={2.4} />
             </span>
             <div>
@@ -227,7 +227,7 @@ export default function Wellness() {
       <Section id="safety" testId="wellness-safety" size="lg">
         <Container>
           <div className="flex items-start gap-4">
-            <span className="mt-1 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue" aria-hidden>
+            <span className="mt-1 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue-ink" aria-hidden>
               <ShieldCheck size={20} strokeWidth={2.4} />
             </span>
             <div>
@@ -243,7 +243,7 @@ export default function Wellness() {
                 key={i}
                 className="flex gap-4 rounded-[1.75rem] bg-white p-7 ring-1 ring-brand-ink/5"
               >
-                <span className="mt-1 inline-flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-blue/15 font-poppins text-[12px] font-bold text-brand-blue">
+                <span className="mt-1 inline-flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-blue/15 font-poppins text-[12px] font-bold text-brand-blue-ink">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <p className="text-[1.0125rem] leading-[1.65] text-brand-ink/85">
@@ -297,7 +297,7 @@ export default function Wellness() {
       <Section id="communication" testId="wellness-communication" size="lg">
         <Container>
           <div className="flex items-start gap-4">
-            <span className="mt-1 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange" aria-hidden>
+            <span className="mt-1 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full bg-brand-orange/10 text-brand-orange-ink" aria-hidden>
               <MessageCircleHeart size={20} strokeWidth={2.4} />
             </span>
             <div>
@@ -314,9 +314,7 @@ export default function Wellness() {
           <ol className="mt-14 grid gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             {w.communication.steps.map((step, i) => (
               <li key={step.title} className="flex flex-col">
-                <span className="font-poppins text-[2.25rem] font-bold leading-none text-brand-orange/30">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                <span className="font-poppins text-[2.25rem] font-bold leading-none text-brand-orange-ink/30 before:content-[attr(data-numeral)]" data-numeral={String(i + 1).padStart(2, "0")} aria-hidden="true" />
                 <h3 className="mt-4 font-poppins text-[1.15rem] font-semibold leading-tight text-brand-ink">
                   {step.title}
                 </h3>
@@ -346,7 +344,7 @@ export default function Wellness() {
                 data-testid={`policy-item-${i}`}
               >
                 <summary className="flex items-center justify-between gap-6 font-poppins text-[1.05rem] font-semibold tracking-tight text-brand-ink list-none">
-                  <span className="group-open:text-brand-orange">{item.q}</span>
+                  <span className="group-open:text-brand-orange-ink">{item.q}</span>
                   <span className="font-light text-2xl text-brand-ink/60 transition-transform group-open:rotate-45" aria-hidden>+</span>
                 </summary>
                 <p className="mt-3 pr-10 text-[15.5px] leading-[1.75] text-brand-ink/70">
@@ -363,7 +361,7 @@ export default function Wellness() {
         <Container size="narrow">
           <div className="rounded-[2rem] bg-brand-cream-soft p-8 sm:p-12 md:p-14">
             <div className="flex items-start gap-4">
-              <span className="mt-1 inline-flex h-11 w-11 flex-none items-center justify-center rounded-full bg-brand-orange/15 text-brand-orange" aria-hidden>
+              <span className="mt-1 inline-flex h-11 w-11 flex-none items-center justify-center rounded-full bg-brand-orange/15 text-brand-orange-ink" aria-hidden>
                 <Sparkles size={19} strokeWidth={2.4} />
               </span>
               <div>

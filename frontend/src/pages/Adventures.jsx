@@ -97,7 +97,7 @@ export default function Adventures() {
                       className="absolute inset-0 h-full w-full object-cover transition duration-700 ease-soft group-hover:scale-[1.04]"
                     />
                     <span
-                      className="absolute left-4 top-4 inline-flex items-center justify-center rounded-full bg-white/95 p-2.5 text-brand-orange shadow-soft backdrop-blur"
+                      className="absolute left-4 top-4 inline-flex items-center justify-center rounded-full bg-white/95 p-2.5 text-brand-orange-ink shadow-soft backdrop-blur"
                       aria-hidden
                     >
                       <Icon size={16} strokeWidth={2.5} />
@@ -140,7 +140,7 @@ export default function Adventures() {
                 {/* Season label rail */}
                 <div className="flex items-center gap-3 lg:flex-col lg:items-start lg:gap-2">
                   <span
-                    className="inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white"
+                    className="inline-flex items-center justify-center rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-ink"
                     style={{ backgroundColor: item.color }}
                   >
                     {item.season}
@@ -175,7 +175,7 @@ export default function Adventures() {
         <Container size="narrow">
           <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-cream px-8 py-12 sm:px-12 md:px-16">
             <DoodleCurl
-              className="absolute right-6 top-6 h-7 w-20 text-brand-orange opacity-70"
+              className="absolute right-6 top-6 h-7 w-20 text-brand-orange-ink opacity-70"
               color="#FF6B2C"
             />
             <Eyebrow color="green">{a.future_note.eyebrow}</Eyebrow>

@@ -3,7 +3,7 @@ import { Stethoscope, Wind, MessageCircleHeart, ArrowRight } from "lucide-react"
 import { Section, Container, Eyebrow } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
 import { SplatFrame, DoodleDots } from "./decor/Splat";
-import { IMAGES, WELLNESS } from "../data/content";
+import { IMAGES, WELLNESS, textShade } from "../data/content";
 import { useTour } from "./layout/SiteLayout";
 
 /**
@@ -60,7 +60,7 @@ export default function Wellness() {
             <h2 className="mt-5 font-poppins font-bold leading-[1.04] tracking-tight text-brand-ink"
                 style={{ fontSize: "clamp(2.2rem, 4.6vw, 3.25rem)" }}>
               {WELLNESS.title_lead}{" "}
-              <span className="relative inline-block text-brand-green">
+              <span className="relative inline-block text-brand-green-ink">
                 {WELLNESS.title_emphasis}
               </span>
               {WELLNESS.title_tail}
@@ -84,7 +84,7 @@ export default function Wellness() {
                       className="mt-0.5 inline-flex h-12 w-12 flex-none items-center justify-center rounded-full transition-transform duration-500 ease-soft group-hover:-translate-y-0.5"
                       style={{
                         backgroundColor: `${p.accent}1A`, // 10% tint
-                        color: p.accent,
+                        color: textShade(p.accent),
                       }}
                       aria-hidden
                     >
@@ -108,7 +108,7 @@ export default function Wellness() {
                 type="button"
                 onClick={openTour}
                 data-testid="wellness-cta"
-                className="group inline-flex items-center gap-2 rounded-full bg-brand-ink px-7 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange hover:shadow-soft-lg"
+                className="group inline-flex items-center gap-2 rounded-full bg-brand-ink px-7 py-4 text-base font-semibold text-white shadow-soft transition-all duration-300 ease-soft hover:scale-[1.02] hover:bg-brand-orange-ink hover:shadow-soft-lg"
                 aria-label="Open tour information"
               >
                 {WELLNESS.cta}
@@ -161,7 +161,7 @@ export default function Wellness() {
               data-testid="wellness-trust-card"
               className="absolute -bottom-4 left-2 hidden max-w-[245px] rounded-2xl bg-white px-5 py-4 ring-soft motion-safe:animate-float-slower sm:block"
             >
-              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-green">
+              <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-green-ink">
                 <span
                   className="relative inline-flex h-1.5 w-1.5"
                   aria-hidden

@@ -38,7 +38,7 @@ export default function Testimonial() {
             <Quote
               size={44}
               strokeWidth={2.5}
-              className="relative text-brand-yellow"
+              className="relative text-brand-yellow-ink"
               fill="#FBC247"
             />
 

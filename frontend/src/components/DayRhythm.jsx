@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Section, Container } from "./ui/Section";
 import SmartImage from "./ui/SmartImage";
-import { IMAGES } from "../data/content";
+import { IMAGES, textShade } from "../data/content";
 
 /**
  * DayRhythm — signature immersive section.
@@ -141,7 +141,7 @@ export default function DayRhythm() {
                   <div className="mt-2">
                     <p
                       className="text-sm font-bold uppercase tracking-[0.18em] lg:text-[13px]"
-                      style={{ color: moment.color }}
+                      style={{ color: textShade(moment.color) }}
                     >
                       {moment.time}
                     </p>
@@ -165,7 +165,7 @@ export default function DayRhythm() {
                     </h3>
                     <p
                       className="mt-1.5 text-xs font-medium tracking-wide sm:mt-2 sm:text-sm"
-                      style={{ color: moment.color }}
+                      style={{ color: textShade(moment.color) }}
                     >
                       {moment.subtitle}
                     </p>

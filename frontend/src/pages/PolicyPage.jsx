@@ -30,7 +30,7 @@ export default function PolicyPage() {
         <Container size="prose">
           <Link
             to="/parents"
-            className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand-ink/65 transition hover:text-brand-orange"
+            className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand-ink/65 transition hover:text-brand-orange-ink"
           >
             <ArrowLeft size={16} />
             Back to Parent Information

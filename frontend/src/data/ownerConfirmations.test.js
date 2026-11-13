@@ -23,7 +23,7 @@ function siteSources() {
 
 const RETIRED_CLAIMS = [
   ["inaccurate data claim (enquiries go to email and cloud providers)", /stays with us/i],
-  ["unsupported contrast claim (axe: orange text fails WCAG AA)", /combinations checked against WCAG/i],
+  ["bright brand colour used for text (fails WCAG AA; use the -ink shade)", /\btext-brand-(orange|green|blue|yellow)(?![-\w])/],
   ["second campus", /Paget/],
   ["outdated street address", /Reid Street|HM 11/],
   ["street address shown before booking", /59 Victoria/],

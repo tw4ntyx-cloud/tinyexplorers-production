@@ -53,7 +53,7 @@ export default function ParentPoliciesSection() {
                 key={policy.slug}
                 className="flex h-full flex-col rounded-3xl border border-brand-ink/10 bg-white p-6 shadow-soft"
               >
-                <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-orange">
+                <div className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-orange-ink">
                   {policy.category}
                 </div>
                 <h3 className="mt-3 font-poppins text-[1.2rem] font-semibold leading-tight text-brand-ink">
