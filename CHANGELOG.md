@@ -5,6 +5,9 @@ History before this file existed is summarised from `git log`.
 
 ## [Unreleased]
 
+### Fixed (2026-11-13)
+- **Accessibility: text colour contrast meets WCAG AA.** Text uses deeper "ink" shades of each brand colour (orange #C2410C, green #15803D, blue #2563EB, amber #B45309); orange buttons use dark text; decorative numerals are drawn with CSS. axe-core (WCAG 2 A/AA and best practice), 10 pages × desktop/mobile: 325 → 0. The accessibility statement is updated to match. A guard test blocks bright brand colours being used for text. Owners can still revert (Owner Review Package v2.1, Doc 01 Q11).
+
 ### Added (2026-11-12: staging and pre-launch work not waiting on owners or legal review)
 - **Private staging copy** (`.devcontainer/start-staging.sh`, port 4000): the production build of this branch, served like a static host, with the API in safe mode (no database, no email, no Workspace). A small "Private staging" label shows only on builds that set `REACT_APP_ENV_LABEL`.
 - **Self-hosted fonts** (Poppins, DM Sans via `@fontsource`). Pages no longer contact Google Fonts; the prepared CSP is tightened to match.
